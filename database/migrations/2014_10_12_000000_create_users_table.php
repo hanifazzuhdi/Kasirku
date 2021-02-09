@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('avatar')->nullable()->default('https://ibb.co/94HCy9z');
             $table->unsignedBigInteger('role_id')->nullable();
-            $table->integer('bos_id')->nullable();
             $table->text('remember_token')->nullable();
             $table->timestamps();
 

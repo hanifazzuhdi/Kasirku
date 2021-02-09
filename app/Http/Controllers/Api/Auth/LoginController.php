@@ -4,21 +4,28 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Karyawan;
-use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Controller;
+use App\Models\Member;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Namshi\JOSE\Signer\OpenSSL\HS256;
 
 class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        $user = User::where('email', $request->input('email'))->first();
+        $loginType = filter_var($request->email, FILTER_VALIDATE_EMAIL)  ? 'email' : 'nomor';
 
-        $credentials = $request->only('email', 'password');
+        if ($loginType == 'nomor') {
+            return $this->memberLogin($request);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        $credentials = [
+            $loginType => $request->email,
+            'password' => $request->password
+        ];
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -28,10 +35,26 @@ class LoginController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        $user->update([
-            'remember_token' => $token
-        ]);
+        return response()->json(compact('user', 'token'));
+    }
 
-        return response()->json(compact('token'));
+    protected function memberLogin($request)
+    {
+        $user = Member::where('nomor', $request->email)->first();
+
+        $credentials = [
+            'nomor' => $request->email,
+            'password' => $request->password
+        ];
+
+        try {
+            if (!$token = auth('member')->attempt($credentials)) {
+                return response()->json(['error' => 'isi Username dan Password dengan benar'], 400);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
+
+        return response()->json(compact('user', 'token'));
     }
 }
