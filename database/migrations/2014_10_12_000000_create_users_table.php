@@ -22,9 +22,12 @@ class CreateUsersTable extends Migration
             $table->integer('umur')->nullable();
             $table->string('alamat')->nullable();
             $table->string('avatar')->nullable()->default('https://via.placeholder.com/150');
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->integer('bos_id')->nullable();
             $table->rememberToken();
-            $table->string('role')->nullable();
             $table->timestamps();
+
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

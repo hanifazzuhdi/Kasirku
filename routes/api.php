@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/email/resend', 'VerificationController@resend');
-Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify'); //kirim email verivikasi;
+// Route auth
+Route::group(['namespace' => 'Auth'], function () {
+    Route::get('/email/resend', 'VerificationController@resend')->name('verification.resend');
+    Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
 
-Route::post('/register', 'AuthController@register');
-Route::post('/login', 'AuthController@login');
+    Route::post('/register', 'RegisterController@register');    // register admin
+    Route::post('/login', 'LoginController@login');             // login semua role
+});
+
+
+Route::group(['middleware' => ['jwt.auth']], function () {
+    Route::post('update-profile', 'UserController@update');    // update profile user
+});
+
+
+
+Route::get('/coba', function () {
+    return "halo";
+})->middleware('jwt.auth');

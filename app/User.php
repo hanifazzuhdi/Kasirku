@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\FormatDate;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +25,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'umur',
         'alamat',
         'avatar',
-        'remember_token'
+        'remember_token',
+        'role_id',
+        'bos_id'
     ];
 
     /**
@@ -33,7 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'umur', 'alamat', 'updated_at', 'bos_id'
     ];
 
     /**
@@ -44,6 +47,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getEmailVerifiedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['email_verified_at'])->translatedFormat('d, F Y H:i');
+    }
 
     public function getJWTIdentifier()
     {
