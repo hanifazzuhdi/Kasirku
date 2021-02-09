@@ -25,7 +25,7 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     // Suplier
-    // Route::get('')
+    Route::get('/supplier',);
 
 
 
