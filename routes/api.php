@@ -25,9 +25,7 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     // Suplier
-    Route::get('/supplier',);
-
-
+    // Route::get('/supplier',);
 
     Route::post('update-profile', 'UserController@update');    // update profile user
 });

@@ -32,6 +32,6 @@ class LoginController extends Controller
             'remember_token' => $token
         ]);
 
-        return response()->json(compact('user', 'token'));
+        return response()->json(compact('token'));
     }
 }

@@ -36,7 +36,6 @@ class UserController extends Controller
         $userValidation;
 
         DB::transaction(function () use ($user, $request) {
-
             if ($request->file('avatar')) {
                 $avatar = UploadProvider::upload($request);
             }
