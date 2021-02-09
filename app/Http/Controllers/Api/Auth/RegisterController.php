@@ -7,14 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Twilio\Rest\Client;
 
 class RegisterController extends Controller
 {
-    public $token, $twilio_sid, $twilio_verify_sid;
 
+    protected $token, $twilio_sid, $twilio_verify_sid;
+
+    /**
+     * Construc method for assign property
+     *
+     */
     public function __construct()
     {
         $this->token = getenv("TWILIO_AUTH_TOKEN");
@@ -22,38 +26,10 @@ class RegisterController extends Controller
         $this->twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
     }
 
-
-    public function register(Request $request)
-    {
-        $this->validation($request);
-
-        DB::transaction(function () use ($request) {
-            $kode_member = '00' . $request->input('nomor');
-
-            $qrCode = QrCode::generate($kode_member);
-
-            $user = Member::create([
-                'nomor' => $request->input('nomor'),
-                'nama' => $request->input('nama'),
-                'password' => Hash::make($request->input('password')),
-                'kode_member' => $kode_member,
-                'qrCode' => $qrCode,
-                'role_id' => 4
-            ]);
-
-            // send sms
-            // $twilio = new Client($this->twilio_sid, $this->token);
-            // $twilio->verify->services($this->twilio_verify_sid)
-            //     ->verifications
-            //     ->create($user->nomor, "sms");
-        });
-
-        return response([
-            'status' => 'success',
-            'message' => 'Member berhasil dibuat'
-        ], 201);
-    }
-
+    /**
+     * Validation Request
+     *
+     */
     public function validation($request)
     {
         return $request->validate([
@@ -63,32 +39,95 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * Format number phone request
+     *
+     */
+    public function formatNumber($request)
+    {
+        if (str_contains($request->input('nomor'), '+62')) {
+            $nomor = $request->input('nomor');
+        } else {
+            $nomor = str_split($request->input('nomor'), 1);
+
+            if ($nomor[0] == 0) {
+                unset($nomor[0]);
+            }
+
+            $nomor = '+62' . implode($nomor);
+        }
+
+        return $nomor;
+    }
+
+    /**
+     * Function for registration
+     *
+     */
+    public function register(Request $request)
+    {
+        $this->validation($request);
+
+        DB::transaction(function () use ($request) {
+
+            $nomor = $this->formatNumber($request);
+
+            $kode_member = '00' . $request->input('nomor');
+
+            $qrCode = QrCode::generate($kode_member);
+
+            $user = Member::create([
+                'nomor' => $nomor,
+                'nama' => $request->input('nama'),
+                'password' => Hash::make($request->input('password')),
+                'kode_member' => $kode_member,
+                'qrCode' => $qrCode,
+                'role_id' => 4
+            ]);
+
+            // Kirim SMS
+            $twilio = new Client($this->twilio_sid, $this->token);
+
+            $twilio->verify->v2->services($this->twilio_verify_sid)
+                ->verifications
+                ->create($user->nomor, "sms");
+        });
+
+        return response([
+            'status' => 'success',
+            'message' => 'Member berhasil dibuat'
+        ], 201);
+    }
+
+    /**
+     * function for verification otp from sms
+     *
+     */
     protected function verify(Request $request)
     {
         $data = $request->validate([
-            'verification_code' => ['required', 'numeric'],
-            'phone_number' => ['required', 'string'],
+            'kode' => ['required', 'numeric'],
+            'nomor' => ['required', 'string'],
         ]);
 
-        /* Get credentials from .env */
+        // Verification Checks
         $twilio = new Client($this->twilio_sid, $this->token);
 
-        $verification = $twilio->verify->services($this->twilio_verify_sid)
+        $verification = $twilio->verify->v2->services($this->twilio_verify_sid)
             ->verificationChecks
-            ->create($data['verification_code'], array('to' => $data['phone_number']));
+            ->create(
+                $data['kode'],
+                [
+                    'to' => $data['nomor']
+                ]
+            );
 
         if ($verification->valid) {
-            $user = tap(Member::where('phone_number', $data['phone_number']))->update(['isVerified' => true]);
+            $user = tap(Member::where('nomor', $data['nomor']))->update(['is_verified' => true]);
 
-            /* Authenticate user */
-            Auth::login($user->first());
-
-            return response([
-                'message' => 'Phone number verified'
-            ]);
+            return $this->sendResponse('success', 'Nomor berhasil diverifikasi', $user, 200);
+        } else {
+            return $this->sendResponse('failed', 'Nomor sudah diverifikasi', null, 400);
         }
-        return response([
-            'message' => 'gagal'
-        ]);
     }
 }

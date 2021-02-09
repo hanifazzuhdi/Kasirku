@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Member;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,15 +20,17 @@ Route::group(['namespace' => 'Auth'], function () {
 
     Route::post('/register', 'RegisterController@register');    // register member
     Route::post('/login', 'LoginController@login');             // login semua role
-    // Route::post('/verify', 'LoginController@verify');             // login semua role
+    Route::post('/verify', 'RegisterController@verify');           // login semua role
 });
 
 
 Route::group(['middleware' => ['jwt.auth']], function () {
-    // Suplier
-    Route::get('supplier', 'SupplierController@index');
-    // Route::
+    // Pimpinan
 
-    // Route::get('/supplier',);
-    // Route::post('update-profile', 'UserController@update');    // update profile user
+
+    // Staf
+    Route::get('supplier', 'SupplierController@index');
+
+
+    // Kasir
 });
