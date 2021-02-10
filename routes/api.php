@@ -29,7 +29,7 @@ Route::group(['namespace' => 'Auth'], function () {
 
     Route::post('/register', 'RegisterController@register');    // register member
 
-    Route::post('/verify', 'VeriicationController@verify');     // verifikasi otp member
+    Route::post('/verify', 'VerificationController@verify');     // verifikasi otp member
     Route::post('/resend', 'VerificationController@resend');    // kirim ulang otp
 });
 
@@ -40,13 +40,14 @@ Route::group(['namespace' => 'Auth'], function () {
 /** Staf
  *  1. Data supplier
  *  2. Buat supplier
- *  3. Katgori
+ *  3. Kategori
  *  4. Barang
  *  5. Pembelian / stok masuk
  */
 Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     // supplier
     Route::get('/supplier', 'SupplierController@index');
+    Route::post('/add-supplier', 'SupplierController@store');
 
     // kategori
     Route::get('/kategori', 'KategoriController@index');
@@ -55,7 +56,8 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     Route::get('/barang', 'BarangController@index');
 
     // pembelian
-    // Route::get
+    Route::get('/pembelian', 'PembelianController@index');
+    Route::post('/add-pembelian', 'PembelianController@store');
 });
 
 

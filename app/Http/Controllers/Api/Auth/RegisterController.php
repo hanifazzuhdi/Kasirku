@@ -26,40 +26,6 @@ class RegisterController extends Controller
     }
 
     /**
-     * Validation Request
-     *
-     */
-    public function validation($request)
-    {
-        return $request->validate([
-            'nomor' => 'required|unique:members',
-            'nama' => 'required',
-            'password' => 'required',
-        ]);
-    }
-
-    /**
-     * Format number phone request
-     *
-     */
-    public function formatNumber($request)
-    {
-        if (str_contains($request->input('nomor'), '+62')) {
-            $nomor = $request->input('nomor');
-        } else {
-            $nomor = str_split($request->input('nomor'), 1);
-
-            if ($nomor[0] == 0) {
-                unset($nomor[0]);
-            }
-
-            $nomor = '+62' . implode($nomor);
-        }
-
-        return $nomor;
-    }
-
-    /**
      * Function for registration
      *
      */
@@ -83,16 +49,30 @@ class RegisterController extends Controller
             ]);
 
             // Kirim SMS
-            $twilio = new Client($this->twilio_sid, $this->token);
+            // $twilio = new Client($this->twilio_sid, $this->token);
 
-            $twilio->verify->v2->services($this->twilio_verify_sid)
-                ->verifications
-                ->create($user->nomor, "sms");
+            // $twilio->verify->v2->services($this->twilio_verify_sid)
+            //     ->verifications
+            //     ->create($user->nomor, "sms");
         });
 
         return response([
             'status' => 'success',
             'message' => 'Member berhasil dibuat'
         ], 201);
+    }
+
+    /**
+     * Validation Request
+     *
+     */
+    public function validation($request)
+    {
+        return $request->validate([
+            'nomor' => 'required|unique:members',
+            'nama' => 'required',
+            'password' => 'required',
+            'kode_member' => 'required|unique:members'
+        ]);
     }
 }

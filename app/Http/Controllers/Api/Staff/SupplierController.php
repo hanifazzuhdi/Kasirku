@@ -15,8 +15,16 @@ class SupplierController extends Controller
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nama_supplier' => 'required'
+        ]);
+
+        $data = Supplier::create([
+            'nama_supplier' => $request->input('nama_supplier')
+        ]);
+
+        $this->sendResponse('success', 'data berhasil dibuat', $data, 202);
     }
 }

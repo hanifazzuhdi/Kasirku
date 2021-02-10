@@ -40,14 +40,15 @@ class LoginController extends Controller
 
     protected function memberLogin($request)
     {
-        if (!str_contains($request->email, '+62')) {
-            $nomor = str_split($request->email, 1);
-            unset($nomor[0]);
-
-            $nomor = '+62' . implode($nomor);
-        }
+        $nomor = $this->formatNumber($request);
 
         $user = Member::where('nomor', $nomor)->first();
+
+        if ($user == null) {
+            return $this->sendResponse('failed', 'Akun tidak terdaftar', null, 400);
+        } else if ($user->is_verified == 0) {
+            return $this->sendResponse('failed', 'Akun belum terverifikasi', null, 400);
+        }
 
         $credentials = [
             'nomor' => $nomor,
@@ -63,5 +64,25 @@ class LoginController extends Controller
         }
 
         return response()->json(compact('user', 'token'));
+    }
+
+    public function formatNumber($request)
+    {
+        if (str_contains($request->input('email'), '+62') and str_split($request->input('email'), 3)[0] == '+62') {
+            $nomor = $request->input('email');
+        } else {
+            $nomor = str_split($request->input('email'), 2);
+
+            if ($nomor[0] === '08') {
+
+                unset($nomor[0]);
+
+                $nomor = '+628' . implode($nomor);
+            } else {
+                return $this->sendResponse('failed', 'input nomor dengan benar', null, 404);
+            }
+        }
+
+        return $nomor;
     }
 }

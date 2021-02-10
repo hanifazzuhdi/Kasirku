@@ -13,4 +13,11 @@ class Supplier extends Model
     protected $fillable = [
         'nama_supplier'
     ];
+
+    // relations
+
+    public function pembelians()
+    {
+        return $this->hasMany(Pembelian::class);
+    }
 }

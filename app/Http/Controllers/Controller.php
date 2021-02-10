@@ -11,6 +11,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * Method for send response api
+     *
+     */
+
     public function sendResponse($status, $message, $data, $http)
     {
         return response()->json([
@@ -18,5 +23,29 @@ class Controller extends BaseController
             'message' => $message,
             'data'  => $data
         ], $http);
+    }
+
+    /**
+     * Method for format phone number
+     *
+     */
+    public function formatNumber($request)
+    {
+        if (str_contains($request->input('nomor'), '+62') and str_split($request->input('nomor'), 3)[0] == '+62') {
+            $nomor = $request->input('nomor');
+        } else {
+            $nomor = str_split($request->input('nomor'), 2);
+
+            if ($nomor[0] === '08') {
+
+                unset($nomor[0]);
+
+                $nomor = '+628' . implode($nomor);
+            } else {
+                return $this->sendResponse('failed', 'input nomor dengan benar', null, 404);
+            }
+        }
+
+        return $nomor;
     }
 }
