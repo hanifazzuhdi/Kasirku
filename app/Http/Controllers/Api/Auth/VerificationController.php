@@ -50,7 +50,7 @@ class VerificationController extends Controller
             );
 
         if ($verification->valid) {
-            $user = tap(Member::where('nomor', $nomor))->update(['is_verified' => true]);
+            $user = tap(Member::where('nomor', $nomor))->update(['is_verified' => 1]);
 
             return response()->json([
                 'status' => 'success',
@@ -59,8 +59,8 @@ class VerificationController extends Controller
         } else {
             return response()->json([
                 'status' => 'failed',
-                'message' => 'Akun gagal diverifikasi'
-            ], 4040);
+                'message' => 'Akun gagal diverifikasi, OTP Salah'
+            ], 400);
         }
     }
 
@@ -85,8 +85,9 @@ class VerificationController extends Controller
             ->create($nomor, "sms");
 
         return response([
-            'status' => 'success',
-            'message' => 'OTP berhasil dikirim ulang'
+            'status'  => 'success',
+            'message' => 'OTP berhasil dikirim ulang',
+            'data'    => $nomor
         ], 201);
     }
 }

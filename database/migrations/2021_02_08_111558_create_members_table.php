@@ -20,7 +20,7 @@ class CreateMembersTable extends Migration
             $table->string('nomor')->unique();
             $table->string('password');
             $table->integer('saldo')->nullable()->default(0);
-            $table->boolean('is_verified')->default(false);
+            $table->tinyInteger('is_verified')->default(0);
             $table->text('qrCode')->nullable();
             $table->unsignedBigInteger('role_id')->default(4);
             $table->timestamps();

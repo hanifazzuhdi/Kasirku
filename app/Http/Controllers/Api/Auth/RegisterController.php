@@ -65,6 +65,7 @@ class RegisterController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Member berhasil dibuat',
+            'data' => $nomor
         ], 201);
     }
 
