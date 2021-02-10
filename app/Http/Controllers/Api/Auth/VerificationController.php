@@ -82,7 +82,7 @@ class VerificationController extends Controller
 
         $twilio->verify->v2->services($this->twilio_verify_sid)
             ->verifications
-            ->create($request->input('nomor'), "sms");
+            ->create($nomor, "sms");
 
         return response([
             'status' => 'success',
