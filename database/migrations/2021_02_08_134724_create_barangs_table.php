@@ -21,8 +21,8 @@ class CreateBarangsTable extends Migration
             $table->integer('harga_jual');
             $table->unsignedBigInteger('kategori');
             $table->unsignedBigInteger('merek');
-            $table->integer('stok');
-            $table->integer('diskon');
+            $table->integer('stok')->default(0);
+            $table->integer('diskon')->nullable();
             $table->timestamps();
 
             $table->foreign('kategori')->references('id')->on('kategoris');

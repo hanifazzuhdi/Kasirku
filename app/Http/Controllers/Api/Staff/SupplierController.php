@@ -25,6 +25,6 @@ class SupplierController extends Controller
             'nama_supplier' => $request->input('nama_supplier')
         ]);
 
-        $this->sendResponse('success', 'data berhasil dibuat', $data, 202);
+        return $this->sendResponse('success', 'data berhasil dibuat', $data, 202);
     }
 }

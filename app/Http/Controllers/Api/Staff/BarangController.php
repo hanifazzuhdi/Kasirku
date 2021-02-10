@@ -14,4 +14,15 @@ class BarangController extends Controller
 
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
     }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'uuid' => 'required',
+            'nama_barang' => 'required',
+            'harga_beli' => 'required',
+            'harga_jual' => 'required',
+            // 'kategori'
+        ]);
+    }
 }

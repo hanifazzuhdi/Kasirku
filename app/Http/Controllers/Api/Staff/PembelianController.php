@@ -48,6 +48,6 @@ class PembelianController extends Controller
             'total_harga'   => $request->input('total_harga')
         ]);
 
-        $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
+        return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
     }
 }
