@@ -50,7 +50,7 @@ class RegisterController extends Controller
                 'nama' => $request->input('nama'),
                 'password' => Hash::make($request->input('password')),
                 'kode_member' => $kode_member,
-                'qrCode' => QrCode::generate($kode_member),
+                'qr_code' => QrCode::generate($kode_member),
                 'role_id' => 4
             ]);
 

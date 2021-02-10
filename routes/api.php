@@ -1,6 +1,11 @@
 <?php
 
+use App\Models\Barang;
+use App\Models\Member;
 use Illuminate\Support\Facades\Route;
+use Milon\Barcode\Facades\DNS1DFacade;
+use Milon\Barcode\Facades\DNS2DFacade;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/coba', function () {
+    // echo DNS2DFacade::getBarcodeHTML($member->kode_member, 'QRCODE');
+    // echo  DNS1DFacade::getBarcodeSVG('12-' . str_split(time(), 5)[1] . random_int(10, 30), 'C39', 1, 33);
+});
 
 // Route auth
 Route::group(['namespace' => 'Auth'], function () {
@@ -47,6 +57,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
 
     // barang
     Route::get('/barang', 'BarangController@index');
+    Route::post('/add-barang', 'BarangController@store');
 
     // pembelian
     Route::get('/pembelian', 'PembelianController@index');

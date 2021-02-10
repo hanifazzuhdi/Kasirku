@@ -10,7 +10,7 @@ class Barang extends Model
     use FormatDate;
 
     protected $fillable = [
-        'uuid', 'nama_barang', 'harga_beli', 'harga_jual',
+        'uid', 'barcode', 'nama_barang', 'harga_beli', 'harga_jual',
         'kategori', 'merek', 'stok', 'diskon'
     ];
 
