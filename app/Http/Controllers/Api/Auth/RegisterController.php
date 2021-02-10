@@ -12,7 +12,6 @@ use Twilio\Rest\Client;
 
 class RegisterController extends Controller
 {
-
     protected $token, $twilio_sid, $twilio_verify_sid;
 
     /**
@@ -72,16 +71,14 @@ class RegisterController extends Controller
 
             $nomor = $this->formatNumber($request);
 
-            $kode_member = '00' . $request->input('nomor');
-
-            $qrCode = QrCode::generate($kode_member);
+            $kode_member = '000' . substr($request->input('nomor'), 3);
 
             $user = Member::create([
                 'nomor' => $nomor,
                 'nama' => $request->input('nama'),
                 'password' => Hash::make($request->input('password')),
                 'kode_member' => $kode_member,
-                'qrCode' => $qrCode,
+                'qrCode' => QrCode::generate($kode_member),
                 'role_id' => 4
             ]);
 
@@ -97,37 +94,5 @@ class RegisterController extends Controller
             'status' => 'success',
             'message' => 'Member berhasil dibuat'
         ], 201);
-    }
-
-    /**
-     * function for verification otp from sms
-     *
-     */
-    protected function verify(Request $request)
-    {
-        $data = $request->validate([
-            'kode' => ['required', 'numeric'],
-            'nomor' => ['required', 'string'],
-        ]);
-
-        // Verification Checks
-        $twilio = new Client($this->twilio_sid, $this->token);
-
-        $verification = $twilio->verify->v2->services($this->twilio_verify_sid)
-            ->verificationChecks
-            ->create(
-                $data['kode'],
-                [
-                    'to' => $data['nomor']
-                ]
-            );
-
-        if ($verification->valid) {
-            $user = tap(Member::where('nomor', $data['nomor']))->update(['is_verified' => true]);
-
-            return $this->sendResponse('success', 'Nomor berhasil diverifikasi', $user, 200);
-        } else {
-            return $this->sendResponse('failed', 'Nomor sudah diverifikasi', null, 400);
-        }
     }
 }

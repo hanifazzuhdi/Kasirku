@@ -13,27 +13,16 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     /**
-     * Construct function
-     *
-     */
-    public function __construct()
-    {
-        return $this->middleware('verified');
-    }
-
-    /**
      * Function for update profile user
      *
      */
-    public function update(Request $request, UserValidation $userValidation)
+    public function update(Request $request)
     {
         $user = User::find(Auth::id());
 
-        if ($request->input('email')) {
-            $user->update(['email' => 'update']);
-        }
-
-        $userValidation;
+        $this->validate($request, [
+            'avatar' => 'image|file'
+        ]);
 
         DB::transaction(function () use ($user, $request) {
             if ($request->file('avatar')) {
@@ -42,7 +31,6 @@ class UserController extends Controller
 
             $user->update([
                 'nama' => $request->input('nama') ?? $user->nama,
-                'email' => $request->input('email') ?? $user->email,
                 'umur' => $request->input('umur') ?? $user->umur,
                 'alamat' => $request->input('alamat') ?? $user->alamat,
                 'avatar' => $avatar ?? $user->avatar,

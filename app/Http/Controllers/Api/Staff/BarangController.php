@@ -1,21 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Models\Supplier;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class BarangController extends Controller
 {
-    /**
-     *
-     *  Show all supplier
-     *
-     */
     public function index()
     {
-        $data = Supplier::get();
+        $data = Barang::all();
 
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
     }

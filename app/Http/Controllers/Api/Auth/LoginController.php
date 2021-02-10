@@ -40,10 +40,17 @@ class LoginController extends Controller
 
     protected function memberLogin($request)
     {
-        $user = Member::where('nomor', $request->email)->first();
+        if (!str_contains($request->email, '+62')) {
+            $nomor = str_split($request->email, 1);
+            unset($nomor[0]);
+
+            $nomor = '+62' . implode($nomor);
+        }
+
+        $user = Member::where('nomor', $nomor)->first();
 
         $credentials = [
-            'nomor' => $request->email,
+            'nomor' => $nomor,
             'password' => $request->password
         ];
 

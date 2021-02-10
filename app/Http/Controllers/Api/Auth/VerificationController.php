@@ -4,90 +4,76 @@ namespace App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\VerifiesEmails;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Models\Member;
+use Twilio\Rest\Client;
 
 class VerificationController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Email Verification Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling email verification for any
-    | user that recently registered with the application. Emails may also
-    | be re-sent if the user didn't receive the original email message.
-    |
-    */
-
-    use VerifiesEmails;
+    protected $token, $twilio_sid, $twilio_verify_sid;
 
     /**
-     * Where to redirect users after verification.
+     * Construc method for assign property
      *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth:api')->only('resend');
-        $this->middleware('signed')->only('verify');
+        $this->token = getenv("TWILIO_AUTH_TOKEN");
+        $this->twilio_sid = getenv("TWILIO_SID");
+        $this->twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
+
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
     /**
-     * Resend the email verification notification.
+     * function for verification otp from sms
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function resend(Request $request)
+    protected function verify(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        $data = $request->validate([
+            'kode' => ['required', 'numeric'],
+            'nomor' => ['required', 'string'],
+        ]);
 
-            return response(['message' => 'Already verified']);
+        // Verification Checks
+        $twilio = new Client($this->twilio_sid, $this->token);
+
+        $verification = $twilio->verify->v2->services($this->twilio_verify_sid)
+            ->verificationChecks
+            ->create(
+                $data['kode'],
+                [
+                    'to' => $data['nomor']
+                ]
+            );
+
+        if ($verification->valid) {
+            $user = tap(Member::where('nomor', $data['nomor']))->update(['is_verified' => true]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Akun berhasi diverifikasi'
+            ], 200);
+        } else {
+            return $this->sendResponse('failed', 'Akun sudah diverifikasi', null, 400);
         }
-
-        $request->user()->sendEmailVerificationNotification();
-
-        if ($request->wantsJson()) {
-            return response(['message' => 'Email Sent']);
-        }
-
-        return back()->with('resent', true);
     }
 
-
-    /**
-     * Mark the authenticated user's email address as verified.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function verify(Request $request)
+    public function resend(Request $request)
     {
-        auth()->loginUsingId($request->route('id'));
+        $data = $this->validate($request, [
+            'nomor' => 'required'
+        ]);
 
-        if ($request->route('id') != $request->user()->getKey()) {
-            throw new AuthorizationException;
-        }
+        $twilio = new Client($this->twilio_sid, $this->token);
 
-        if ($request->user()->hasVerifiedEmail()) {
-            return response(['message' => 'akun anda telah diverifikasi. silakan kembali ke aplikasi']);
-        }
+        $twilio->verify->v2->services($this->twilio_verify_sid)
+            ->verifications
+            ->create($data['nomor'], "sms");
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-        }
-
-        return response(['message' => 'Successfully verified']);
+        return response([
+            'status' => 'success',
+            'message' => 'OTP berhasil dikirim ulang'
+        ], 201);
     }
 }
