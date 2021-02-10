@@ -33,11 +33,17 @@ class RegisterController extends Controller
     {
         $this->validation($request);
 
-        DB::transaction(function () use ($request) {
+        $nomor = $this->formatNumber($request);
 
-            $nomor = $this->formatNumber($request);
+        $member = Member::where('nomor', $nomor)->first();
 
-            $kode_member = '000' . substr($request->input('nomor'), 3);
+        if ($member) {
+            return $this->sendResponse('failed', 'Akun sudah terdaftar', null, 404);
+        }
+
+        DB::transaction(function () use ($request, $nomor) {
+
+            $kode_member = '000' . substr($request->input('nomor'), 2);
 
             $user = Member::create([
                 'nomor' => $nomor,
@@ -49,16 +55,16 @@ class RegisterController extends Controller
             ]);
 
             // Kirim SMS
-            // $twilio = new Client($this->twilio_sid, $this->token);
+            $twilio = new Client($this->twilio_sid, $this->token);
 
-            // $twilio->verify->v2->services($this->twilio_verify_sid)
-            //     ->verifications
-            //     ->create($user->nomor, "sms");
+            $twilio->verify->v2->services($this->twilio_verify_sid)
+                ->verifications
+                ->create($user->nomor, "sms");
         });
 
         return response([
             'status' => 'success',
-            'message' => 'Member berhasil dibuat'
+            'message' => 'Member berhasil dibuat',
         ], 201);
     }
 
@@ -69,10 +75,9 @@ class RegisterController extends Controller
     public function validation($request)
     {
         return $request->validate([
-            'nomor' => 'required|unique:members',
+            'nomor' => 'required|unique:members,nomor',
             'nama' => 'required',
             'password' => 'required',
-            'kode_member' => 'required|unique:members'
         ]);
     }
 }

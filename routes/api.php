@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Milon\Barcode\DNS2D;
-use Milon\Barcode\Facades\DNS1DFacade;
-use Milon\Barcode\Facades\DNS2DFacade;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +12,6 @@ use Milon\Barcode\Facades\DNS2DFacade;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-// Route::get('/coba', function () {
-//     echo DNS1DFacade::getBarcodeSVG('4445645656', 'EAN13', 1, 34, 'blue', true);
-// });
 
 // Route auth
 Route::group(['namespace' => 'Auth'], function () {
