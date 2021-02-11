@@ -45,15 +45,15 @@ class UserSeeder extends Seeder
             'role_id'           => 3,
         ]);
 
-        Member::create([
-            'nomor'             => '+628999981907',
-            'kode_member'       => '0008999981907',
-            'nama'              => 'Usman Among Us',
-            'password'          => Hash::make('password'),
-            'role_id'           => 4,
-            'is_verified'       => 1,
-            'qr_code'           => QrCode::generate('0008999981907'),
-            'created_at'        => now()
-        ]);
+        // Member::create([
+        //     'nomor'             => '+628999981907',
+        //     'kode_member'       => '0008999981907',
+        //     'nama'              => 'Usman Among Us',
+        //     'password'          => Hash::make('password'),
+        //     'role_id'           => 4,
+        //     'is_verified'       => 1,
+        //     'qr_code'           => QrCode::generate('0008999981907'),
+        //     'created_at'        => now()
+        // ]);
     }
 }
