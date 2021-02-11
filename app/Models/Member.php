@@ -13,7 +13,7 @@ class Member extends Authenticatable implements JWTSubject
 
     protected $guard = 'member';
 
-    protected $fillable = ['nomor', 'nama', 'password', 'kode_member', 'is_verified', 'qrCode'];
+    protected $fillable = ['nomor', 'nama', 'password', 'kode_member', 'is_verified', 'qr_code'];
 
     protected $hidden = [
         'password', 'updated_at', 'created_at'

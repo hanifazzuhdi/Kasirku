@@ -18,7 +18,7 @@ class MemberController extends Controller
             'password_baru' => 'required',
         ]);
 
-        $user = Member::find(Auth::id());
+        $user = Member::find(auth('member')->id());
 
         if (Hash::check($request->input('password_lama'), $user->password)) {
 
