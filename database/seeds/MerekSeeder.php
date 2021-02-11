@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Merek;
+use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
 class MerekSeeder extends Seeder
@@ -12,6 +13,10 @@ class MerekSeeder extends Seeder
      */
     public function run()
     {
+        Supplier::create([
+            'nama_supplier' => 'PT.Indomie Indonesia'
+        ]);
+
         $mereks = ['Detol', 'Indomie', 'Indomilk'];
 
         for ($i = 0; $i < count($mereks); $i++) {

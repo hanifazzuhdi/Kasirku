@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Api\Staff;
 
-use App\Http\Controllers\Controller;
-use App\Models\Member;
 use App\Models\Supplier;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
@@ -17,6 +15,10 @@ class SupplierController extends Controller
          *
          */
         $data = Supplier::all();
+
+        if (count($data) == null) {
+            return $this->sendResponse('success', 'Belum ada supplier', null, 200);
+        }
 
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
     }
@@ -30,8 +32,6 @@ class SupplierController extends Controller
         $data = $this->validate($request, [
             'nama_supplier' => 'required'
         ]);
-
-        dd(auth('member')->user());
 
         $data = Supplier::create($data);
 

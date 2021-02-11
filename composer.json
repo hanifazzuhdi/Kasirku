@@ -16,10 +16,10 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
+        "milon/barcode": "^7.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "twilio/sdk": "^6.16",
-        "tymon/jwt-auth": "^1.0.2",
-        "milon/barcode": "^7.0"
+        "tymon/jwt-auth": "^1.0.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

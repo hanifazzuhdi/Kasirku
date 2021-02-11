@@ -14,7 +14,6 @@ class Supplier extends Model
         'nama_supplier'
     ];
 
-
     // relations
     public function pembelians()
     {

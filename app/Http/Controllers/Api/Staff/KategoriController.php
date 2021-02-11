@@ -29,7 +29,7 @@ class KategoriController extends Controller
             'nama_kategori' => 'required'
         ]);
 
-        $data = Kategori::create([$data]);
+        $data = Kategori::create($data);
 
         return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
     }

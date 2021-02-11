@@ -1,11 +1,8 @@
 <?php
 
-use App\Models\Barang;
-use App\Models\Member;
 use Illuminate\Support\Facades\Route;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Milon\Barcode\Facades\DNS2DFacade;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +16,12 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 */
 
 Route::get('/coba', function () {
-    // echo DNS2DFacade::getBarcodeHTML($member->kode_member, 'QRCODE');
-    // echo  DNS1DFacade::getBarcodeSVG('12-' . str_split(time(), 5)[1] . random_int(10, 30), 'C39', 1, 33);
+
+    echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('12-232323', 'C39', 1, 33) . '" alt="barcode"   />';
+});
+
+Route::get('/png', function () {
+    //
 });
 
 // Route auth
