@@ -10,6 +10,12 @@ class Pembelian extends Model
     use FormatDate;
 
     protected $fillable = [
-        'supplier_id', 'barang', 'total_barang', 'total_harga', 'status'
+        'supplier_id', 'barang', 'total_barang', 'harga_satuan', 'total_harga', 'status'
     ];
+
+    // Relation
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 }

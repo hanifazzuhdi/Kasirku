@@ -6,6 +6,7 @@ use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Providers\UploadProvider;
 use Milon\Barcode\Facades\DNS1DFacade;
 
 class BarangController extends Controller
@@ -45,7 +46,7 @@ class BarangController extends Controller
         ]);
 
         $data->update([
-            'barcode' => DNS1DFacade::getBarcodeSVG($data->uid, 'C39', 1, 33)
+            'barcode' => UploadProvider::uploadCode($data->uid, 'barang')
         ]);
         DB::commit();
         // Commit transaction

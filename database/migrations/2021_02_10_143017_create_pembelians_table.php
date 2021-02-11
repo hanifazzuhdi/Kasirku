@@ -18,6 +18,7 @@ class CreatePembeliansTable extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->string('barang');
             $table->integer('total_barang');
+            $table->integer('harga_satuan');
             $table->integer('total_harga');
             $table->string('status')->default(0);
             $table->timestamps();

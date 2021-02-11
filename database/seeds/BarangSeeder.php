@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Barang;
+use App\Providers\UploadProvider;
 use Illuminate\Database\Seeder;
 use Milon\Barcode\Facades\DNS1DFacade;
 
@@ -14,7 +15,7 @@ class BarangSeeder extends Seeder
     public function run()
     {
         Barang::create([
-            'uid' => "12-" . str_split(time(), 5)[1] . random_int(10, 30),
+            'uid' => "12-19070101",
             'nama_barang' => "Indomie Goreng rasa Rendang",
             'harga_beli' => 2300,
             'harga_jual' => 2500,
@@ -22,7 +23,7 @@ class BarangSeeder extends Seeder
             'merek' => 2,
             'stok' => 10,
             'diskon' => 0,
-            'barcode' => DNS1DFacade::getBarcodeSVG("12-" . str_split(time(), 5)[1] . random_int(10, 30), 'C39', 1, 33)
+            'barcode' => 'https://res.cloudinary.com/hanif-it/image/upload/v1613016682/wsrf49t93dly62lf3zri.png'
         ]);
     }
 }

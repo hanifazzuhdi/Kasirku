@@ -17,7 +17,11 @@ class PembelianController extends Controller
     {
         $data = Pembelian::get();
 
-        $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
+        if (count($data) == null) {
+            return $this->sendResponse('success', 'data pembelian kosong', null, 200);
+        }
+
+        return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
     }
 
     /**
@@ -28,15 +32,21 @@ class PembelianController extends Controller
     {
         $this->validated($request);
 
-        $data = Pembelian::store([
-            'supplier'      => $request->input('supplier'),
+        $data = Pembelian::create([
+            'supplier_id'      => $request->input('supplier'),
             'barang'        => $request->input('barang'),
+            'harga_satuan'  => $request->input('harga_satuan'),
             'total_barang'  => $request->input('total_barang'),
-            'total_harga'   => $request->input('total_harga')
+            'total_harga'   => $request->input('harga_satuan') * $request->input('total_barang')
         ]);
 
         return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
     }
+
+    /**
+     * Method for update status pembelian
+     *
+     */
 
     public function updateStatus($id)
     {
@@ -59,7 +69,7 @@ class PembelianController extends Controller
             'supplier'     => 'required',
             'barang'       => 'required',
             'total_barang' => 'required',
-            'total_harga'  => 'required'
+            'harga_satuan'  => 'required'
         ]);
     }
 }

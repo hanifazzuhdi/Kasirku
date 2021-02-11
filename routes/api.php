@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Milon\Barcode\DNS1D;
 use Milon\Barcode\Facades\DNS1DFacade;
-
+use Milon\Barcode\Facades\DNS2DFacade;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,9 @@ use Milon\Barcode\Facades\DNS1DFacade;
 |
 */
 
-Route::get('/coba', function () {
-
-    echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('12-232323', 'C39', 1, 33) . '" alt="barcode"   />';
-});
-
-Route::get('/png', function () {
-    //
+Route::get('/upload', function () {
+    // echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('12-19070112', 'C39', 1, 34, array(1, 1, 1), true) . '" alt="barcode"   />';
+    // echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('123123', 'PHARMA2T', 1, 33, 'black', true) . '" alt="barcode"   />';
 });
 
 // Route auth

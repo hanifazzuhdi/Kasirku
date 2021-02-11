@@ -21,7 +21,7 @@ class VerificationController extends Controller
         $this->twilio_sid = getenv("TWILIO_SID");
         $this->twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
 
-        // $this->middleware('throttle:6,1')->only('verify', 'resend');
+        $this->middleware('throttle:60,1')->only('verify', 'resend');
     }
 
     /**

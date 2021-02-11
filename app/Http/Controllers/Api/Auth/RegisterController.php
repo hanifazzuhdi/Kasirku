@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Providers\UploadProvider;
 use Twilio\Rest\Client;
 
 class RegisterController extends Controller
@@ -50,7 +50,7 @@ class RegisterController extends Controller
                 'nama' => $request->input('nama'),
                 'password' => Hash::make($request->input('password')),
                 'kode_member' => $kode_member,
-                'qr_code' => QrCode::generate($kode_member),
+                'qr_code' => UploadProvider::uploadCode($kode_member, 'register'),
                 'role_id' => 4
             ]);
 
