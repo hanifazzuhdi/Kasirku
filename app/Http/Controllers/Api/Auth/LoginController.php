@@ -67,7 +67,7 @@ class LoginController extends Controller
 
         try {
             if (!$token = auth('member')->attempt($credentials)) {
-                return response()->json(['error' => 'isi Username dan Password dengan benar'], 400);
+                return response()->json(['error' => 'isi Username dan Password dengan benar'], 404);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
