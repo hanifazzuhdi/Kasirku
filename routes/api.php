@@ -75,8 +75,21 @@ Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
 
 
 // Staf + Kasir
-Route::post('/update-profile', 'UserController@update');     // update prodile staf dan kasir
+Route::group(['middleware' => ['jwt.auth']], function () {
+
+    Route::post('/update-profile', 'UserController@update');     // update prodile staf dan kasir
+});
 
 
-// Member
-Route::post('/change-password', 'MemberController@change');  // update password member
+/** Member
+ *  1. Member
+ *  2. Saldo
+ *
+ */
+Route::group(['namespace' => 'Member', 'middleware' => 'jwt.auth'], function () {
+    // Member
+    Route::post('/change-password', 'MemberController@change');
+
+    // Saldo
+    Route::get('/saldo', 'SaldoController@index');
+});
