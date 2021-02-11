@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'nama'              => 'Staf',
+            'nama'              => 'Mujahid',
             'email'             => 'staf@gmail.com',
             'email_verified_at' => now(),
             'password'          => Hash::make('password'),
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'nama'              => 'Kasir',
+            'nama'              => 'Ihsan',
             'email'             => 'kasir@gmail.com',
             'email_verified_at' => now(),
             'password'          => Hash::make('password'),
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
         Member::create([
             'nomor'             => '+628999981907',
             'kode_member'       => '0008999981907',
-            'nama'              => 'Member',
+            'nama'              => 'Usman Among Us',
             'password'          => Hash::make('password'),
             'role_id'           => 4,
             'is_verified'       => 1,

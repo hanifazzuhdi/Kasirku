@@ -21,7 +21,7 @@ class VerificationController extends Controller
         $this->twilio_sid = getenv("TWILIO_SID");
         $this->twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
 
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
+        // $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
     /**
@@ -36,6 +36,11 @@ class VerificationController extends Controller
         ]);
 
         $nomor = $this->formatNumber($request);
+
+        $member = Member::where('nomor', $nomor)->first();
+        if ($member->is_verified == 1) {
+            return $this->sendResponse('failed', 'Nomor sudah diverifikasi', null, 404);
+        }
 
         // Verification Checks
         $twilio = new Client($this->twilio_sid, $this->token);
@@ -59,8 +64,8 @@ class VerificationController extends Controller
         } else {
             return response()->json([
                 'status' => 'failed',
-                'message' => 'Akun gagal diverifikasi, OTP Salah'
-            ], 400);
+                'message' => 'Kode OTP Salah'
+            ], 404);
         }
     }
 

@@ -20,20 +20,6 @@ class PembelianController extends Controller
     }
 
     /**
-     * validate all request
-     *
-     */
-    public function validated($request)
-    {
-        return $this->validate($request, [
-            'supplier' => 'required',
-            'barang'   => 'required',
-            'total_barang' => 'required',
-            'total_harga'   => 'required'
-        ]);
-    }
-
-    /**
      * function for store data pembelian
      *
      */
@@ -49,5 +35,30 @@ class PembelianController extends Controller
         ]);
 
         return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
+    }
+
+    public function updateStatus($id)
+    {
+        $pembelian = Pembelian::find($id);
+
+        $pembelian->update([
+            'status' => 1
+        ]);
+
+        return $this->sendResponse('success', 'status berhasil diupdate', $pembelian, 200);
+    }
+
+    /**
+     * validate all request
+     *
+     */
+    public function validated($request)
+    {
+        return $this->validate($request, [
+            'supplier'     => 'required',
+            'barang'       => 'required',
+            'total_barang' => 'required',
+            'total_harga'  => 'required'
+        ]);
     }
 }

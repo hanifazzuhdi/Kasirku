@@ -54,6 +54,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
 
     // kategori
     Route::get('/kategori', 'KategoriController@index');
+    Route::post('/add-kategori', 'KategoriController@store');
 
     // barang
     Route::get('/barang', 'BarangController@index');
@@ -62,6 +63,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     // pembelian
     Route::get('/pembelian', 'PembelianController@index');
     Route::post('/add-pembelian', 'PembelianController@store');
+    Route::post('/update-pembelian/{id}', 'PembelianController@updateStatus');
 });
 
 

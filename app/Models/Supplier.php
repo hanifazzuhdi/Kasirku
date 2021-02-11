@@ -14,8 +14,8 @@ class Supplier extends Model
         'nama_supplier'
     ];
 
-    // relations
 
+    // relations
     public function pembelians()
     {
         return $this->hasMany(Pembelian::class);

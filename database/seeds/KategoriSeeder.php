@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kategori;
 use Illuminate\Database\Seeder;
 
 class KategoriSeeder extends Seeder
@@ -11,6 +12,12 @@ class KategoriSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $kategoris = ['Makanan', 'Minuman', 'Sabun'];
+
+        for ($i = 0; $i < count($kategoris); $i++) {
+            Kategori::create([
+                'nama_kategori' => $kategoris[$i]
+            ]);
+        }
     }
 }

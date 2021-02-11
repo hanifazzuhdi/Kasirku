@@ -10,6 +10,6 @@ class Pembelian extends Model
     use FormatDate;
 
     protected $fillable = [
-        'supplier_id', 'barang', 'total_barang', 'total_harga'
+        'supplier_id', 'barang', 'total_barang', 'total_harga', 'status'
     ];
 }

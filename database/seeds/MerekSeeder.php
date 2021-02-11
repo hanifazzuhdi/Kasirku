@@ -12,8 +12,12 @@ class MerekSeeder extends Seeder
      */
     public function run()
     {
-        Merek::create([
-            'nama_merek' => 'Pepsodent'
-        ]);
+        $mereks = ['Detol', 'Indomie', 'Indomilk'];
+
+        for ($i = 0; $i < count($mereks); $i++) {
+            Merek::create([
+                'nama_merek' => $mereks[$i]
+            ]);
+        }
     }
 }

@@ -26,8 +26,8 @@ class CreateBarangsTable extends Migration
             $table->integer('diskon')->default(0);
             $table->timestamps();
 
-            // $table->foreign('kategori')->references('id')->on('kategoris');
-            // $table->foreign('merek')->references('id')->on('mereks');
+            $table->foreign('kategori')->references('id')->on('kategoris');
+            $table->foreign('merek')->references('id')->on('mereks');
         });
     }
 

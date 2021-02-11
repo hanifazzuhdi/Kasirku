@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Staff;
 
-use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Milon\Barcode\Facades\DNS1DFacade;
 
 class BarangController extends Controller
@@ -31,6 +31,7 @@ class BarangController extends Controller
     {
         $this->validated($request);
 
+        // Begin transaction
         DB::beginTransaction();
         $data = Barang::create([
             'uid' => "{$request->kategori}{$request->merek}-" . str_split(time(), 5)[1] . random_int(10, 30),
@@ -47,6 +48,7 @@ class BarangController extends Controller
             'barcode' => DNS1DFacade::getBarcodeSVG($data->uid, 'C39', 1, 33)
         ]);
         DB::commit();
+        // Commit transaction
 
         return response()->json([
             'status' => 'success',

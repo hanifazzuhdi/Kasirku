@@ -12,6 +12,11 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends Controller
 {
+    /**
+     * Method Login for Staff or Kasir
+     *
+     *
+     */
     public function login(Request $request)
     {
         $loginType = filter_var($request->email, FILTER_VALIDATE_EMAIL)  ? 'email' : 'nomor';
@@ -38,6 +43,11 @@ class LoginController extends Controller
         return response()->json(compact('user', 'token'));
     }
 
+    /**
+     * Method login for member
+     *
+     *
+     */
     protected function memberLogin($request)
     {
         $nomor = $this->formatNumber($request);
@@ -66,6 +76,11 @@ class LoginController extends Controller
         return response()->json(compact('user', 'token'));
     }
 
+    /**
+     * format number phone member, change 08 to +62
+     *
+     *
+     */
     public function formatNumber($request)
     {
         if (str_contains($request->input('email'), '+62') and str_split($request->input('email'), 3)[0] == '+62') {

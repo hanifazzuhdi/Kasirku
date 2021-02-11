@@ -19,6 +19,7 @@ class CreatePembeliansTable extends Migration
             $table->string('barang');
             $table->integer('total_barang');
             $table->integer('total_harga');
+            $table->string('status')->default(0);
             $table->timestamps();
 
             $table->foreign('supplier_id')->references('id')->on('suppliers');
