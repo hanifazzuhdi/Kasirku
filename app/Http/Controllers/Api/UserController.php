@@ -5,15 +5,25 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserValidation;
 use App\Providers\UploadProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    /** Method for show user login
+     *
+     *
+     */
+    public function show()
+    {
+        $data = User::find(Auth::id());
+
+        return $this->sendResponse('success', 'Data berhasil dimuat', $data, 200);
+    }
+
     /**
-     * Function for update profile user
+     * Method for update profile user
      *
      */
     public function update(Request $request)

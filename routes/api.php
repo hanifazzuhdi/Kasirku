@@ -13,24 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/email/resend', 'VerificationController@resend')->name('verification.resend');
+// Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
 
-
-Route::get('/upload', function () {
-    // echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('12-19070112', 'C39', 1, 34, array(1, 1, 1), true) . '" alt="barcode"   />';
-    // echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('123123', 'PHARMA2T', 1, 33, 'black', true) . '" alt="barcode"   />';
-});
+// Route::get('/upload', function () {
+// echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('12-19070112', 'C39', 1, 34, array(1, 1, 1), true) . '" alt="barcode"   />';
+// echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('123123', 'PHARMA2T', 1, 33, 'black', true) . '" alt="barcode"   />';
+// });
 
 // Route auth
 Route::group(['namespace' => 'Auth'], function () {
-    // Route::get('/email/resend', 'VerificationController@resend')->name('verification.resend');
-    // Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
+    // login semua role
+    Route::post('/login', 'LoginController@login');
 
-    Route::post('/login', 'LoginController@login');             // login semua role
+    // register member
+    Route::post('/register', 'RegisterController@register');
 
-    Route::post('/register', 'RegisterController@register');    // register member
-
-    Route::post('/verify', 'VerificationController@verify');     // verifikasi otp member
-    Route::post('/resend', 'VerificationController@resend');    // kirim ulang otp
+    // Verifikasi OTP
+    Route::post('/verify', 'VerificationController@verify');
+    Route::post('/resend', 'VerificationController@resend');
 });
 
 
@@ -74,10 +75,14 @@ Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
 });
 
 
-// Staf + Kasir
+/** Staf + Kasir
+ *
+ *
+ */
 Route::group(['middleware' => ['jwt.auth']], function () {
-
-    Route::post('/update-profile', 'UserController@update');     // update prodile staf dan kasir
+    // Karyawan
+    Route::get('/profile', 'UserController@show');
+    Route::post('/update-profile', 'UserController@update');
 });
 
 
