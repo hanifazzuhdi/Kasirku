@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Milon\Barcode\DNS1D;
-use Milon\Barcode\Facades\DNS1DFacade;
-use Milon\Barcode\Facades\DNS2DFacade;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,9 +70,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
  */
 Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
     // penjualan
-
-
-
+    Route::post('/add-transaksi', 'TransaksiController@store');
 });
 
 
