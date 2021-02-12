@@ -1,12 +1,10 @@
 <?php
 
-use App\Models\Member;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Midtrans\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,12 +136,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
  *  2. Saldo
  *
  */
-Route::group(['namespace' => 'Member', 'middleware' => 'jwt.auth'], function () {
+Route::group(['namespace' => 'Member'], function () {
     // Member
     Route::post('/change-password', 'MemberController@change');
 
     // Saldo
     Route::get('/saldo', 'SaldoController@index');
+    Route::get('/transaksi', 'SaldoController@transaksi');
     Route::post('/isi-saldo', 'SaldoController@store');
     Route::post('/notif/payments', 'SaldoController@webhooks');
 });

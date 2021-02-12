@@ -12,6 +12,11 @@ use Illuminate\Support\Str;
 
 class SaldoController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('jwt.auth')->except('webhooks');
+    }
+
     /**
      * Method get saldo
      *
@@ -21,6 +26,17 @@ class SaldoController extends Controller
         $data = Member::where('id', auth('member')->id())->first();
 
         return $this->sendResponse('success', 'Saldo berhasil dimuat', $data->saldo, 200);
+    }
+
+    /**
+     * Method get transaksi
+     *
+     */
+    public function transaksi()
+    {
+        $data = Payment::where('kode_member', auth('member')->user()->kode_member)->get();
+
+        return $this->sendResponse('success', 'Riwayat Transaksi berhasil dimuat', $data, 200);
     }
 
     /**
@@ -75,7 +91,8 @@ class SaldoController extends Controller
                 'order_id' => $data['order_id'],
                 'transaction_status' => $data['transaction_status'],
                 'jumlah' => $data['gross_amount'],
-                'va_numbers' => $data['va_numbers']
+                'va_numbers' => $data['va_numbers'],
+                'transaction_date' => $data['transaction_time']
             ]
         ]);
     }
@@ -118,5 +135,7 @@ class SaldoController extends Controller
                 'status' => 2
             ]);
         }
+
+        return;
     }
 }
