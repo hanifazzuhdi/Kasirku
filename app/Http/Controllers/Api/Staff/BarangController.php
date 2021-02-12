@@ -70,6 +70,24 @@ class BarangController extends Controller
     }
 
     /**
+     * Api Update barang
+     *
+     */
+    public function update(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Api Hapus barang
+     *
+     */
+    public function delete(Request $request)
+    {
+        //
+    }
+
+    /**
      * Method for validate request
      *
      */

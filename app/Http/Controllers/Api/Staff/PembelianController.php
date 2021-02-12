@@ -43,7 +43,10 @@ class PembelianController extends Controller
         return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
     }
 
-
+    public function postPembelian()
+    {
+        //
+    }
 
     /**
      * Method for update status pembelian

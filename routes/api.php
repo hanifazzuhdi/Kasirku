@@ -118,6 +118,8 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     Route::get('/barang', 'BarangController@index');
     Route::get('/barang/{uid}', 'BarangController@show');
     Route::post('/add-barang', 'BarangController@store');
+    Route::post('/update-barang', 'BarangController@update');
+    Route::delete('/delete-barang', 'BarangController@delete');
 
     // pembelian
     Route::get('/pembelian', 'PembelianController@index');
