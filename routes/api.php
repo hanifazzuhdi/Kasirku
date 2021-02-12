@@ -93,7 +93,8 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
     Route::get('/laporan-stok', "LaporanController@stok");
 
     //pembelian
-    Route::get('/laporan-pembelian/{tanggalAwal}/{}', 'LaporanController@pembelian');
+    Route::get('/laporan-pembelian', 'LaporanController@allPembelian');
+    Route::get('/laporan-pembelian/{tanggalAwal}/{tanggalAkhir}', 'LaporanController@pembelian');
 });
 
 
@@ -121,6 +122,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     // pembelian
     Route::get('/pembelian', 'PembelianController@index');
     Route::post('/add-pembelian', 'PembelianController@store');
+    Route::post('/post-pembelian', 'PembelianController@postPembelian');
     Route::post('/update-pembelian/{id}', 'PembelianController@updateStatus');
 });
 
@@ -158,6 +160,8 @@ Route::group(['namespace' => 'Member'], function () {
     // Saldo
     Route::get('/saldo', 'SaldoController@index');
     Route::get('/transaksi', 'SaldoController@transaksi');
+
+    Route::post('/isi-saldo', 'SaldoController@isiSaldo');
     Route::post('/payments', 'SaldoController@store');
     Route::post('/notif/payments', 'SaldoController@webhooks');
 });

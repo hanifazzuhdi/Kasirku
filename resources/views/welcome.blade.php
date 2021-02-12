@@ -137,6 +137,13 @@
         </form>
     </div>
 
+    <div>
+        <label for="">Tanggal awal</label>
+        <input type="date">
+        <label for="">Tanggal akhir</label>
+        <input type="date">
+    </div>
+
 </body>
 
 </html>

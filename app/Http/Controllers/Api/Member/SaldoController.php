@@ -34,10 +34,43 @@ class SaldoController extends Controller
      */
     public function transaksi()
     {
-        $data = Payment::where('kode_member', auth('member')->user()->kode_member)->get();
+        $data = Payment::where('kode_member', auth('member')->user()->kode_member)->orderBy('id', 'DESC')->get();
 
         return $this->sendResponse('success', 'Riwayat transaksi berhasil dimuat', $data, 200);
     }
+
+    /**
+     *  Isi saldo via kasir
+     *
+     */
+    public function isiSaldo(Request $request)
+    {
+        $this->validate($request, [
+            'kode_member' => 'required',
+            'jumlah' => 'required'
+        ]);
+
+        DB::beginTransaction();
+        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+
+        $member->update([
+            'saldo' => $member->saldo + $request->input('jumlah')
+        ]);
+
+        Payment::create([
+            'order_id' => 'KASIR-' . date('dmyHis') . '-' . $member->id,
+            'jumlah' => $request->input('jumlah'),
+            'kode_member' => $request->input('kode_member'),
+            'nama_member' => $member->nama,
+            'nomor_member' => $member->nomor,
+            'bank' => 'Kasir',
+            'status' => 1
+        ]);
+        DB::commit();
+
+        return $this->sendResponse('success', 'Transaksi berhasil, saldo ditambahkan', $request->input('jumlah'), 200);
+    }
+
 
     /**
      * Method for add saldo via payments
