@@ -84,12 +84,16 @@ Route::group(['namespace' => 'Auth'], function () {
 
 
 /** Pimpinan
- *  1. Laporan Harian
- *  2. Laporan Bulanan
+ *  1. Laporan
+ *  2. Laporan harian - bulanan
  *
  */
 Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function () {
-    // Route::get('/laporan-stok', "LaporanController@stok");
+    // stok => pilih uid barang terlebih dulu
+    Route::get('/laporan-stok', "LaporanController@stok");
+
+    //pembelian
+    Route::get('/laporan-pembelian/{tanggalAwal}/{}', 'LaporanController@pembelian');
 });
 
 

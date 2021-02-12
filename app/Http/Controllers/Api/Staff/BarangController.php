@@ -6,6 +6,7 @@ use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BarangResource;
 use App\Providers\UploadProvider;
 
 class BarangController extends Controller
@@ -18,9 +19,9 @@ class BarangController extends Controller
 
     public function index()
     {
-        $data = Barang::all();
+        $datas = BarangResource::collection(Barang::get());
 
-        return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
+        return $this->sendResponse('success', 'data berhasil dimuat', $datas, 200);
     }
 
     /**

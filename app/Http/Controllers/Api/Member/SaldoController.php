@@ -91,7 +91,8 @@ class SaldoController extends Controller
                 'order_id' => $data['order_id'],
                 'transaction_status' => $data['transaction_status'],
                 'jumlah' => $data['gross_amount'],
-                'va_numbers' => $data['va_numbers'],
+                'bank' => Str::upper($data['va_numbers'][0]['bank']),
+                'va_numbers' => $data['va_numbers'][0]['va_number'],
                 'transaction_date' => $data['transaction_time']
             ]
         ]);
