@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Events\LoginKaryawan;
 use App\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -39,6 +40,8 @@ class LoginController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
+
+        event(new LoginKaryawan($request->email, 'Mobile', 'Login'));
 
         return response()->json(compact('user', 'token'));
     }

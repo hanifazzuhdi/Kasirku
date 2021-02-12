@@ -40,7 +40,7 @@ class SaldoController extends Controller
     }
 
     /**
-     * Method for add saldo
+     * Method for add saldo via payments
      *
      */
     public function store(Request $request)

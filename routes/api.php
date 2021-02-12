@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Barang;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -20,11 +21,12 @@ use Illuminate\Support\Str;
 // Route::get('/email/resend', 'VerificationController@resend')->name('verification.resend');
 // Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
 
-// Route::get('/upload', function () {
-// echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('12-19070112', 'C39', 1, 34, array(1, 1, 1), true) . '" alt="barcode"   />';
-// echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('123123', 'PHARMA2T', 1, 33, 'black', true) . '" alt="barcode"   />';
-// });
 
+Route::get('/coba', function () {
+    $user = Barang::find(21);
+
+    return $user->barcode;
+});
 
 Route::post('/coba', function (Request $request) {
 
@@ -70,6 +72,7 @@ Route::post('/coba', function (Request $request) {
 Route::group(['namespace' => 'Auth'], function () {
     // login semua role
     Route::post('/login', 'LoginController@login');
+    Route::post('/logout', 'LogoutController@logout')->middleware('jwt.auth');
 
     // register member
     Route::post('/register', 'RegisterController@register');
@@ -86,8 +89,7 @@ Route::group(['namespace' => 'Auth'], function () {
  *
  */
 Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function () {
-    //
-    //
+    // Route::get('/laporan-stok', "LaporanController@stok");
 });
 
 
@@ -109,6 +111,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
 
     // barang
     Route::get('/barang', 'BarangController@index');
+    Route::get('/barang/{uid}', 'BarangController@show');
     Route::post('/add-barang', 'BarangController@store');
 
     // pembelian
@@ -120,7 +123,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
 
 /** Kasir
  *  1. Transaksi/Penjualan
- *
+ *  2. isi saldo member
  */
 Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
     // penjualan
@@ -151,6 +154,6 @@ Route::group(['namespace' => 'Member'], function () {
     // Saldo
     Route::get('/saldo', 'SaldoController@index');
     Route::get('/transaksi', 'SaldoController@transaksi');
-    Route::post('/isi-saldo', 'SaldoController@store');
+    Route::post('/payments', 'SaldoController@store');
     Route::post('/notif/payments', 'SaldoController@webhooks');
 });

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\UploadProvider;
-use Milon\Barcode\Facades\DNS1DFacade;
 
 class BarangController extends Controller
 {
@@ -22,6 +21,17 @@ class BarangController extends Controller
         $data = Barang::all();
 
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
+    }
+
+    /**
+     * Method show barang per uid
+     *
+     */
+    public function show($uid)
+    {
+        $barang = Barang::where('uid', $uid)->first();
+
+        return $this->sendResponse('success', 'data barang berhasil dimuat', $barang, 200);
     }
 
     /**
