@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $datas = Payment::get();
+
+    return view('welcome', compact('datas'));
 });
 
 Auth::routes();

@@ -1,6 +1,12 @@
 <?php
 
+use App\Models\Member;
+use App\Models\Payment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Midtrans\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +26,47 @@ use Illuminate\Support\Facades\Route;
 // echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('12-19070112', 'C39', 1, 34, array(1, 1, 1), true) . '" alt="barcode"   />';
 // echo '<img src="data:image/png;base64,' . DNS1DFacade::getBarcodePNG('123123', 'PHARMA2T', 1, 33, 'black', true) . '" alt="barcode"   />';
 // });
+
+
+Route::post('/coba', function (Request $request) {
+
+    $order_id = Str::upper($request->bank) . "-" . random_int(10000, 99999) . '-2';
+
+    $res = Http::withBasicAuth('SB-Mid-server-P_D1Q6IGgH4b-_YqgY6Ybnra', '')
+        ->withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ])
+        ->post('https://api.sandbox.midtrans.com/v2/charge', [
+            "payment_type" => "bank_transfer",
+
+            "transaction_details" => [
+                "gross_amount" => $request->jumlah,
+                "order_id" => $order_id
+            ],
+
+            "customer_details" => [
+                "email" => "0005210593721",
+                "first_name" => "Zen",
+                "phone" => "+6285210593721"
+            ],
+
+            "bank_transfer" => [
+                "bank" => $request->bank,
+            ]
+        ]);
+
+    Payment::create([
+        'order_id' => $order_id,
+        'jumlah' => $request->jumlah,
+        "kode_member" => "0005210593721",
+        "nama_member" => "Zen",
+        "nomor_member" => "+6285210593721",
+        'bank' => $request->bank
+    ]);
+
+    dd($res->json());
+});
 
 // Route auth
 Route::group(['namespace' => 'Auth'], function () {
@@ -97,4 +144,6 @@ Route::group(['namespace' => 'Member', 'middleware' => 'jwt.auth'], function () 
 
     // Saldo
     Route::get('/saldo', 'SaldoController@index');
+    Route::post('/isi-saldo', 'SaldoController@store');
+    Route::post('/notif/payments', 'SaldoController@webhooks');
 });

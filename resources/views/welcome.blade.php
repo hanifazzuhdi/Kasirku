@@ -83,21 +83,58 @@
         @endif
 
         <div class="content">
-            <div class="title m-b-md">
-                Laravel
-            </div>
 
-            <div class="links">
-                <a href="https://laravel.com/docs">Docs</a>
-                <a href="https://laracasts.com">Laracasts</a>
-                <a href="https://laravel-news.com">News</a>
-                <a href="https://blog.laravel.com">Blog</a>
-                <a href="https://nova.laravel.com">Nova</a>
-                <a href="https://forge.laravel.com">Forge</a>
-                <a href="https://vapor.laravel.com">Vapor</a>
-                <a href="https://github.com/laravel/laravel">GitHub</a>
-            </div>
+            <table class="table" border="1px" cellspacing='1' cellpadding="10">
+                <tr>
+                    <td>Order_id</td>
+                    <td>Jumlah</td>
+                    <td>kode_member</td>
+                    <td>nama_member</td>
+                    <td>nomor_member</td>
+                    <td>bank</td>
+                    <td>status</td>
+                </tr>
+                @foreach ($datas as $data)
+                <tr>
+                    <td>{{$data->order_id}}</td>
+                    <td>{{$data->jumlah}}</td>
+                    <td>{{$data->kode_member}}</td>
+                    <td>{{$data->nama_member}}</td>
+                    <td>{{$data->nomor_member}}</td>
+                    <td>{{$data->bank}}</td>
+                    <td>{{$data->status == 0 ? 'Pending' : 'Success'}}
+                        @if ($data->status == 2)
+                        'Failed'
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </table>
+
         </div>
+    </div>
+
+    <div class="content">
+        <form action="/api/coba" method="post">
+            <div>
+                <label for="">Jumlah Topup : </label>
+                <br>
+                <input type="text" name="jumlah">
+            </div>
+            <br>
+            <div>
+                <select name="bank" id="">
+                    <option value="bni">BNI</option>
+                    <option value="bri">BRI</option>
+                    <option value="bca">BCA</option>
+                    <option value="mandiri">Mandiri</option>
+                </select>
+            </div>
+            <br><br>
+            <button type="submit">Topup</button>
+
+            <br><br><br><br><br><br><br><br>
+        </form>
     </div>
 
 </body>

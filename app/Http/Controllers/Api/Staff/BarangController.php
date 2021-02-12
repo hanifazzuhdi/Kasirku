@@ -42,7 +42,7 @@ class BarangController extends Controller
             'kategori' => $request->input('kategori'),
             'merek' => $request->input('merek'),
             'stok' => $request->input('stok'),
-            'diskon' => $request->input('diskon'),
+            'diskon' => $request->input('diskon') ?? 0,
         ]);
 
         $data->update([
@@ -68,7 +68,9 @@ class BarangController extends Controller
             'nama_barang' => 'required',
             'harga_beli' => 'required',
             'harga_jual' => 'required',
-            'stok' => 'required'
+            'stok' => 'required',
+            'kategori' => 'required',
+            'merek' => 'required',
         ]);
     }
 }
