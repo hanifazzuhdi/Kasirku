@@ -80,7 +80,15 @@ Route::group(['namespace' => 'Auth'], function () {
 });
 
 
-// Pimpinan
+/** Pimpinan
+ *  1. Laporan Harian
+ *  2. Laporan Bulanan
+ *
+ */
+Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function () {
+    //
+    //
+});
 
 
 /** Staf

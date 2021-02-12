@@ -36,7 +36,7 @@ class SaldoController extends Controller
     {
         $data = Payment::where('kode_member', auth('member')->user()->kode_member)->get();
 
-        return $this->sendResponse('success', 'Riwayat Transaksi berhasil dimuat', $data, 200);
+        return $this->sendResponse('success', 'Riwayat transaksi berhasil dimuat', $data, 200);
     }
 
     /**

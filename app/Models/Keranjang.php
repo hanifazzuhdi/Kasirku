@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaksi extends Model
+class Keranjang extends Model
 {
     protected $guarded = [];
 
     // relation
-    public function kasir()
+    public function transaksi()
     {
-        return $this->belongsTo(User::class, 'kasir_id');
+        return $this->belongsTo(Transaksi::class);
     }
 }

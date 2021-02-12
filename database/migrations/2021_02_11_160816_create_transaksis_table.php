@@ -15,9 +15,15 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->string('barang');
-            $table->smallInteger('jumlah_barang');
+            $table->integer('harga_total');
+            $table->integer('dibayar');
+            $table->integer('kembalian');
+            $table->string('kode_member')->nullable()->default('pembeli');
+            $table->tinyInteger('status')->default(0);
+            $table->unsignedBigInteger('kasir_id');
             $table->timestamps();
+
+            $table->foreign('kasir_id')->references('id')->on('users');
         });
     }
 
