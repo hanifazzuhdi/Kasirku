@@ -28,13 +28,13 @@ class MessageProvider extends ServiceProvider
 
         DB::insert("INSERT INTO password_resets VALUES ('$nomor','$token', now())");
 
-        $twilio = new Client(self::$twilio_sid, self::$token);
+        $twilio = new Client($this->twilio_sid, $this->token);
 
         $twilio->messages
             ->create(
                 $nomor,
                 [
-                    'messagingServiceSid' => self::$twilio_message_sid,
+                    'messagingServiceSid' => $this->twilio_message_sid,
                     'body' => "Ini link lupa password anda : https://project-mini.herokuapp.com/{$token}/{$nomor}"
                 ]
             );
