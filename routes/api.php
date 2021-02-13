@@ -164,6 +164,7 @@ Route::group(['namespace' => 'Member'], function () {
     // Saldo
     Route::get('/saldo', 'SaldoController@index');
     Route::get('/transaksi', 'SaldoController@transaksi');
+    Route::get('/daftar-bank', 'SaldoController@bank');
 
     Route::post('/isi-saldo', 'SaldoController@isiSaldo');
     Route::post('/payments', 'SaldoController@store');

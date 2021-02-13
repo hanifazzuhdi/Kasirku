@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api\Member;
 
-use App\Http\Controllers\Controller;
-use App\Models\Member;
-use App\Models\Payment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
+use App\Models\{Bank, Member, Payment};
+use Illuminate\Support\Facades\{DB, Http};
+
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SaldoController extends Controller
 {
@@ -37,6 +36,17 @@ class SaldoController extends Controller
         $data = Payment::where('kode_member', auth('member')->user()->kode_member)->orderBy('id', 'DESC')->get();
 
         return $this->sendResponse('success', 'Riwayat transaksi berhasil dimuat', $data, 200);
+    }
+
+    /**
+     * Daftar Bank
+     *
+     */
+    public function bank()
+    {
+        $data = Bank::get();
+
+        return $this->sendResponse('success', 'Daftar bank berhasil ditampilkan', $data, 200);
     }
 
     /**

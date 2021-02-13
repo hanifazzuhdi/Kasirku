@@ -142,14 +142,13 @@
 
     <div class="content">
 
-        Nomor Telpon lupa password anda +628999981907
+        @isset($nomor, $token)
+        Nomor Telpon lupa password anda {{$nomor}}
 
         <form action="/lupa/password" method="post">
 
-            @isset($nomor, $token)
             <input name="nomor" type="hidden" value="{{$nomor}}">
             <input name="token" type="hidden" value="{{$token}}">
-            @endisset
 
             <br>
             <label for="">Password Baru: </label>
@@ -167,6 +166,9 @@
             @csrf
         </form>
         <br><br><br><br><br><br><br><br>
+
+        @endisset
+
     </div>
 
 </body>
