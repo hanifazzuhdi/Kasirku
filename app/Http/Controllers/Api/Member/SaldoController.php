@@ -81,7 +81,7 @@ class SaldoController extends Controller
         $order_id = Str::upper($request->input('bank')) . "-" . date('dmyHis') . '-' . auth('member')->id();
 
         DB::beginTransaction();
-        $res = Http::withBasicAuth('SB-Mid-server-P_D1Q6IGgH4b-_YqgY6Ybnra', '')
+        $res = Http::withBasicAuth(env('SERVER_KEY_MIDTRANS'), '')
             ->withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'

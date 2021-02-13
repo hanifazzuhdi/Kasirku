@@ -137,11 +137,33 @@
         </form>
     </div>
 
-    <div>
-        <label for="">Tanggal awal</label>
-        <input type="date">
-        <label for="">Tanggal akhir</label>
-        <input type="date">
+    <div class="content">
+
+        Nomor Telpon lupa password anda +628999981907
+
+        <form action="/lupa/password" method="post">
+
+            @isset($nomor, $token)
+            <input name="nomor" type="hidden" value="{{$nomor}}">
+            <input name="token" type="hidden" value="{{$token}}">
+            @endisset
+
+            <br>
+            <label for="">Password Baru: </label>
+            <br>
+            <input type="text" name="password">
+
+            <br><br>
+            <label for="">Konfirmasi Password: </label>
+            <br>
+            <input type="text" name="password_confirmation">
+
+            <br><br>
+            <button type="submit">Submit</button>
+
+            @csrf
+        </form>
+        <br><br><br><br><br><br><br><br>
     </div>
 
 </body>

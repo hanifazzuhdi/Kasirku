@@ -80,6 +80,9 @@ Route::group(['namespace' => 'Auth'], function () {
     // Verifikasi OTP
     Route::post('/verify', 'VerificationController@verify');
     Route::post('/resend', 'VerificationController@resend');
+
+    // forgot password
+    Route::post('/forgot-password', 'ForgotPasswordController@forgot');
 });
 
 
@@ -124,7 +127,6 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     // pembelian
     Route::get('/pembelian', 'PembelianController@index');
     Route::post('/add-pembelian', 'PembelianController@store');
-    Route::post('/post-pembelian', 'PembelianController@postPembelian');
     Route::post('/update-pembelian/{id}', 'PembelianController@updateStatus');
 });
 
