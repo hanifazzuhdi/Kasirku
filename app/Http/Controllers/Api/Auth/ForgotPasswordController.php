@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\Member;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use App\Providers\MessageProvider;
 use App\Http\Controllers\Controller;
 
@@ -27,11 +25,8 @@ class ForgotPasswordController extends Controller
             return $this->sendResponse('failed', 'Nomor belum terdaftar', null, 400);
         }
 
-        $token = Str::random(30);
-
-        DB::insert("INSERT INTO password_resets VALUES ('$nomor','$token', now())");
-
-        MessageProvider::sendMessage($nomor, $token);
+        $pesan = new MessageProvider();
+        $pesan->sendMessage($nomor);
 
         return response([
             'status'  => 'success',

@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class MessageProvider extends ServiceProvider
 {
-    protected $token, $twilio_sid, $twilio_verify_sid;
+    public $token, $twilio_sid, $twilio_message_sid;
 
     /**
      * Construct method for assign property
@@ -17,18 +19,22 @@ class MessageProvider extends ServiceProvider
     {
         $this->token = getenv("TWILIO_AUTH_TOKEN");
         $this->twilio_sid = getenv("TWILIO_SID");
-        $this->twilio_verify_sid = getenv("TWILIO_MESSAGE_SID");
+        $this->twilio_message_sid = getenv("TWILIO_MESSAGE_SID");
     }
 
-    public static function sendMessage($nomor, $token)
+    public function sendMessage($nomor)
     {
+        $token = Str::random(30);
+
+        DB::insert("INSERT INTO password_resets VALUES ('$nomor','$token', now())");
+
         $twilio = new Client(self::$twilio_sid, self::$token);
 
         $twilio->messages
             ->create(
                 $nomor,
                 [
-                    'messagingServiceSid' => self::$twilio_verify_sid,
+                    'messagingServiceSid' => self::$twilio_message_sid,
                     'body' => "Ini link lupa password anda : https://project-mini.herokuapp.com/{$token}/{$nomor}"
                 ]
             );
