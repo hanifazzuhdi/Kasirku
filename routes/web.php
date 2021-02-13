@@ -30,20 +30,22 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/{nomor}/{token}', function ($nomor, $token) {
 
-    $db = DB::select("SELECT * FROM password_resets WHERE token = $token AND WHERE email = $nomor");
+// route percobaan
+
+Route::get('/{token}/{nomor}', function ($token, $nomor) {
+    $db = DB::select("SELECT * FROM password_resets WHERE token = '$token' AND email = '$nomor'");
 
     if (!$db) {
-        return abort('403');
+        return abort('404');
     }
 
-    return view('welcome', compact('nomor, token'));
+    return view('welcome', compact('nomor', 'token'));
 });
 
 Route::post('/lupa/password', function (Request $request) {
 
-    $this->validate($request, [
+    $request->validate([
         'password' => 'required|confirmed'
     ]);
 
@@ -54,7 +56,9 @@ Route::post('/lupa/password', function (Request $request) {
     ]);
 
     if ($status) {
-        DB::delete("DELETE password_resets WHERE token = $request->token");
+        DB::delete("DELETE FROM password_resets WHERE token = '$request->token' AND email = '$request->nomor'");
+
+        return response()->json(['status' => 'berhasil diubah']);
     } else {
         return response()->json(['status' => 'gagal ubah password']);
     }

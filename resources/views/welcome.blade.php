@@ -94,6 +94,7 @@
                     <td>bank</td>
                     <td>status</td>
                 </tr>
+                @isset($datas)
                 @foreach ($datas as $data)
                 <tr>
                     <td>{{$data->order_id}}</td>
@@ -109,6 +110,8 @@
                     </td>
                 </tr>
                 @endforeach
+                @endisset
+
             </table>
 
         </div>
@@ -151,12 +154,12 @@
             <br>
             <label for="">Password Baru: </label>
             <br>
-            <input type="text" name="password">
+            <input type="password" name="password">
 
             <br><br>
             <label for="">Konfirmasi Password: </label>
             <br>
-            <input type="text" name="password_confirmation">
+            <input type="password" name="password_confirmation">
 
             <br><br>
             <button type="submit">Submit</button>

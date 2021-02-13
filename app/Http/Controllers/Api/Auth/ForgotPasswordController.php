@@ -43,7 +43,7 @@ class ForgotPasswordController extends Controller
             return $this->sendResponse('failed', 'Nomor belum terdaftar', null, 400);
         }
 
-        $token = \Str::random(20);
+        $token = \Str::random(30);
 
         DB::insert("INSERT INTO password_resets VALUES ('$nomor','$token', now())");
 
@@ -51,16 +51,16 @@ class ForgotPasswordController extends Controller
 
         $twilio->messages
             ->create(
-                '+628999981907',
+                $nomor,
                 [
                     'messagingServiceSid' => $this->twilio_verify_sid,
-                    'body' => "Ini link lupa password anda : https://project-mini.herokuapp.com/{$nomor}/{$token}"
+                    'body' => "Ini link lupa password anda : https://project-mini.herokuapp.com/{$token}/{$nomor}"
                 ]
             );
 
         return response([
             'status'  => 'success',
-            'message' => 'OTP berhasil dikirim ulang',
+            'message' => 'Link ubah password berhasil dikirim',
             'data'    => $nomor
         ], 201);
     }
