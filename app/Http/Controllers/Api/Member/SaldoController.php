@@ -81,7 +81,6 @@ class SaldoController extends Controller
         return $this->sendResponse('success', 'Transaksi berhasil, saldo ditambahkan', $request->input('jumlah'), 200);
     }
 
-
     /**
      * Method for add saldo via payments
      *

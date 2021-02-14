@@ -82,9 +82,13 @@ class BarangController extends Controller
      * Api Hapus barang
      *
      */
-    public function delete(Request $request)
+    public function delete($id)
     {
-        //
+        $data = Barang::find($id);
+
+        $data->delete();
+
+        return $this->sendResponse('success', 'Barang berhasil dihapus', $data->only('uid', 'nama_barang'), 202);
     }
 
     /**

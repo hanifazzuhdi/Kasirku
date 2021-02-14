@@ -19,6 +19,7 @@ class CreateLogsTable extends Migration
             $table->string('role');
             $table->string('device');
             $table->string('activity');
+            $table->string('pesan');
             $table->timestamps();
         });
     }

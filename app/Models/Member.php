@@ -19,6 +19,13 @@ class Member extends Authenticatable implements JWTSubject
         'password', 'updated_at', 'created_at'
     ];
 
+    // Scope
+    public function ScopeMemberActive()
+    {
+        $this->where('is_verified', 1)->get();
+    }
+
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

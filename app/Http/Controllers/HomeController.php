@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $member = Member::MemberActive()->count();
+
+        $logs = Log::orderBy('id', 'DESC')->get();
+
+        return view('dashboard.home', compact('member', 'logs'));
     }
 }
