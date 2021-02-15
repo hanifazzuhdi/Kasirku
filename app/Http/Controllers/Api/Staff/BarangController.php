@@ -30,7 +30,7 @@ class BarangController extends Controller
      */
     public function show($uid)
     {
-        $barang = Barang::where('uid', $uid)->first();
+        $barang = Barang::where('uid', $uid)->firstOrFail();
 
         return $this->sendResponse('success', 'data barang berhasil dimuat', $barang, 200);
     }
@@ -73,22 +73,30 @@ class BarangController extends Controller
      * Api Update barang
      *
      */
-    public function update(Request $request)
+    public function update(Barang $barang, Request $request)
     {
-        //
+        $barang->update([
+            'nama_barang' => $request->input('nama_barang') ?? $barang->nama_barang,
+            'harga_beli' => $request->input('harga_beli') ?? $barang->harga_beli,
+            'harga_jual' => $request->input('harga_jual') ?? $barang->harga_jual,
+            'kategori' => $request->input('kategori') ?? $barang->kategori,
+            'merek' => $request->input('merek') ?? $barang->merek,
+            'stok' => $request->input('stok') ?? $barang->stok,
+            'diskon' => $request->input('diskon') ?? $barang->diskon,
+        ]);
+
+        return $this->sendResponse('success', 'Data barang berhasil diupdate', $barang, 202);
     }
 
     /**
      * Api Hapus barang
      *
      */
-    public function delete($id)
+    public function delete(Barang $barang)
     {
-        $data = Barang::find($id);
+        $barang->delete();
 
-        $data->delete();
-
-        return $this->sendResponse('success', 'Barang berhasil dihapus', $data->only('uid', 'nama_barang'), 202);
+        return $this->sendResponse('success', 'Barang berhasil dihapus', $barang->only('uid', 'nama_barang'), 202);
     }
 
     /**

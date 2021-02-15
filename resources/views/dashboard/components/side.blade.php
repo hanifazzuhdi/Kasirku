@@ -14,49 +14,49 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{{asset('backend/examples/user.html')}}">
                     <i class="material-icons">person</i>
-                    <p>User Profile</p>
+                    <p>Laporan</p>
                 </a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="{{asset('backend/examples/tables.html')}}">
                     <i class="material-icons">content_paste</i>
-                    <p>Table List</p>
+                    <p>Member</p>
                 </a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="{{asset('backend/examples/typography.html')}}">
                     <i class="material-icons">library_books</i>
-                    <p>Typography</p>
-                </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{asset('backend/examples/icons.html')}}">
-                    <i class="material-icons">bubble_chart</i>
-                    <p>Icons</p>
+                    <p>Karyawan</p>
                 </a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="{{asset('backend/examples/map.html')}}">
                     <i class="material-icons">location_ons</i>
-                    <p>Maps</p>
+                    <p>Supplier</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{asset('backend/examples/icons.html')}}">
+                    <i class="material-icons">bubble_chart</i>
+                    <p>Produk</p>
                 </a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="{{asset('backend/examples/notifications.html')}}">
                     <i class="material-icons">notifications</i>
-                    <p>Notifications</p>
+                    <p>Aktivitas Karyawan</p>
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="{{asset('backend/examples/rtl.html')}}">
-                    <i class="material-icons">language</i>
-                    <p>RTL Support</p>
+                <a class="nav-link" href="{{asset('backend/examples/notifications.html')}}">
+                    <i class="material-icons">notifications</i>
+                    <p>Settings</p>
                 </a>
             </li>
             <li class="nav-item active-pro ">
                 <a class="nav-link" href="{{asset('backend/examples/upgrade.html')}}">
-                    <i class="material-icons">unarchive</i>
-                    <p>Upgrade to PRO</p>
+                    <p>User Logged In</p>
+                    <p> {{ Str::upper( Auth::user()->nama ) }} </p>
                 </a>
             </li>
         </ul>

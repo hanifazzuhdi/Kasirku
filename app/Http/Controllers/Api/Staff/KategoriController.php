@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 
@@ -32,5 +33,17 @@ class KategoriController extends Controller
         $data = Kategori::create($data);
 
         return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
+    }
+
+    /**
+     * Delete Kategori
+     *
+     */
+    public function delete($id)
+    {
+        $barang = Barang::find($id);
+        $barang->delete();
+
+        return $this->sendResponse('success', 'Kategori berhasil dihapus', $barang, 200);
     }
 }

@@ -2,7 +2,6 @@
 
 use App\Models\Member;
 use App\Models\Payment;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

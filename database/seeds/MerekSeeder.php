@@ -17,7 +17,7 @@ class MerekSeeder extends Seeder
             'nama_supplier' => 'PT.Indomie Indonesia'
         ]);
 
-        $mereks = ['Detol', 'Indomie', 'Indomilk'];
+        $mereks = ['Tanpa Merek', 'Detol', 'Indomie', 'Indomilk'];
 
         for ($i = 0; $i < count($mereks); $i++) {
             Merek::create([

@@ -116,13 +116,18 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     // kategori
     Route::get('/kategori', 'KategoriController@index');
     Route::post('/add-kategori', 'KategoriController@store');
+    Route::delete('/hapus-kategori/{id}', 'KategoriController@delete');
+
+    // Merek
+    Route::get('/merek', 'MerekController@index');
+    Route::post('/add-merek', 'MerekController@store');
 
     // barang
     Route::get('/barang', 'BarangController@index');
     Route::get('/barang/{uid}', 'BarangController@show');
     Route::post('/add-barang', 'BarangController@store');
-    Route::post('/update-barang/{id}', 'BarangController@update');
-    Route::delete('/delete-barang/{id}', 'BarangController@delete');
+    Route::post('/update-barang/{barang}', 'BarangController@update');
+    Route::delete('/delete-barang/{barang}', 'BarangController@delete');
 
     // pembelian
     Route::get('/pembelian', 'PembelianController@index');
