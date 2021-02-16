@@ -10,9 +10,9 @@
                     <span class="badge filter badge-purple" data-color="purple"></span>
                     <span class="badge filter badge-azure" data-color="azure"></span>
                     <span class="badge filter badge-green" data-color="green"></span>
-                    <span class="badge filter badge-warning" data-color="orange"></span>
+                    <span class="badge filter badge-warning active" data-color="orange"></span>
                     <span class="badge filter badge-danger" data-color="danger"></span>
-                    <span class="badge filter badge-rose active" data-color="rose"></span>
+                    <span class="badge filter badge-rose" data-color="rose"></span>
                 </div>
                 <div class="clearfix"></div>
             </a>

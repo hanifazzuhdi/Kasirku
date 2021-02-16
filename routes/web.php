@@ -27,11 +27,22 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route General
+Route::group(['middleware' => 'auth', 'namespace' => 'Web'], function () {
+    Route::get('/dashboard', 'HomeController@index')->name('home');
+});
+
+// Route Admin
+Route::group(['middleware' => 'auth', 'namespace' => 'Web\Admin', 'prefix' => 'admin'], function () {
+    // Member
+    Route::get('/daftar-member', 'MemberController@index')->name('admin.member');
+    Route::get('/member/{member}', 'MemberController@show')->name('admin.member.show');
+    Route::post('/daftar-member', 'MemberController@cari')->name('admin.member.cari');
+    Route::delete('/member/delete/{id}', 'MemberController@destroy');
+});
 
 
 // route percobaan
-
 Route::get('/{token}/{nomor}', function ($token, $nomor) {
     $db = DB::select("SELECT * FROM password_resets WHERE token = '$token' AND email = '$nomor'");
 

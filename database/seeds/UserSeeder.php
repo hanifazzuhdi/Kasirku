@@ -50,12 +50,12 @@ class UserSeeder extends Seeder
 
         Member::create([
             'nomor'             => '+628999981907',
-            'kode_member'       => '0008999981907',
+            'kode_member'       => '000999981907',
             'nama'              => 'Usman Among Us',
             'password'          => Hash::make('password'),
             'role_id'           => 4,
             'is_verified'       => 1,
-            'qr_code'           => 'https://res.cloudinary.com/hanif-it/image/upload/v1613016652/kip3hduknuulkidlqpwi.png',
+            'qr_code'           => 'https://res.cloudinary.com/hanif-it/image/upload/v1613363169/x0auxiva7lluxhmpudem.png',
             'created_at'        => now()
         ]);
 

@@ -5,8 +5,8 @@
         </a></div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item active  ">
-                <a class="nav-link" href="{{asset('backend/examples/dashboard.html')}}">
+            <li class="nav-item{{request()->is('dashboard') ? ' active' : ''}}">
+                <a class="nav-link" href="{{route('home')}}">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
                 </a>
@@ -17,8 +17,8 @@
                     <p>Laporan</p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{asset('backend/examples/tables.html')}}">
+            <li class="nav-item{{request()->is('admin/daftar-member') ? ' active' : ''}} ">
+                <a class="nav-link" href="{{route('admin.member')}}">
                     <i class="material-icons">content_paste</i>
                     <p>Member</p>
                 </a>
@@ -44,13 +44,13 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{{asset('backend/examples/notifications.html')}}">
                     <i class="material-icons">notifications</i>
-                    <p>Aktivitas Karyawan</p>
+                    <p>Pengeluaran</p>
                 </a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="{{asset('backend/examples/notifications.html')}}">
                     <i class="material-icons">notifications</i>
-                    <p>Settings</p>
+                    <p>Aktivitas Karyawan</p>
                 </a>
             </li>
             <li class="nav-item active-pro ">

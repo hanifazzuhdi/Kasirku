@@ -399,6 +399,7 @@
                     </div>
 
                     <div class="card-body list-group">
+                        @if (count($logs) >= 1)
                         @for ($i = 0; $i <= 2; $i++) <a href="#"
                             class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
@@ -415,6 +416,7 @@
                     <div class="card-footer d-flex justify-content-end mr-4">
                         <a href="#"> See all </a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
