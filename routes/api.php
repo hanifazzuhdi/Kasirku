@@ -147,7 +147,8 @@ Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
     Route::post('/add-keranjang', 'KeranjangController@store');
     Route::delete('/hapus/keranjang/{keranjang}', 'KeranjangController@destroy');
 
-    Route::post('/post-transaksi', 'TransaksiController@store');
+    Route::post('/add-transaksi', 'TransaksiController@store');
+    Route::delete('/delete-transaksi', 'TransaksiController@destroy');
 });
 
 

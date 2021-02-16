@@ -17,7 +17,7 @@ class CreateTransaksisTable extends Migration
             $table->id();
             $table->integer('harga_total')->nullable();
             $table->integer('dibayar')->nullable();
-            $table->integer('kembalian')->nullable();
+            $table->integer('kembalian')->nullable()->default(0);
             $table->string('kode_member')->nullable()->default('pembeli');
             $table->tinyInteger('status')->default(0);
             $table->unsignedBigInteger('kasir_id');

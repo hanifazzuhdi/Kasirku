@@ -13,7 +13,7 @@
                     <div class="p-4 text-center border">
                         <img width="120" height="120" id="qr_code" src="{{$datas[0]->qr_code}}" alt="QR Code">
 
-                        <h3 class="mt-3 font-weight-bold" id="kode_member">000999981907</h3>
+                        <h3 class="mt-3 font-weight-bold" id="kode_member">00000000000</h3>
                     </div>
                     <div class="border p-4 mt-1">
                         <div class="container">
@@ -22,29 +22,31 @@
                                     <div class="col-md-6">
                                         <label for="">Nama : </label>
                                         <br>
-                                        <input id="nama" class="form-control" type="text" value="Hanif" disabled>
+                                        <input id="nama" class="form-control" type="text" value="Nama" disabled>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="">Nomor : </label>
                                         <br>
-                                        <input id="nomor" class="form-control" type="text" value="08999981907" disabled>
+                                        <input id="nomor" class="form-control" type="text" value="Nomor" disabled>
                                     </div>
                                 </div>
                                 <div class="row mt-5">
                                     <div class="col-md-4">
                                         <label for="">Status : </label>
                                         <br>
-                                        <input id="status" class="form-control" type="text" value="Aktif" disabled>
+                                        <input id="status" class="form-control" type="text" value="Status" disabled>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="">Created At : </label>
                                         <br>
-                                        <input id="created_at" class="form-control" type="text" value="Aktif" disabled>
+                                        <input id="created_at" class="form-control" type="text" value="Created At"
+                                            disabled>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="">Updated At : </label>
                                         <br>
-                                        <input id="updated_at" class="form-control" type="text" value="Aktif" disabled>
+                                        <input id="updated_at" class="form-control" type="text" value="Updated At"
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
