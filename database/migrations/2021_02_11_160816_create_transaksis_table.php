@@ -15,9 +15,9 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->integer('harga_total');
-            $table->integer('dibayar');
-            $table->integer('kembalian');
+            $table->integer('harga_total')->nullable();
+            $table->integer('dibayar')->nullable();
+            $table->integer('kembalian')->nullable();
             $table->string('kode_member')->nullable()->default('pembeli');
             $table->tinyInteger('status')->default(0);
             $table->unsignedBigInteger('kasir_id');

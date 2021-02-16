@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Kasir\TransaksiController;
 use App\Models\Barang;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -142,7 +143,11 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
  */
 Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
     // penjualan
-    Route::post('/add-transaksi', 'TransaksiController@store');
+    Route::get('/keranjang', 'KeranjangController@index');
+    Route::post('/add-keranjang', 'KeranjangController@store');
+    Route::delete('/hapus/keranjang/{keranjang}', 'KeranjangController@destroy');
+
+    Route::post('/post-transaksi', 'TransaksiController@store');
 });
 
 
