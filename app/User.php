@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Transaksi;
 use App\Traits\FormatDate;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -27,7 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'avatar',
         'remember_token',
         'role_id',
-        'is_verified'
+        'is_verified',
+        'updated_at', 'created_at', 'email_verified_at'
     ];
 
     /**
@@ -36,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'updated_at', 'created_at', 'email_verified_at'
+        'password', 'remember_token'
     ];
 
     /**
@@ -58,13 +60,14 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return $this->getKey();
     }
 
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    // Relation
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'kasir_id');
     }
 }

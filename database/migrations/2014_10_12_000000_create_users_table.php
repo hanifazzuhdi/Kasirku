@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('umur')->nullable();
             $table->string('alamat')->nullable();
-            $table->string('avatar')->nullable()->default('https://ibb.co/94HCy9z');
+            $table->string('avatar')->nullable()->default('https://i.ibb.co/Smw9VXW/Pngtree-users-vector-3725294.png');
             $table->unsignedBigInteger('role_id')->nullable();
             $table->text('remember_token')->nullable();
             $table->timestamps();

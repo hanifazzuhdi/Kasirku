@@ -47,8 +47,6 @@
     <script src="{{asset('backend/assets/js/core/bootstrap-material-design.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
 
-    <!-- Plugin for the momentJs  -->
-    {{-- <script src="{{asset('backend/assets/js/plugins/moment.min.js')}}"></script> --}}
     <!-- Forms Validations Plugin -->
     <script src="{{asset('backend/assets/js/plugins/jquery.validate.min.js')}}"></script>
     <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->

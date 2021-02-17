@@ -29,7 +29,7 @@ class KeranjangController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::where('kasir_id', Auth::id())->where('status', 0)->first();
+        $transaksi = Transaksi::transaksiAktif()->first();
 
         if (empty($transaksi)) {
             return $this->sendResponse('failed', 'Data keranjang masih kosong', null, 400);
@@ -52,14 +52,14 @@ class KeranjangController extends Controller
 
         DB::beginTransaction();
         // logic transaksi
-        $cek_transaksi = Transaksi::where('kasir_id', Auth::id())->where('status', 0)->first();
+        $cek_transaksi = Transaksi::transaksiAktif()->first();
 
         if (empty($cek_transaksi)) {
             $transaksi = Transaksi::create([
                 'kasir_id' => Auth::id(),
             ]);
         } else {
-            $transaksi = Transaksi::transaksiAktif();
+            $transaksi = Transaksi::transaksiAktif()->first();
         }
 
         // logic keranjang
@@ -99,7 +99,6 @@ class KeranjangController extends Controller
         return $this->sendResponse('success', 'Berhasil tambah ke keranjang', $keranjang, 200);
     }
 
-
     /**
      * Untuk hapus data 1 kolom keranjang
      *
@@ -111,7 +110,7 @@ class KeranjangController extends Controller
         $keranjang->delete();
 
         // kurangi total harga
-        $transaksi = Transaksi::transaksiAktif();
+        $transaksi = Transaksi::transaksiAktif()->first();
 
         $transaksi->update([
             'harga_total' => $transaksi->harga_total - $total

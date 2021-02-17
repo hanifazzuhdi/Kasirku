@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\Pimpinan;
 
-use App\Models\Barang;
+use App\Models\{Barang, Pembelian, Transaksi};
+
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LaporanKasir;
 use App\Http\Resources\StokResource;
-use App\Models\Pembelian;
 
 class LaporanController extends Controller
 {
@@ -28,24 +30,45 @@ class LaporanController extends Controller
     {
         $data = Pembelian::get();
 
-        return $this->sendResponse('success', 'data berhasil ditampilakan', $data, 200);
+        if (count($data)  == null) {
+            return $this->sendResponse('failed', 'Data Pembelian Kosong', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data berhasil ditampilakan', $data, 200);
     }
 
     /**
-     * Laporan Pembelian
+     * Laporan Pembelian berdasarkan antara tanggal
      *
      */
-    public function pembelian($tanggalAwal, $tanggalAkhir)
+    public function pembelian(Request $request)
     {
-        $tanggalAwal = "2021-02-12 ";
-        $tanggalAkhir = "2021-02-13 ";
+        $tanggalAwal = $request->input('tAwal');
+        $tanggalAkhir = $request->input('tAkhir');
 
-        $data = Pembelian::whereBetween('created_at', [$tanggalAwal . '00:00:00', $tanggalAkhir . '23:59:59'])->get();
+        $data = Pembelian::whereBetween('created_at', [$tanggalAwal . ' 00:00:00', $tanggalAkhir . ' 23:59:59'])->get();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'data berhasil ditampilkan',
-            'data' => $data
-        ]);
+        if (count($data)  == null) {
+            return $this->sendResponse('failed', 'Data Pembelian Kosong', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data berhasil ditampilakan', $data, 200);
+    }
+
+    /**
+     * Laporan Penjualan
+     *
+     */
+    public function allPenjualan()
+    {
+        $datas = Transaksi::with('kasir')->where('status', 1)->get();
+
+        if (count($datas) == null) {
+            return $this->sendResponse('failed', 'Data penjualan Kosong', null, 404);
+        }
+
+        $data = LaporanKasir::collection($datas);
+
+        return $this->sendResponse('success', 'Data penjualan berhasil ditampilakan', $data, 200);
     }
 }

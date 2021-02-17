@@ -24,7 +24,7 @@ class CreateKeranjangsTable extends Migration
             $table->unsignedBigInteger('transaksi_id');
             $table->timestamps();
 
-            $table->foreign('transaksi_id')->references('id')->on('transaksis');
+            $table->foreign('transaksi_id')->references('id')->on('transaksis')->onDelete('cascade');
         });
     }
 

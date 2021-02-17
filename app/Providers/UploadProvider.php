@@ -27,7 +27,7 @@ class UploadProvider extends ServiceProvider
         if ($type == 'register') {
             $image = DNS2DFacade::getBarcodePNG($request, 'QRCODE');
         } else {
-            $image = DNS1DFacade::getBarcodePNG($request, 'C39', 1, 34);
+            $image = DNS1DFacade::getBarcodePNG($request, 'C39', 1, 34, array(1, 1, 1), true);
         }
 
         $response = cloudinary()->upload("data:image/png;base64,$image")->getSecurePath();

@@ -29,12 +29,12 @@ class MemberController extends Controller
     {
         if (!$request->input('datefilter')) {
             $datas = Member::where('kode_member', 'LIKE', "%$request->search%")->paginate(10);
+        } else {
+            $tanggal = $request->datefilter;
+            $tHasil = explode(' - ', $tanggal);
+
+            $datas = Member::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->paginate(10);
         }
-
-        $tanggal = $request->datefilter;
-        $tHasil = explode(' - ', $tanggal);
-
-        $datas = Member::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->paginate(10);
 
         return view('dashboard.pages.admin.member', compact('datas'));
     }

@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="p-4 text-center border">
-                        <img width="120" height="120" id="qr_code" src="{{$datas[0]->qr_code}}" alt="QR Code">
+                        <img width="120" height="120" id="qr_code" src="" alt="QR Code">
 
                         <h3 class="mt-3 font-weight-bold" id="kode_member">00000000000</h3>
                     </div>

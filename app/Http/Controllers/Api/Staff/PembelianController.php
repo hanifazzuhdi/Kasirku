@@ -18,7 +18,7 @@ class PembelianController extends Controller
         $data = Pembelian::get();
 
         if (count($data) == null) {
-            return $this->sendResponse('success', 'data pembelian kosong', null, 200);
+            return $this->sendResponse('failed', 'data pembelian kosong', null, 404);
         }
 
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);

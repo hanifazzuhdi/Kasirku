@@ -17,14 +17,14 @@
                     <p>Laporan</p>
                 </a>
             </li>
-            <li class="nav-item{{request()->is('admin/daftar-member') ? ' active' : ''}} ">
+            <li class="nav-item{{request()->is('admin/daftar-member') ? ' active' : ''}}">
                 <a class="nav-link" href="{{route('admin.member')}}">
                     <i class="material-icons">content_paste</i>
                     <p>Member</p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{asset('backend/examples/typography.html')}}">
+            <li class="nav-item{{request()->is('admin/daftar-karyawan') ? ' active' : ''}}">
+                <a class="nav-link" href="{{route('admin.karyawan')}}">
                     <i class="material-icons">library_books</i>
                     <p>Karyawan</p>
                 </a>

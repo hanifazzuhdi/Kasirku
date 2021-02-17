@@ -98,7 +98,11 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
 
     //pembelian
     Route::get('/laporan-pembelian', 'LaporanController@allPembelian');
-    Route::get('/laporan-pembelian/{tanggalAwal}/{tanggalAkhir}', 'LaporanController@pembelian');
+    Route::post('/laporan-pembelian', 'LaporanController@pembelian');
+
+    // penjualan
+    Route::get('/laporan-penjualan', 'LaporanController@allPenjualan');
+    Route::post('/laporan-penjualan', 'LaporanController@penjualan');
 });
 
 
