@@ -71,4 +71,29 @@ class LaporanController extends Controller
 
         return $this->sendResponse('success', 'Data penjualan berhasil ditampilakan', $data, 200);
     }
+
+    /**
+     *  Laporan penjualan berdasarkan tanggal
+     *
+     */
+
+    public function penjualan(Request $request)
+    {
+        $tanggalAwal = $request->input('tAwal');
+        $tanggalAkhir = $request->input('tAkhir');
+
+        $datas = Transaksi::whereBetween('created_at', [$tanggalAwal . ' 00:00:00', $tanggalAkhir . ' 23:59:59'])->get();
+
+        if (count($datas)  == null) {
+            return $this->sendResponse('failed', 'Data Penjualan Kosong', null, 404);
+        }
+
+        $data = LaporanKasir::collection($datas);
+
+        return $this->sendResponse('success', 'Data penjualan berhasil ditampilakan', $data, 200);
+    }
+
+    public function keuntungan()
+    {
+    }
 }

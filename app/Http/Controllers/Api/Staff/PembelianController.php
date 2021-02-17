@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Staff;
 
-use App\Http\Controllers\Controller;
-use App\Models\Member;
-use App\Models\Pembelian;
+use App\Models\{Member, Pembelian, Pengeluaran};
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PembelianController extends Controller
 {
@@ -33,11 +33,17 @@ class PembelianController extends Controller
         $this->validated($request);
 
         $data = Pembelian::create([
-            'supplier_id'      => $request->input('supplier'),
+            'supplier_id'   => $request->input('supplier'),
             'barang'        => $request->input('barang'),
             'harga_satuan'  => $request->input('harga_satuan'),
             'total_barang'  => $request->input('total_barang'),
             'total_harga'   => $request->input('harga_satuan') * $request->input('total_barang')
+        ]);
+
+        Pengeluaran::create([
+            'nama_pengeluaran' => "Pembelian Barang $request->barang",
+            'jumlah' => $request->input('harga_satuan') * $request->input('total_barang'),
+            'jenis' => 'Pembelian'
         ]);
 
         return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);

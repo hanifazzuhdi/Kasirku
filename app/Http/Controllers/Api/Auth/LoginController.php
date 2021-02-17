@@ -58,7 +58,7 @@ class LoginController extends Controller
         $user = Member::where('nomor', $nomor)->first();
 
         if ($user == null) {
-            return $this->sendResponse('failed', 'Akun tidak terdaftar', null, 400);
+            return $this->sendResponse('failed', 'Akun tidak terdaftar', null, 404);
         } else if ($user->is_verified == 0) {
             return $this->sendResponse('failed', 'Akun belum terverifikasi', null, 400);
         }

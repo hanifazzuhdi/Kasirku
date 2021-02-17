@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\Kasir\TransaksiController;
 use App\Models\Barang;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -100,9 +99,16 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
     Route::get('/laporan-pembelian', 'LaporanController@allPembelian');
     Route::post('/laporan-pembelian', 'LaporanController@pembelian');
 
-    // penjualan
+    // Penjualan / Pemasukan
     Route::get('/laporan-penjualan', 'LaporanController@allPenjualan');
     Route::post('/laporan-penjualan', 'LaporanController@penjualan');
+
+    // Laba Rugi
+    Route::get('/laporan/laba-rugi', 'LaporanController@keuntungan');
+
+    // Total pengeluaran => 1. pembelian 2. pengeluaran
+    Route::get('/laporan/pengeluaran', 'PengeluaranController@index');
+    Route::post('/add-pengeluaran', 'PengeluaranController@store');
 });
 
 

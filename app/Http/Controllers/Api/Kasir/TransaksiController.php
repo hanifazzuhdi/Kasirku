@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\Kasir;
 
-use App\Http\Controllers\Controller;
-use App\Models\Barang;
-use App\Models\Keranjang;
-use App\Models\Transaksi;
+use App\Models\{Barang, Keranjang, Transaksi};
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TransaksiController extends Controller
 {
