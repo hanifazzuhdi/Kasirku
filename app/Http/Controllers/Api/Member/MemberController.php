@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
+    public function index()
+    {
+        $data = auth('member')->user();
+
+        return $this->sendResponse('success', 'Data member berhasil ditampilkan', $data, 200);
+    }
+
     public function change(Request $request)
     {
         $this->validate($request, [

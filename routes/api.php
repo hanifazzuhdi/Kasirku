@@ -178,8 +178,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
  *  2. Saldo
  *
  */
-Route::group(['namespace' => 'Member'], function () {
+Route::group(['namespace' => 'Member', 'middleware' => 'jwt.auth'], function () {
     // Member
+    Route::get('/get-member', 'MemberController@index');
     Route::post('/change-password', 'MemberController@change');
 
     // Saldo

@@ -43,7 +43,12 @@ class LoginController extends Controller
 
         event(new LoginKaryawan($request->email, 'Mobile', 'Login'));
 
-        return response()->json(compact('user', 'token'));
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil Login',
+            'data' => $user->only('role_id', 'is_verified',),
+            'token' => $token
+        ]);
     }
 
     /**
@@ -76,7 +81,12 @@ class LoginController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('user', 'token'));
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil Login',
+            'data' => $user->only('role_id', 'is_verified',),
+            'token' => $token
+        ]);
     }
 
     /**
