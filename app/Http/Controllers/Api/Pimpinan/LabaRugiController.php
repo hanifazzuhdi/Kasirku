@@ -2,33 +2,49 @@
 
 namespace App\Http\Controllers\Api\Pimpinan;
 
+use App\Models\{Pembelian, Pengeluaran, Transaksi};
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Transaksi;
-use App\User;
 
 class LabaRugiController extends Controller
 {
-    public function index()
+    public function show(Request $request)
     {
+        $data = $this->validate($request, [
+            'bulan' => 'required'
+        ]);
         /**
          * Pendapatan
          * 1. Penjualan
-         * 2. laba kotor
-         *
+         * 2. Pembelian
+         * 3. laba kotor
          */
 
-        $bulan = 02;
+        $penjualan = Transaksi::whereMonth('created_at', $data['bulan'])->pluck('harga_total')->sum();
+        $pembelian = Pembelian::whereMonth('created_at', $data['bulan'])->pluck('total_harga')->sum();
 
-        $penjualan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
+        $labaKotor = $penjualan - $pembelian;
 
-        return $penjualan;
+        /**
+         * Beban Usaha
+         * 1. pengeluaran
+         */
+        $pengeluaran = Pengeluaran::whereMonth('created_at', $data['bulan'])->where('jenis', 'Pengeluaran')->pluck('jumlah')->sum();
 
-        // pengeluaran
+        // Laba/Rugi
+        $labaRugi = $labaKotor - $pengeluaran;
 
         return response()->json([
             'status' => 'success',
             'message' => 'Data Laba Rugi berhasil dimuat',
+            'data' => [
+                'penjualan' => $penjualan,
+                'pembelian_produk' => $pembelian,
+                'laba_kotor' => $labaKotor,
+                'pengeluaran' => $pengeluaran,
+                'laba_rugi' => $labaRugi
+            ],
         ]);
     }
 }

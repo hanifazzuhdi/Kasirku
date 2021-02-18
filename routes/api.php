@@ -104,7 +104,7 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
     Route::post('/laporan-penjualan', 'LaporanController@penjualan');
 
     // Laba Rugi
-    Route::get('/laporan/laba-rugi', 'LabaRugiController@index');
+    Route::post('/laporan/laba-rugi', 'LabaRugiController@show');
 
     // Total pengeluaran => 1. pembelian 2. pengeluaran
     Route::get('/laporan-pengeluaran', 'PengeluaranController@index');

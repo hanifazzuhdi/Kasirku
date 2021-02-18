@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nama');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->tinyInteger('is_verified')->default(0);
+            $table->string('is_verified')->default('1');
             $table->string('password');
             $table->integer('umur')->nullable();
             $table->string('alamat')->nullable();

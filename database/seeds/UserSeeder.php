@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'umur'              => 25,
             'alamat'            => 'Bantul Yogyakarta',
             'role_id'           => 1,
-            'is_verified'       => 1
+            'is_verified'       => '1'
         ]);
 
         User::create([
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'umur'              => 25,
             'alamat'            => 'Bantul Yogyakarta',
             'role_id'           => 2,
-            'is_verified'       => 1
+            'is_verified'       => '1'
         ]);
 
         User::create([
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
             'umur'              => 25,
             'alamat'            => 'Bantul Yogyakarta',
             'role_id'           => 3,
-            'is_verified'       => 1
+            'is_verified'       => '1'
         ]);
 
         Member::create([
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
             'nama'              => 'Usman Among Us',
             'password'          => Hash::make('password'),
             'role_id'           => 4,
-            'is_verified'       => 1,
+            'is_verified'       => '1',
             'qr_code'           => 'https://res.cloudinary.com/hanif-it/image/upload/v1613363169/x0auxiva7lluxhmpudem.png',
             'created_at'        => now()
         ]);
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
             'nama'              => 'Zen',
             'password'          => Hash::make('password'),
             'role_id'           => 4,
-            'is_verified'       => 1,
+            'is_verified'       => '1',
             'qr_code'           => 'https://res.cloudinary.com/hanif-it/image/upload/v1613027643/msconyaleyz8txfbflsg.png',
             'created_at'        => now()
         ]);
