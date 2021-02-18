@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\Pimpinan;
 
-use App\Http\Controllers\Controller;
-use App\Models\Pembelian;
-use App\Models\Pengeluaran;
+use App\Models\{Pembelian, Pengeluaran};
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class PengeluaranController extends Controller
 {
@@ -22,6 +23,24 @@ class PengeluaranController extends Controller
         }
 
         return $this->sendResponse('success', 'Data Pengeluaran berhasil ditampilakan', $datas, 200);
+    }
+
+    /**
+     * Laporan Pengeluaran
+     *
+     */
+    public function show(Request $request)
+    {
+        $tanggalAwal = $request->input('tAwal');
+        $tanggalAkhir = $request->input('tAkhir');
+
+        $data = Pengeluaran::antara($tanggalAwal, $tanggalAkhir)->get();
+
+        if (count($data)  == null) {
+            return $this->sendResponse('failed', 'Data Pembelian Kosong', null, 404);
+        }
+
+        return $this->sendResponse('success', 'Data berhasil ditampilakan', $data, 200);
     }
 
     /**

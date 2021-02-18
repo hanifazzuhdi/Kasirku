@@ -46,7 +46,7 @@ class LaporanController extends Controller
         $tanggalAwal = $request->input('tAwal');
         $tanggalAkhir = $request->input('tAkhir');
 
-        $data = Pembelian::whereBetween('created_at', [$tanggalAwal . ' 00:00:00', $tanggalAkhir . ' 23:59:59'])->get();
+        $data = Pembelian::antara($tanggalAwal, $tanggalAkhir)->get();
 
         if (count($data)  == null) {
             return $this->sendResponse('failed', 'Data Pembelian Kosong', null, 404);
@@ -82,7 +82,7 @@ class LaporanController extends Controller
         $tanggalAwal = $request->input('tAwal');
         $tanggalAkhir = $request->input('tAkhir');
 
-        $datas = Transaksi::whereBetween('created_at', [$tanggalAwal . ' 00:00:00', $tanggalAkhir . ' 23:59:59'])->get();
+        $datas = Transaksi::antara($tanggalAwal, $tanggalAkhir)->get();
 
         if (count($datas)  == null) {
             return $this->sendResponse('failed', 'Data Penjualan Kosong', null, 404);
@@ -91,9 +91,5 @@ class LaporanController extends Controller
         $data = LaporanKasir::collection($datas);
 
         return $this->sendResponse('success', 'Data penjualan berhasil ditampilakan', $data, 200);
-    }
-
-    public function keuntungan()
-    {
     }
 }

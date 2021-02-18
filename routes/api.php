@@ -99,15 +99,16 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
     Route::get('/laporan-pembelian', 'LaporanController@allPembelian');
     Route::post('/laporan-pembelian', 'LaporanController@pembelian');
 
-    // Penjualan / Pemasukan
+    // Penjualan / pemasukan
     Route::get('/laporan-penjualan', 'LaporanController@allPenjualan');
     Route::post('/laporan-penjualan', 'LaporanController@penjualan');
 
     // Laba Rugi
-    Route::get('/laporan/laba-rugi', 'LaporanController@keuntungan');
+    Route::get('/laporan/laba-rugi', 'LabaRugiController@index');
 
     // Total pengeluaran => 1. pembelian 2. pengeluaran
-    Route::get('/laporan/pengeluaran', 'PengeluaranController@index');
+    Route::get('/laporan-pengeluaran', 'PengeluaranController@index');
+    Route::post('/laporan-pengeluaran', 'PengeluaranController@show');
     Route::post('/add-pengeluaran', 'PengeluaranController@store');
 });
 
@@ -163,7 +164,6 @@ Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
 
 
 /** Staf + Kasir
- *
  *
  */
 Route::group(['middleware' => ['jwt.auth']], function () {

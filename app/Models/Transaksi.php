@@ -21,6 +21,11 @@ class Transaksi extends Model
         return $this->where('kasir_id', Auth::id())->where('status', 0);
     }
 
+    public function scopeAntara($query, $tanggalAwal, $tanggalAkhir)
+    {
+        return $query->whereBetween('created_at', [$tanggalAwal . ' 00:00:00', $tanggalAkhir . ' 23:59:59']);
+    }
+
     // relation
     public function kasir()
     {

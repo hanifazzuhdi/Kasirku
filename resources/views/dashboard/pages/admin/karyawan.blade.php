@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['title' => 'Daftar Karyawan | tokoku.com'])
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
