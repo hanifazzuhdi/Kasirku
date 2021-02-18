@@ -32,14 +32,18 @@
         <div class="main-panel">
             @include('dashboard.components.top')
 
-            @yield('content')
+            <div class="content">
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+            </div>
 
             @include('dashboard.components.footer')
         </div>
 
     </div>
     <div class="fixed-plugin">
-        @include('dashboard.components.config')
+        {{-- @include('dashboard.components.config') --}}
     </div>
     <!--   Core JS Files   -->
     <script src="{{asset('backend/assets/js/core/jquery.min.js')}}"></script>

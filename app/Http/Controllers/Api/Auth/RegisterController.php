@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\Member;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
-use App\Providers\UploadProvider;
 use Twilio\Rest\Client;
+use Illuminate\Http\Request;
+use App\Providers\UploadProvider;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\{DB, Hash};
 
 class RegisterController extends Controller
 {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Staff;
 
 use App\Models\Supplier;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SupplierResource;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -14,7 +15,8 @@ class SupplierController extends Controller
          * Method for get all data supplier
          *
          */
-        $data = Supplier::all();
+
+        $data = SupplierResource::collection(Supplier::get());
 
         if (count($data) == null) {
             return $this->sendResponse('success', 'Belum ada supplier', null, 200);
@@ -35,6 +37,6 @@ class SupplierController extends Controller
 
         $data = Supplier::create($data);
 
-        return $this->sendResponse('success', 'data berhasil dibuat', $data, 202);
+        return $this->sendResponse('success', 'data berhasil dibuat', $data->only('id', 'nama_supplier', 'created_at'), 201);
     }
 }

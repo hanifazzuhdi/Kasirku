@@ -14,7 +14,7 @@ class MerekSeeder extends Seeder
     public function run()
     {
         Supplier::create([
-            'nama_supplier' => 'PT.Indomie Indonesia'
+            'nama_supplier' => 'PT. Indomie Indonesia'
         ]);
 
         $mereks = ['Tanpa Merek', 'Detol', 'Indomie', 'Indomilk'];

@@ -399,24 +399,23 @@
                     </div>
 
                     <div class="card-body list-group">
-                        @if (count($logs) >= 1)
-                        @for ($i = 0; $i <= 2; $i++) <a href="#"
-                            class="list-group-item list-group-item-action flex-column align-items-start">
+                        @foreach ($logs as $log)
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1">
-                                    {{$logs[$i]->activity}}
+                                    {{$log->activity}}
                                     Activity
                                 </h5>
-                                <small class="text-muted">{{$logs[$i]->updated_at}}</small>
+                                <small class="text-muted">{{$log->updated_at}}</small>
                             </div>
-                            <p class="mb-1">{{$logs[$i]->pesan}}</p>
-                            </a>
-                            @endfor
+                            <p class="mb-1">{{$log->pesan}}</p>
+                        </a>
+                        @endforeach
+
                     </div>
                     <div class="card-footer d-flex justify-content-end mr-4">
                         <a href="#"> See all </a>
                     </div>
-                    @endif
                 </div>
             </div>
         </div>

@@ -5,21 +5,19 @@ namespace App\Http\Controllers\Api\Staff;
 use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Providers\UploadProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarangResource;
-use App\Providers\UploadProvider;
 
 class BarangController extends Controller
 {
-
     /**
      * Method for get data all products
      *
      */
-
     public function index()
     {
-        $datas = BarangResource::collection(Barang::get());
+        $datas = BarangResource::collection(Barang::with('kategori', 'merek')->get());
 
         return $this->sendResponse('success', 'data berhasil dimuat', $datas, 200);
     }
@@ -30,9 +28,11 @@ class BarangController extends Controller
      */
     public function show($uid)
     {
-        $barang = Barang::where('uid', $uid)->firstOrFail();
+        $barang = Barang::where('uid', $uid)->get();
 
-        return $this->sendResponse('success', 'data barang berhasil dimuat', $barang, 200);
+        $data = BarangResource::collection($barang);
+
+        return $this->sendResponse('success', 'data barang berhasil dimuat', $data, 200);
     }
 
     /**

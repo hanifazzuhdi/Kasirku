@@ -39,17 +39,6 @@ class SaldoController extends Controller
     }
 
     /**
-     * Daftar Bank
-     *
-     */
-    public function bank()
-    {
-        $data = Bank::get();
-
-        return $this->sendResponse('success', 'Daftar bank berhasil ditampilkan', $data, 200);
-    }
-
-    /**
      *  Isi saldo via kasir
      *
      */

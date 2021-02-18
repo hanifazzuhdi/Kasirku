@@ -11,7 +11,8 @@ class Supplier extends Model
     use FormatDate;
 
     protected $fillable = [
-        'nama_supplier'
+        'nama_supplier',
+        'jml_order'
     ];
 
     // relations

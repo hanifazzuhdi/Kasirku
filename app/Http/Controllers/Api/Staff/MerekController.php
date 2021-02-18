@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\Staff;
 
-use App\Http\Controllers\Controller;
 use App\Models\Merek;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\MerekResource;
 
 class MerekController extends Controller
 {
@@ -15,7 +17,7 @@ class MerekController extends Controller
 
     public function index()
     {
-        $datas = Merek::get();
+        $datas = MerekResource::collection(Merek::get());
 
         return $this->sendResponse('success', 'Data merek berhasil ditampilkan', $datas, 200);
     }

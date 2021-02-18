@@ -96,34 +96,34 @@
                     <div class="border p-4 mt-1">
                         <div class="container">
                             <div class="form-group">
-                                <form action="{{route('admin.karyawan.store')}}" method="post">
+                                <form action="{{route('admin.karyawan.store')}}" method="post" id="form-karyawan">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="nama">Nama : </label>
                                             <br>
-                                            <input id="nama" class="form-control" type="text">
+                                            <input name="nama" class="form-control" type="text">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="">Email : </label>
                                             <br>
-                                            <input id="email" class="form-control" type="text">
+                                            <input name="email" class="form-control" type="text">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="">Alamat : </label>
                                             <br>
-                                            <input id="alamat" class="form-control" type="text">
+                                            <input name="alamat" class="form-control" type="text">
                                         </div>
                                     </div>
                                     <div class="row mt-5">
                                         <div class="col-md-4">
                                             <label for="">Umur : </label>
                                             <br>
-                                            <input id="umur" class="form-control" type="text">
+                                            <input name="umur" class="form-control" type="text">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="">Password : </label>
                                             <br>
-                                            <input id="password" class="form-control" type="text">
+                                            <input name="password" class="form-control" type="password">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="">Jabatan : </label>

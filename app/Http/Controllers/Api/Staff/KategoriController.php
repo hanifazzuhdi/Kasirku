@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\Staff;
 
-use App\Http\Controllers\Controller;
-use App\Models\Barang;
-use App\Models\Kategori;
+use App\Models\{Barang, Kategori};
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\KategoriResource;
 
 class KategoriController extends Controller
 {
@@ -15,7 +16,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $data = Kategori::all();
+        $data = KategoriResource::collection(Kategori::get());
 
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
     }
@@ -32,7 +33,7 @@ class KategoriController extends Controller
 
         $data = Kategori::create($data);
 
-        return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
+        return $this->sendResponse('success', 'data berhasil ditambahkan', $data->only('id', 'nama_kategori', 'created_at'), 201);
     }
 
     /**

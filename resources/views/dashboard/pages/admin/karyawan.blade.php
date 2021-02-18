@@ -6,83 +6,79 @@
 
 @section('content')
 
-<div class="content">
-    <div class="container-fluid">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-warning d-flex justify-content-between">
+                <div>
+                    <h4 class="card-title ">Daftar Karyawan Tokoku</h4>
+                    <p class="card-category"> Hingga {{date('d, F Y')}} </p>
+                </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-warning d-flex justify-content-between">
-                        <div>
-                            <h4 class="card-title ">Daftar Karyawan Tokoku</h4>
-                            <p class="card-category"> Hingga {{date('d, F Y')}} </p>
-                        </div>
+                <a href="#" class="d-flex align-items-center mr-2 text-black" data-toggle="modal"
+                    data-target="#modal-create">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
 
-                        <a href="#" class="d-flex align-items-center mr-2 text-black" data-toggle="modal"
-                            data-target="#modal-create">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-
-                            <div class="mb-3 d-flex justify-content-between">
-                                <form class="w-19 ml-2" action="{{route('admin.karyawan.cari')}}" method="post">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" name="search" id="search"
-                                            placeholder="Cari Id, Email Karyawan...">
-                                    </div>
-                                    @csrf
-                                </form>
-
-                                <div class="my-2">
-                                    <form action="{{ route('admin.karyawan.cari') }}" method="post">
-                                        <input class="" required type="text" name="datefilter"
-                                            placeholder="Filter Tanggal ... " />
-                                        <button class="btn btn-warning py-2 px-3 mb-2" type="submit">Filter</button>
-                                        @csrf
-                                    </form>
-                                </div>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <form class="w-19 ml-2" action="{{route('admin.karyawan.cari')}}" method="post">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="search" id="search"
+                                    placeholder="Cari Id, Email Karyawan...">
                             </div>
+                            @csrf
+                        </form>
 
-                            <table class="table" id="dataTables">
-                                <thead class=" text-warning">
-                                    <th>ID</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Jabatan</th>
-                                    <th>Status</th>
-                                    <th>Tanggal Bergabung</th>
-                                    <th>Aksi</th>
-                                </thead>
-                                <tbody>
-                                    @foreach ($datas as $data)
-                                    <tr>
-                                        <td>{{$data->id}}</td>
-                                        <td>{{$data->nama}}</td>
-                                        <td>{{$data->email}}</td>
-                                        <td>{{$data->role_id == 2 ? 'Staf' : 'Kasir' }}</td>
-                                        <td>{{$data->is_verified == 1 ? 'Aktif' : 'Belum Aktif'}}</td>
-                                        <td>{{$data->created_at}}</td>
-                                        <td>
-                                            <a data-toggle="modal" data-target="#modal-karyawan" data-id="{{$data->id}}"
-                                                href="#"> Detail
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            @isset($datas)
-                            {{$datas->links()}}
-                            @endisset
+                        <div class="my-2">
+                            <form action="{{ route('admin.karyawan.cari') }}" method="post">
+                                <input class="" required type="text" name="datefilter" placeholder="Filter Tanggal ... "
+                                    autocomplete="off" />
+                                <button class="btn btn-warning py-2 px-3 mb-2" type="submit">Filter</button>
+                                @csrf
+                            </form>
                         </div>
                     </div>
+
+                    <table class="table" id="dataTables">
+                        <thead class=" text-warning">
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Jabatan</th>
+                            <th>Status</th>
+                            <th>Tanggal Bergabung</th>
+                            <th>Aksi</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($datas as $data)
+                            <tr>
+                                <td>{{$data->id}}</td>
+                                <td>{{$data->nama}}</td>
+                                <td>{{$data->email}}</td>
+                                <td>{{$data->role_id == 2 ? 'Staf' : 'Kasir' }}</td>
+                                <td>{{$data->is_verified == 1 ? 'Aktif' : 'Belum Aktif'}}</td>
+                                <td>{{$data->created_at}}</td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#modal-karyawan" data-id="{{$data->id}}"
+                                        href="#"> Detail
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @isset($datas)
+                    {{$datas->links()}}
+                    @endisset
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @include('dashboard.components.modal-karyawan')
 
@@ -90,7 +86,6 @@
 
 @section('scripts')
 
-{{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> --}}
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
@@ -101,8 +96,8 @@
                 let id = $(this).data('id');
                 console.log(id);
 
+                $('#form-karyawan').attr('action', '/admin/add-karyawan');
                 $('.modal-footer form').attr('action', '/admin/karyawan/delete/' + id)
-                $('form.d-inline').attr('action', '/admin/karyawan/bekukan/' + id);
 
                 $.ajax({
                     url: '/admin/karyawan/' + id,

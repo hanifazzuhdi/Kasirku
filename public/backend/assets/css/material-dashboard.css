@@ -17548,6 +17548,8 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 .card.bg-warning,
 .card.card-rotate.bg-warning .front,
 .card.card-rotate.bg-warning .back {
+
+    /* background-color: #ffeb3b; */
     background: linear-gradient(60deg, #ffa726, #fb8c00);
 }
 

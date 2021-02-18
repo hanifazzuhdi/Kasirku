@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('jwt.auth');
+    }
+
+    // Melihat data member yang sedang login
     public function index()
     {
         $data = auth('member')->user();
@@ -16,6 +22,7 @@ class MemberController extends Controller
         return $this->sendResponse('success', 'Data member berhasil ditampilkan', $data, 200);
     }
 
+    // Ubah password member
     public function change(Request $request)
     {
         $this->validate($request, [

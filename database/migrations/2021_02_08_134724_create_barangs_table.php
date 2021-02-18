@@ -20,14 +20,14 @@ class CreateBarangsTable extends Migration
             $table->string('nama_barang');
             $table->integer('harga_beli');
             $table->integer('harga_jual');
-            $table->unsignedBigInteger('kategori');
-            $table->unsignedBigInteger('merek');
+            $table->unsignedBigInteger('kategori_id');
+            $table->unsignedBigInteger('merek_id');
             $table->integer('stok')->default(0);
             $table->integer('diskon')->default(0)->nullable();
             $table->timestamps();
 
-            $table->foreign('kategori')->references('id')->on('kategoris');
-            $table->foreign('merek')->references('id')->on('mereks');
+            $table->foreign('kategori_id')->references('id')->on('kategoris');
+            $table->foreign('merek_id')->references('id')->on('mereks');
         });
     }
 

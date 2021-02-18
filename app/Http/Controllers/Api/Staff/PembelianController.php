@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\Staff;
 
-use App\Models\{Member, Pembelian, Pengeluaran};
+use App\Models\{Member, Pembelian, Pengeluaran, Supplier};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class PembelianController extends Controller
 {
@@ -32,6 +33,7 @@ class PembelianController extends Controller
     {
         $this->validated($request);
 
+        DB::beginTransaction();
         $data = Pembelian::create([
             'supplier_id'   => $request->input('supplier'),
             'barang'        => $request->input('barang'),
@@ -40,11 +42,17 @@ class PembelianController extends Controller
             'total_harga'   => $request->input('harga_satuan') * $request->input('total_barang')
         ]);
 
+        $supp = Supplier::find(request('supplier'));
+        $supp->update([
+            'jml_order' => $supp->jml_order + 1
+        ]);
+
         Pengeluaran::create([
             'nama_pengeluaran' => "Pembelian Barang $request->barang",
             'jumlah' => $request->input('harga_satuan') * $request->input('total_barang'),
             'jenis' => 'Pembelian'
         ]);
+        DB::commit();
 
         return $this->sendResponse('success', 'data berhasil ditambahkan', $data, 202);
     }
@@ -62,7 +70,7 @@ class PembelianController extends Controller
             'status' => 1
         ]);
 
-        return $this->sendResponse('success', 'status berhasil diupdate', $pembelian, 200);
+        return $this->sendResponse('success', 'status berhasil diupdate', $pembelian->only('id', 'barang', 'status', 'created_at'), 202);
     }
 
     /**

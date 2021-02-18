@@ -16,6 +16,7 @@ class CreateSuppliersTable extends Migration
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->string('nama_supplier');
+            $table->smallInteger('jml_order')->default(0);
             $table->timestamps();
         });
     }

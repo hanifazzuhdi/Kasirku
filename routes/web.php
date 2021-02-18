@@ -45,7 +45,19 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Web\Admin', 'prefix' => 'a
     Route::get('/karyawan/{user}', 'KaryawanController@show')->name('admin.karyawan.show');
     Route::post('/add-karyawan', 'KaryawanController@store')->name('admin.karyawan.store');
     Route::post('/daftar-karyawan', 'KaryawanController@cari')->name('admin.karyawan.cari');
-    Route::delete('/karyawan/delete/{user}', 'MemberController@destroy');
+    Route::delete('/karyawan/delete/{user}', 'KaryawanController@destroy');
+
+    // Supplier
+    Route::get('daftar-supplier', 'SupplierController@index')->name('admin.supplier');
+    Route::post('/daftar-supplier', 'SupplierController@cari')->name('admin.supplier.cari');
+
+    // Produk
+    Route::get('/daftar-produk', 'ProdukController@index')->name('admin.produk');
+    Route::get('/produk/{barang}', 'ProdukController@show')->name('admin.produk.show');
+    Route::post('/daftar-produk', 'ProdukController@cari')->name('admin.produk.cari');
+
+    // pengeluaran
+    Route::get('/pengeluaran', 'PengeluaranController@index')->name('admin.pengeluaran');
 });
 
 

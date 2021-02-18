@@ -1,11 +1,6 @@
 <?php
 
-use App\Models\Barang;
-use App\Models\Payment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,53 +15,6 @@ use Illuminate\Support\Str;
 
 // Route::get('/email/resend', 'VerificationController@resend')->name('verification.resend');
 // Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
-
-
-Route::get('/coba', function () {
-    $user = Barang::find(21);
-
-    return $user->barcode;
-});
-
-Route::post('/coba', function (Request $request) {
-
-    $order_id = Str::upper($request->bank) . "-" . random_int(10000, 99999) . '-2';
-
-    $res = Http::withBasicAuth('SB-Mid-server-P_D1Q6IGgH4b-_YqgY6Ybnra', '')
-        ->withHeaders([
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
-        ])
-        ->post('https://api.sandbox.midtrans.com/v2/charge', [
-            "payment_type" => "bank_transfer",
-
-            "transaction_details" => [
-                "gross_amount" => $request->jumlah,
-                "order_id" => $order_id
-            ],
-
-            "customer_details" => [
-                "email" => "0005210593721",
-                "first_name" => "Zen",
-                "phone" => "+6285210593721"
-            ],
-
-            "bank_transfer" => [
-                "bank" => $request->bank,
-            ]
-        ]);
-
-    Payment::create([
-        'order_id' => $order_id,
-        'jumlah' => $request->jumlah,
-        "kode_member" => "0005210593721",
-        "nama_member" => "Zen",
-        "nomor_member" => "+6285210593721",
-        'bank' => $request->bank
-    ]);
-
-    dd($res->json());
-});
 
 // Route auth
 Route::group(['namespace' => 'Auth'], function () {
@@ -176,9 +124,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 /** Member
  *  1. Member
  *  2. Saldo
- *
  */
-Route::group(['namespace' => 'Member', 'middleware' => 'jwt.auth'], function () {
+Route::group(['namespace' => 'Member'], function () {
     // Member
     Route::get('/get-member', 'MemberController@index');
     Route::post('/change-password', 'MemberController@change');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class KaryawanController extends Controller
 {
@@ -44,17 +45,16 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-
         $data = $this->validate($request, [
             'nama' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'umur' => 'required',
             'alamat' => 'required',
-            'avatar' => 'required',
             'role_id' => 'required',
         ]);
+
+        $data['password'] = Hash::make(request('password'));
 
         User::create($data);
 
@@ -69,11 +69,9 @@ class KaryawanController extends Controller
     public function cari(Request $request)
     {
         if (!$request->input('datefilter')) {
-
             $searchType = filter_var(request('search'), FILTER_VALIDATE_INT) ? 'id' : 'email';
             $datas = User::where($searchType, 'LIKE', "%$request->search%")->where('id', '!=', 1)->paginate(10);
         } else {
-
             $tanggal = $request->datefilter;
             $tHasil = explode(' - ', $tanggal);
 

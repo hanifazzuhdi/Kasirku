@@ -10,4 +10,10 @@ class Kategori extends Model
     use FormatDate;
 
     protected $fillable = ['nama_kategori'];
+
+    // relation
+    public function barang()
+    {
+        return $this->hasMany(Barang::class);
+    }
 }
