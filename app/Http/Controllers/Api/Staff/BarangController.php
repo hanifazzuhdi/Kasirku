@@ -46,12 +46,12 @@ class BarangController extends Controller
         // Begin transaction
         DB::beginTransaction();
         $data = Barang::create([
-            'uid' => "{$request->kategori}{$request->merek}-" . str_split(time(), 5)[1] . random_int(10, 30),
+            'uid' => "{$request->kategori_id}{$request->merek_id}-" . str_split(time(), 5)[1] . random_int(10, 30),
             'nama_barang' => $request->input('nama_barang'),
             'harga_beli' => $request->input('harga_beli'),
             'harga_jual' => $request->input('harga_jual'),
-            'kategori' => $request->input('kategori'),
-            'merek' => $request->input('merek'),
+            'kategori_id' => $request->input('kategori_id'),
+            'merek_id' => $request->input('merek_id'),
             'stok' => $request->input('stok'),
             'diskon' => $request->input('diskon') ?? 0,
         ]);
@@ -66,7 +66,7 @@ class BarangController extends Controller
             'status' => 'success',
             'message' => 'Data berhasil dibuat',
             'data' => $data
-        ], 202);
+        ], 201);
     }
 
     /**
@@ -79,8 +79,8 @@ class BarangController extends Controller
             'nama_barang' => $request->input('nama_barang') ?? $barang->nama_barang,
             'harga_beli' => $request->input('harga_beli') ?? $barang->harga_beli,
             'harga_jual' => $request->input('harga_jual') ?? $barang->harga_jual,
-            'kategori' => $request->input('kategori') ?? $barang->kategori,
-            'merek' => $request->input('merek') ?? $barang->merek,
+            'kategori_id' => $request->input('kategori') ?? $barang->kategori_id,
+            'merek_id' => $request->input('merek') ?? $barang->merek_id,
             'stok' => $request->input('stok') ?? $barang->stok,
             'diskon' => $request->input('diskon') ?? $barang->diskon,
         ]);
@@ -110,8 +110,8 @@ class BarangController extends Controller
             'harga_beli' => 'required',
             'harga_jual' => 'required',
             'stok' => 'required',
-            'kategori' => 'required',
-            'merek' => 'required',
+            'kategori_id' => 'required',
+            'merek_id' => 'required',
         ]);
     }
 }

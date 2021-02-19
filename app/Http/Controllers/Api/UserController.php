@@ -47,6 +47,6 @@ class UserController extends Controller
             ]);
         });
 
-        return $this->sendResponse('success', 'User berhasil diperbarui', $user, 200);
+        return $this->sendResponse('success', 'User berhasil diperbarui', $user->only('id', 'nama', 'email', 'alamat', 'avatar', 'role_id'), 200);
     }
 }

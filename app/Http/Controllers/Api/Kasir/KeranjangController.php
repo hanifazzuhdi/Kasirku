@@ -29,13 +29,13 @@ class KeranjangController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::transaksiAktif()->first();
+        $datas = Keranjang::whereHas('transaksi', function ($q) {
+            $q->where('status', 0);
+        })->get();
 
-        if (empty($transaksi)) {
+        if (empty($datas)) {
             return $this->sendResponse('failed', 'Data keranjang masih kosong', null, 400);
         }
-
-        $datas = Keranjang::where('transaksi_id', $transaksi->id)->get();
 
         $data = TransaksiResource::collection($datas);
 
