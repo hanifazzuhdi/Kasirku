@@ -61,8 +61,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Web\Admin', 'prefix' => 'a
     Route::post('/add-pengeluaran', 'PengeluaranController@store')->name('admin.pengeluaran.store');
 
     // Aktifitas
-    Route::get('/aktivitas-karyawan', 'Aktivitascontroller@index')->name('admin.aktivitas');
-    Route::post('/aktivitas-karyawan', 'Aktivitascontroller@cari')->name('admin.aktivitas.cari');
+    Route::get('/aktivitas-karyawan', 'AktivitasController@index')->name('admin.aktivitas');
+    Route::post('/aktivitas-karyawan', 'AktivitasController@cari')->name('admin.aktivitas.cari');
 });
 
 
