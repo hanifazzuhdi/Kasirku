@@ -20,8 +20,8 @@ class TransaksiResource extends JsonResource
             'nama_barang' => $this->nama_barang,
             'harga_satuan' => $this->harga,
             'pcs' => $this->pcs,
-            'total_harga' => $this->total_harga,
-            'diskon' => $this->diskon
+            'diskon' => $this->diskon,
+            'total_harga' => $this->total_harga
         ];
     }
 }

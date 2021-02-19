@@ -56,7 +56,10 @@
                         <a class="dropdown-item" href="#">Profile</a>
                         <a class="dropdown-item" href="#">Settings</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Log out</a>
+                        <form class="d-flex justify-content-center py-2" action="{{route('logout')}}" method="post">
+                            <button class="btn btn-primary btn-sm" type="submit">Log out</button>
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>

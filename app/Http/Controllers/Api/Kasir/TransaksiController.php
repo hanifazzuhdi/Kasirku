@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Kasir;
 
-use App\Models\{Barang, Keranjang, Transaksi};
+use App\Models\{Barang, Keranjang, Member, Transaksi};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -48,6 +48,21 @@ class TransaksiController extends Controller
         // Kurangi stok barang
 
         return $this->sendResponse('success', 'Transaksi berhasil dilakukan', $transaksi, 202);
+    }
+
+    /**
+     * Bayar melalui saldo member
+     *
+     */
+    public function bayarSaldo(Request $request)
+    {
+        $member = Member::where('kode_member', $request->input('kode_member'))->first();
+
+        $member->update([
+            'saldo' => $member->saldo - $request->input('pembayaran')
+        ]);
+
+        return $this->sendResponse('success', 'Pembayaran berhasil', $member->only('kode_member, nama, saldo'), 202);
     }
 
     /**

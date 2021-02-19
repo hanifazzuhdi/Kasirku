@@ -15,9 +15,10 @@
                     <p class="card-category"> Hingga {{date('d, F Y')}} </p>
                 </div>
 
-                <a href="#" class="d-flex align-items-center mr-2 text-black" data-toggle="modal"
-                    data-target="#modal-create">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
+                <a href="#" class="d-flex align-items-center mr-2" data-toggle="modal" data-target="#modal-create">
+                    <span class="material-icons">
+                        add_box
+                    </span>
                 </a>
             </div>
             <div class="card-body">

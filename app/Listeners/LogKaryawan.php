@@ -46,7 +46,8 @@ class LogKaryawan
             'role' => $role,
             'device' => $event->device,
             'activity' => $event->activity,
-            'pesan' => "Karyawan anda $user->nama sebagai $role telah $event->activity melaui $event->device App"
+            'pesan' => "Karyawan anda $user->nama sebagai $role telah $event->activity melaui $event->device App",
+            'date' => date('Y-m-d')
         ]);
     }
 }
