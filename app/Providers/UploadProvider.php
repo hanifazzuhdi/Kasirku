@@ -35,7 +35,7 @@ class UploadProvider extends ServiceProvider
             $response = $client->request('POST', 'https://api.imgbb.com/1/upload', [
                 'form_params' => [
                     'key' => 'f98a15c0e84720165f5cd99516022338',
-                    'image' => "$image",
+                    'image' => base64_encode($image),
                     'name' => $request
                 ]
             ]);
