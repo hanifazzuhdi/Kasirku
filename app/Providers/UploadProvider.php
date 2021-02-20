@@ -28,6 +28,8 @@ class UploadProvider extends ServiceProvider
     {
         if ($type == 'register') {
             $image = DNS2DFacade::getBarcodePNG($request, 'QRCODE');
+
+            dd($image);
         } else {
             $image = DNS1DFacade::getBarcodePNG($request, 'C39', 1, 34, array(1, 1, 1), true);
 
