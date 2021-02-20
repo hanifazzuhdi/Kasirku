@@ -19,7 +19,8 @@
         "milon/barcode": "^7.0",
         "realrashid/sweet-alert": "^3.2",
         "twilio/sdk": "^6.16",
-        "tymon/jwt-auth": "^1.0.2"
+        "tymon/jwt-auth": "^1.0.2",
+        "ext-gd": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
