@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Providers\UploadProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarangResource;
+use Milon\Barcode\Facades\DNS1DFacade;
 
 class BarangController extends Controller
 {
@@ -46,7 +47,7 @@ class BarangController extends Controller
         // Begin transaction
         DB::beginTransaction();
         $data = Barang::create([
-            'uid' => "{$request->kategori_id}{$request->merek_id}-" . str_split(time(), 5)[1] . random_int(10, 30),
+            'uid' => "{$request->kategori_id}{$request->merek_id}-" . str_split(time(), 6)[1] . random_int(1, 9),
             'nama_barang' => $request->input('nama_barang'),
             'harga_beli' => $request->input('harga_beli'),
             'harga_jual' => $request->input('harga_jual'),
@@ -55,7 +56,6 @@ class BarangController extends Controller
             'stok' => $request->input('stok'),
             'diskon' => $request->input('diskon') ?? 0,
         ]);
-
         $data->update([
             'barcode' => UploadProvider::uploadCode($data->uid, 'barang')
         ]);

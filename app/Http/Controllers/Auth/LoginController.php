@@ -37,4 +37,17 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function sendLoginResponse($request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if (auth()->user()->role_id == 1) {
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('staf');
+        }
+    }
 }
