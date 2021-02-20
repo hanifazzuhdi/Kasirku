@@ -13,12 +13,24 @@
             <p class="card-category">Absen Hari Ini {{ date('d, F Y H:i') }} WIB</p>
         </div>
         <div class="my-2 d-flex justify-content-end">
-            <form action="{{ route('admin.aktivitas.cari') }}" method="post">
-                <input class="" required type="text" name="datefilter" placeholder="Filter Tanggal ... "
-                    autocomplete="off" />
-                <button class="btn btn-warning py-2 px-3 mb-2" type="submit">Filter</button>
-                @csrf
-            </form>
+
+            <div class=" mr-3">
+                <a class="btn btn-white btn-round btn-just-icon" style="cursor: pointer;" title="Filter"
+                    id="dropdownMember" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">
+                        filter_list
+                    </i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMember">
+                    <small class="text-rose ml-2">Filter Tanggal</small>
+                    <form action="{{ route('admin.aktivitas.cari') }}" method="post" id="target">
+                        <input class="dropdown-item" type="text" name="datefilter" placeholder="Filter Tanggal ... "
+                            required autocomplete="off" />
+                        @csrf
+                    </form>
+                </div>
+            </div>
+
         </div>
         <div class="card-body text-center">
             <div class="table-responsive">
