@@ -31,11 +31,13 @@ class UploadProvider extends ServiceProvider
         } else {
             $image = DNS1DFacade::getBarcodePNG($request, 'C39', 1, 34, array(1, 1, 1), true);
 
+            dd($image);
+
             $client = new GuzzleHttpClient();
             $response = $client->request('POST', 'https://api.imgbb.com/1/upload', [
                 'form_params' => [
                     'key' => 'f98a15c0e84720165f5cd99516022338',
-                    'image' => base64_encode($image),
+                    'image' => $image,
                     'name' => $request
                 ]
             ]);
