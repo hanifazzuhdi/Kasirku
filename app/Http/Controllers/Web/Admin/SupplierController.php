@@ -18,7 +18,7 @@ class SupplierController extends Controller
     {
         $datas = Supplier::paginate(10);
 
-        return view('dashboard.pages.admin.supplier', compact('datas'));
+        return view('dashboard.admin.supplier', compact('datas'));
     }
 
     /**
@@ -37,6 +37,6 @@ class SupplierController extends Controller
             $datas = Supplier::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->paginate(10);
         }
 
-        return view('dashboard.pages.admin.supplier', compact('datas'));
+        return view('dashboard.admin.supplier', compact('datas'));
     }
 }

@@ -79,8 +79,8 @@ class BarangController extends Controller
             'nama_barang' => $request->input('nama_barang') ?? $barang->nama_barang,
             'harga_beli' => $request->input('harga_beli') ?? $barang->harga_beli,
             'harga_jual' => $request->input('harga_jual') ?? $barang->harga_jual,
-            'kategori_id' => $request->input('kategori') ?? $barang->kategori_id,
-            'merek_id' => $request->input('merek') ?? $barang->merek_id,
+            'kategori_id' => $request->input('kategori_id') ?? $barang->kategori_id,
+            'merek_id' => $request->input('merek_id') ?? $barang->merek_id,
             'stok' => $request->input('stok') ?? $barang->stok,
             'diskon' => $request->input('diskon') ?? $barang->diskon,
         ]);

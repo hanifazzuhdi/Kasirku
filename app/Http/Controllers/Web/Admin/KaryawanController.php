@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
-use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KaryawanController extends Controller
 {
@@ -17,7 +18,7 @@ class KaryawanController extends Controller
     {
         $datas = User::where('role_id', '!=', 1)->paginate(10);
 
-        return view('dashboard.pages.admin.karyawan', compact('datas'));
+        return view('dashboard.admin.karyawan.index', compact('datas'));
     }
 
     /**
@@ -47,7 +48,7 @@ class KaryawanController extends Controller
     {
         $data = $this->validate($request, [
             'nama' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'umur' => 'required',
             'alamat' => 'required',
@@ -57,6 +58,8 @@ class KaryawanController extends Controller
         $data['password'] = Hash::make(request('password'));
 
         User::create($data);
+
+        Alert::success('Success', 'Karyawan Berhasil didaftarkan');
 
         return back();
     }
@@ -78,7 +81,23 @@ class KaryawanController extends Controller
             $datas = User::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->where('id', '!=', 1)->paginate(10);
         }
 
-        return view('dashboard.pages.admin.karyawan', compact('datas'));
+        return view('dashboard.admin.karyawan.index', compact('datas'));
+    }
+
+    // filter staf
+    public function staf()
+    {
+        $datas = User::where('role_id', '!=', 1)->where('role_id', 2)->paginate(10);
+
+        return view('dashboard.admin.karyawan.index', compact('datas'));
+    }
+
+    // filter kasir
+    public function kasir()
+    {
+        $datas = User::where('role_id', '!=', 1)->where('role_id', 3)->paginate(10);
+
+        return view('dashboard.admin.karyawan.index', compact('datas'));
     }
 
     /**
@@ -90,6 +109,8 @@ class KaryawanController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
+        Alert::toast('Karyawan berhasil diberhentikan', 'success');
 
         return back();
     }

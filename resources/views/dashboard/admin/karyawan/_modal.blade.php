@@ -66,7 +66,8 @@
             <div class="modal-footer">
                 <form action="" method="post">
                     <button type="button" class="btn btn-black" data-dismiss="modal">Close</button>
-                    <button class="btn btn-danger mr-3" type="submit">Berhentikan</button>
+                    <button onclick="return confirm ('Yakin Berhentikan ?)" class="btn btn-danger mr-3"
+                        type="submit">Berhentikan</button>
                     @csrf
                     @method('delete')
                 </form>
@@ -91,7 +92,6 @@
                     <div class="p-4 text-center border">
                         <img class="border p-3 rounded-circle" width="120" height="120" id="avatar"
                             src="https://i.ibb.co/Smw9VXW/Pngtree-users-vector-3725294.png" alt="QR Code">
-
                     </div>
                     <div class="border p-4 mt-1">
                         <div class="container">

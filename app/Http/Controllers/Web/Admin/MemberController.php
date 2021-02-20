@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Member;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MemberController extends Controller
 {
@@ -17,7 +19,7 @@ class MemberController extends Controller
     {
         $datas = Member::paginate(10);
 
-        return view('dashboard.pages.admin.member', compact('datas'));
+        return view('dashboard.admin.member.index', compact('datas'));
     }
 
     /**
@@ -36,7 +38,7 @@ class MemberController extends Controller
             $datas = Member::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->paginate(10);
         }
 
-        return view('dashboard.pages.admin.member', compact('datas'));
+        return view('dashboard.admin.member.index', compact('datas'));
     }
 
     /**
@@ -64,11 +66,11 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Member $member)
     {
-        $member = Member::find($id);
         $member->delete();
 
+        Alert::toast('User berhasil dibanned', 'success');
 
         return back();
     }

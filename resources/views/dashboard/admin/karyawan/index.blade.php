@@ -12,34 +12,55 @@
             <div class="card-header card-header-warning d-flex justify-content-between">
                 <div>
                     <h4 class="card-title ">Daftar Karyawan Tokoku</h4>
-                    <p class="card-category"> Hingga {{date('d, F Y')}} </p>
+                    <p class="card-category"> Hingga {{date('d, F Y H:i')}} WIB </p>
                 </div>
 
-                <a href="#" class="d-flex align-items-center mr-2" data-toggle="modal" data-target="#modal-create">
-                    <span class="material-icons">
-                        add_box
-                    </span>
+                <a class="mt-2" style="cursor: pointer;" data-toggle="modal" data-target="#modal-create">
+                    <i class="material-icons">add_box</i>
                 </a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
 
                     <div class="mb-3 d-flex justify-content-between">
-                        <form class="w-19 ml-2" action="{{route('admin.karyawan.cari')}}" method="post">
-                            <div class="form-group">
+
+                        <form class="navbar-form w-19 mt-1 ml-2" action="{{route('admin.karyawan.cari')}}"
+                            method="POST">
+                            <div class="input-group no-border">
                                 <input class="form-control" type="text" name="search" id="search"
-                                    placeholder="Cari Id, Email Karyawan...">
+                                    placeholder="Cari ID, Email Karyawan...">
+                                <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                                @csrf
                             </div>
-                            @csrf
                         </form>
 
-                        <div class="my-2">
-                            <form action="{{ route('admin.karyawan.cari') }}" method="post">
-                                <input class="" required type="text" name="datefilter" placeholder="Filter Tanggal ... "
-                                    autocomplete="off" />
-                                <button class="btn btn-warning py-2 px-3 mb-2" type="submit">Filter</button>
-                                @csrf
-                            </form>
+                        <div class="mt-1 mr-3">
+                            <a class="btn btn-white btn-round btn-just-icon" style="cursor: pointer;" title="Filter"
+                                id="dropdownMember" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">
+                                    filter_list
+                                </i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMember">
+                                <small class="text-rose ml-2">Filter Tanggal</small>
+                                <form action="{{ route('admin.karyawan.cari') }}" method="post" id="target">
+                                    <input class="dropdown-item" type="text" name="datefilter"
+                                        placeholder="Pilih Tanggal" required autocomplete="off" />
+                                    @csrf
+                                </form>
+                                <small class="text-rose ml-2">Filter Jabatan</small>
+                                <form action="{{ route('admin.karyawan.staf') }}" method="post" id="target">
+                                    <button class="dropdown-item w-95" type="submit">Staf</button>
+                                    @csrf
+                                </form>
+                                <form action="{{ route('admin.karyawan.kasir') }}" method="post" id="target">
+                                    <button class="dropdown-item w-95" type="submit">Kasir</button>
+                                    @csrf
+                                </form>
+                            </div>
                         </div>
                     </div>
 
@@ -60,7 +81,7 @@
                                 <td>{{$data->nama}}</td>
                                 <td>{{$data->email}}</td>
                                 <td>{{$data->role_id == 2 ? 'Staf' : 'Kasir' }}</td>
-                                <td>{{$data->is_verified == 1 ? 'Aktif' : 'Belum Aktif'}}</td>
+                                <td>{{$data->is_verified == 1 ? 'Karyawan Aktif' : 'Tidak Aktif'}}</td>
                                 <td>{{$data->created_at}}</td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal-karyawan" data-id="{{$data->id}}"
@@ -80,13 +101,11 @@
     </div>
 </div>
 
-
-@include('dashboard.components.modal-karyawan')
+@include('dashboard.admin.karyawan._modal')
 
 @endsection
 
 @section('scripts')
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
@@ -134,8 +153,14 @@
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
+
+        let myForm = $("#target");
+
+        $(".applyBtn").click(function(){
+            setTimeout(function () {
+                myForm.submit();
+            }, 10);
+        });
     });
 </script>
-
-
 @endsection

@@ -57,7 +57,8 @@
             <div class="modal-footer">
                 <form action="" method="post">
                     <button type="button" class="btn btn-black" data-dismiss="modal">Close</button>
-                    <button class="btn btn-danger mr-3" type="submit">Banned</button>
+                    <button onclick="return confirm('Yakin Banned ?')" class="btn btn-danger mr-3"
+                        type="submit">Banned</button>
                     @csrf
                     @method('delete')
                 </form>

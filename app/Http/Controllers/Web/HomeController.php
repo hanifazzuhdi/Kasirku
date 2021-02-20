@@ -16,9 +16,8 @@ class HomeController extends Controller
     public function index()
     {
         $member = Member::MemberActive()->count();
-
         $logs = Log::orderBy('id', 'DESC')->limit(3)->get();
 
-        return view('dashboard.home', compact('member', 'logs'));
+        return view('dashboard.admin.home.index', compact('member', 'logs'));
     }
 }

@@ -18,7 +18,7 @@ class AktivitasController extends Controller
     {
         $datas = Log::where('date', date('Y-m-d'))->paginate(10);
 
-        return view('dashboard.pages.admin.aktivitas', compact('datas'));
+        return view('dashboard.admin.aktivitas', compact('datas'));
     }
 
     /**
@@ -34,7 +34,7 @@ class AktivitasController extends Controller
 
         $datas = Log::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->paginate(10);
 
-        return view('dashboard.pages.admin.aktivitas', compact('datas'));
+        return view('dashboard.admin.aktivitas', compact('datas'));
     }
 
     /**

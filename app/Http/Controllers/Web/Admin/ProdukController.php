@@ -17,7 +17,7 @@ class ProdukController extends Controller
     {
         $datas = Barang::with('kategori', 'merek')->paginate(10);
 
-        return view('dashboard.pages.admin.produk', compact('datas'));
+        return view('dashboard.admin.produk.index', compact('datas'));
     }
 
     /**
@@ -49,6 +49,6 @@ class ProdukController extends Controller
             $datas = Barang::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->paginate(10);
         }
 
-        return view('dashboard.pages.admin.produk', compact('datas'));
+        return view('dashboard.admin.produk.index', compact('datas'));
     }
 }

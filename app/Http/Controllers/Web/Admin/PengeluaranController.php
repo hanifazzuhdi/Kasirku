@@ -6,6 +6,7 @@ use App\Models\{Pengeluaran};
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PengeluaranController extends Controller
 {
@@ -15,7 +16,7 @@ class PengeluaranController extends Controller
         $pengeluarans = Pengeluaran::where('jenis', 'Pengeluaran')->limit(3)->get();
         $pembelians = Pengeluaran::where('jenis', 'Pembelian')->limit(3)->get();
 
-        return view('dashboard.pages.admin.pengeluaran', compact('pengeluarans', 'pembelians'));
+        return view('dashboard.admin.pengeluaran.index', compact('pengeluarans', 'pembelians'));
     }
 
 
@@ -28,6 +29,8 @@ class PengeluaranController extends Controller
         ]);
 
         Pengeluaran::create($data);
+
+        Alert::success('Success', 'Data pengeluaran berhasil dibuat');
 
         return back();
     }

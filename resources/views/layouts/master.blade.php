@@ -9,7 +9,7 @@
 
     <title> {{ $title ?? 'Kasir - Dashboard Admin'}} </title>
 
-    <!--     Fonts and icons     -->
+    <!-- Fonts and icons -->
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
@@ -20,7 +20,6 @@
     <!-- CSS Files -->
     <link href="{{asset('backend/assets/css/material-dashboard.css')}}" rel="stylesheet" />
 
-    {{-- Css for one page --}}
     @yield('css')
 </head>
 
@@ -41,9 +40,8 @@
             @include('dashboard.components.footer')
         </div>
 
-    </div>
-    <div class="fixed-plugin">
-        {{-- @include('dashboard.components.config') --}}
+        @include('sweetalert::alert')
+
     </div>
     <!--   Core JS Files   -->
     <script src="{{asset('backend/assets/js/core/jquery.min.js')}}"></script>
@@ -51,23 +49,18 @@
     <script src="{{asset('backend/assets/js/core/bootstrap-material-design.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
 
-    {{-- <script src="{{asset('backend/assets/js/plugins/jasny-bootstrap.min.js')}}"></script> --}}
     <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <!-- Library for adding dinamically elements -->
     <script src="{{asset('backend/assets/js/plugins/arrive.min.js')}}"></script>
     <!-- Chartist JS -->
     <script src="{{asset('backend/assets/js/plugins/chartist.min.js')}}"></script>
-    <!--  Notifications Plugin    -->
-    <script src="{{asset('backend/assets/js/plugins/bootstrap-notify.js')}}"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('backend/assets/js/material-dashboard.js?v=2.1.2')}}" type="text/javascript"></script>
 
-    {{-- js custom for one page --}}
-    @yield('scripts')
-
-    {{-- script for general --}}
     @include('dashboard.scripts.home')
+
+    @yield('scripts')
 
 </body>
 

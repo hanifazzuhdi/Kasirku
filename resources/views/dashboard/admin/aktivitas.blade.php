@@ -71,6 +71,14 @@
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
+
+        let myForm = $("#target");
+
+        $(".applyBtn").click(function(){
+            setTimeout(function () {
+                myForm.submit();
+            }, 10);
+        });
 </script>
 
 @endsection

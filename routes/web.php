@@ -25,7 +25,9 @@ Route::get('/', function () {
     return view('welcome', compact('datas'));
 });
 
-Auth::routes();
+Auth::routes([
+    'register' => false
+]);
 
 // Route General
 Route::group(['middleware' => 'auth', 'namespace' => 'Web'], function () {
@@ -33,18 +35,23 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Web'], function () {
 });
 
 // Route Admin
-Route::group(['middleware' => 'auth', 'namespace' => 'Web\Admin', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => ['auth', 'admin.web'], 'namespace' => 'Web\Admin', 'prefix' => 'admin'], function () {
+    // Laporan
+    Route::get('/laporan', 'LaporanController@index')->name('admin.laporan');
+
     // Member
     Route::get('/daftar-member', 'MemberController@index')->name('admin.member');
     Route::get('/member/{member}', 'MemberController@show')->name('admin.member.show');
     Route::post('/daftar-member', 'MemberController@cari')->name('admin.member.cari');
-    Route::delete('/member/delete/{id}', 'MemberController@destroy');
+    Route::delete('/member/delete/{member}', 'MemberController@destroy');
 
     // Karyawan
     Route::get('/daftar-karyawan', 'KaryawanController@index')->name('admin.karyawan');
     Route::get('/karyawan/{user}', 'KaryawanController@show')->name('admin.karyawan.show');
     Route::post('/add-karyawan', 'KaryawanController@store')->name('admin.karyawan.store');
     Route::post('/daftar-karyawan', 'KaryawanController@cari')->name('admin.karyawan.cari');
+    Route::post('/daftar-karyawan/staf', 'KaryawanController@staf')->name('admin.karyawan.staf');
+    Route::post('/daftar-karyawan/kasir', 'KaryawanController@kasir')->name('admin.karyawan.kasir');
     Route::delete('/karyawan/delete/{user}', 'KaryawanController@destroy');
 
     // Supplier
@@ -60,7 +67,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Web\Admin', 'prefix' => 'a
     Route::get('/pengeluaran', 'PengeluaranController@index')->name('admin.pengeluaran');
     Route::post('/add-pengeluaran', 'PengeluaranController@store')->name('admin.pengeluaran.store');
 
-    // Aktifitas
+    // Aktivitas
     Route::get('/aktivitas-karyawan', 'AktivitasController@index')->name('admin.aktivitas');
     Route::post('/aktivitas-karyawan', 'AktivitasController@cari')->name('admin.aktivitas.cari');
 });
