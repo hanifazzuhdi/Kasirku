@@ -30,6 +30,8 @@ class UploadProvider extends ServiceProvider
             $image = DNS1DFacade::getBarcodePNG($request, 'C39', 1, 34, array(1, 1, 1), true);
         }
 
+        dd($image);
+
         $response = cloudinary()->upload("data:image/png;base64,$image")->getSecurePath();
 
         return $response;
