@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Web\Staf;
 
 use Illuminate\Http\Request;
 
-use App\Models\{Pembelian, Supplier};
+use App\Models\{Pembelian, Pengeluaran, Supplier};
 
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class StaffController extends Controller
@@ -78,7 +79,20 @@ class StaffController extends Controller
 
         $data['total_harga'] = $data['total_barang'] * $data['harga_satuan'];
 
+        DB::beginTransaction();
         Pembelian::create($data);
+
+        $supp = Supplier::find(request('supplier_id'));
+        $supp->update([
+            'jml_order' => $supp->jml_order + 1
+        ]);
+
+        Pengeluaran::create([
+            'nama_pengeluaran' => "Pembelian Barang $request->barang",
+            'jumlah' => $request->input('harga_satuan') * $request->input('total_barang'),
+            'jenis' => 'Pembelian'
+        ]);
+        DB::commit();
 
         Alert::success('success', 'Data pembelihan ditambahkan');
 

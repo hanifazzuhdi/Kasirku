@@ -16,6 +16,8 @@ class PengeluaranController extends Controller
         $pengeluarans = Pengeluaran::where('jenis', 'Pengeluaran')->limit(3)->get();
         $pembelians = Pengeluaran::where('jenis', 'Pembelian')->limit(3)->get();
 
+        dd($pembelians);
+
         return view('dashboard.admin.pengeluaran.index', compact('pengeluarans', 'pembelians'));
     }
 

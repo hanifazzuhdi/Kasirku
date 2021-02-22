@@ -42,7 +42,7 @@ class PembelianController extends Controller
             'total_harga'   => $request->input('harga_satuan') * $request->input('total_barang')
         ]);
 
-        $supp = Supplier::find(request('supplier'));
+        $supp = Supplier::find(request('supplier_id'));
         $supp->update([
             'jml_order' => $supp->jml_order + 1
         ]);

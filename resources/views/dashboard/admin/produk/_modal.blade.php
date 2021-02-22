@@ -63,13 +63,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <form action="" method="post">
-                    <button type="button" class="btn btn-black" data-dismiss="modal">Close</button>
-                    <button class="btn btn-danger mr-3" type="submit">Banned</button>
-                    @csrf
-                    @method('delete')
-                </form>
+            <div class="modal-footer mr-3">
+                <button type="button" class="btn btn-black" data-dismiss="modal">Close</button>
             </div>
 
         </div>
