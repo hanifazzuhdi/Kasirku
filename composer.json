@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "ext-gd": "*",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "cloudinary-labs/cloudinary-laravel": "^1.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -19,8 +21,7 @@
         "milon/barcode": "^7.0",
         "realrashid/sweet-alert": "^3.2",
         "twilio/sdk": "^6.16",
-        "tymon/jwt-auth": "^1.0.2",
-        "ext-gd": "*"
+        "tymon/jwt-auth": "^1.0.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

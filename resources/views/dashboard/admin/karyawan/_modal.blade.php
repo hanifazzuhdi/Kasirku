@@ -99,34 +99,33 @@
                                 <form action="{{route('admin.karyawan.store')}}" method="post" id="form-karyawan">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label for="nama">Nama : </label>
-                                            <br>
+                                            <label> Nama : </label> <br>
                                             <input name="nama" class="form-control" type="text">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="">Email : </label>
+                                            <label>Email : </label>
                                             <br>
                                             <input name="email" class="form-control" type="text">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="">Alamat : </label>
+                                            <label> Alamat : </label>
                                             <br>
                                             <input name="alamat" class="form-control" type="text">
                                         </div>
                                     </div>
                                     <div class="row mt-5">
                                         <div class="col-md-4">
-                                            <label for="">Umur : </label>
+                                            <label> Umur : </label>
                                             <br>
                                             <input name="umur" class="form-control" type="text">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="">Password : </label>
+                                            <label> Password : </label>
                                             <br>
                                             <input name="password" class="form-control" type="password">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="">Jabatan : </label>
+                                            <label> Jabatan : </label>
                                             <br>
                                             <select name="role_id" class="custom-select">
                                                 <option value="2">Staf</option>

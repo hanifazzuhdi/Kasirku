@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master', ['title' => 'Dashboard Staff'])
 
 @section('content')
 
@@ -12,7 +12,6 @@
                 </div>
                 <p class="card-category">Member Aktif</p>
                 <h3 class="card-title">
-                    {{-- {{$member}} --}}
                 </h3>
             </div>
             <div class="card-footer">

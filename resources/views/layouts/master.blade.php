@@ -18,6 +18,7 @@
     <link rel="icon" type="image/png" href="{{asset('backend/assets/img/favicon.png')}}">
 
     <!-- CSS Files -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="{{asset('backend/assets/css/material-dashboard.css')}}" rel="stylesheet" />
 
     @yield('css')
@@ -48,6 +49,8 @@
     <script src="{{asset('backend/assets/js/core/popper.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/core/bootstrap-material-design.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
@@ -58,7 +61,7 @@
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('backend/assets/js/material-dashboard.js?v=2.1.2')}}" type="text/javascript"></script>
 
-    @include('dashboard.scripts.home')
+    @include('dashboard.components.script')
 
     @yield('scripts')
 

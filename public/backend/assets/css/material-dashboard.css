@@ -14836,6 +14836,18 @@ h2.title {
     color: #FFFFFF;
 }
 
+.dropdown-menu .dropdown-item-staf:hover,
+.dropdown-menu .dropdown-item-staf:focus,
+.dropdown-menu a:hover,
+.dropdown-menu a:focus,
+.dropdown-menu a:active {
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
+    /* background-color: #9c27b0; */
+    /* background-color: #ff9800; */
+    background-color: #00bcd4;
+    color: #FFFFFF;
+}
+
 a[data-toggle="collapse"][aria-expanded="true"] .caret,
 a[aria-expanded="true"] .caret,
 .dropdown.open .caret,

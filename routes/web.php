@@ -34,7 +34,7 @@ Route::middleware(['auth'])->namespace('Web')->group(function () {
     // Admin
     Route::get('/dashboard/admin', 'HomeController@admin')->name('home')->middleware('admin.web');
     // Staf
-    Route::get('/dashboard/staf', 'HomeController@staf')->name('staf');
+    Route::get('/dashboard/staff', 'HomeController@staf')->name('staf')->middleware('staf.web');
 });
 
 // route percobaan

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header border-bottom card-header-warning">
-        <h4 class="card-title">Pengeluaran Terakhir</h4>
+        <h4 class="card-title font-weight-bold">Pengeluaran Terakhir</h4>
         <p class="card-category"> Diperbarui {{ date('d F Y, H:i ') }} WIB</p>
     </div>
 

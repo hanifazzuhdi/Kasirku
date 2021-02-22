@@ -1,21 +1,26 @@
-@extends('layouts.master',['title' => 'Daftar Member | tokoku.com'])
+@extends('layouts.master', ['title' => 'Staff - Data Pembelian | ' . config('app.name') . '.com'])
+
+@section('css')
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endsection
 
 @section('content')
 
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header card-header-warning">
-                <h4 class="card-title font-weight-bold ">Daftar Member Tokoku</h4>
-                <p class="card-category"> Hingga {{date('d, F Y')}} </p>
+            <div class="card-header card-header-info">
+                <h4 class="card-title font-weight-bold font-weight-bold mt-0">Data Pembelian</h4>
+                <p class="card-category">Hingga {{ date('d, F Y H:i') }} WIB</p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <div class="mb-3 d-flex justify-content-between">
-                        <form class="navbar-form w-19 ml-2 mt-1" action="{{route('admin.member.cari')}}" method="POST">
+                        <form class="navbar-form w-19 ml-2 mt-1" action="{{route('staf.pembelian.cari')}}"
+                            method="POST">
                             <div class="input-group no-border">
                                 <input class="form-control" type="text" name="search" id="search"
-                                    placeholder="Cari Kode Member...">
+                                    placeholder="Cari Nama Supplier...">
                                 <button type="submit" class="btn btn-white btn-round btn-just-icon">
                                     <i class="material-icons">search</i>
                                     <div class="ripple-container"></div>
@@ -33,8 +38,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMember">
                                 <small class="text-rose ml-2">Filter Tanggal</small>
-                                <form action="{{ route('admin.member.cari') }}" method="post" id="target">
-                                    <input class="dropdown-item" type="text" name="datefilter"
+                                <form action="{{ route('staf.pembelian.cari') }}" method="post" id="target">
+                                    <input class="dropdown-item dropdown-item-staf" type="text" name="datefilter"
                                         placeholder="Filter Tanggal ... " required autocomplete="off" />
                                     @csrf
                                 </form>
@@ -43,74 +48,58 @@
                     </div>
 
                     <table class="table" id="dataTables">
-                        <thead class=" text-warning">
+                        <thead class="text-dark">
                             <th>ID</th>
-                            <th>Kode Member</th>
-                            <th>Nama</th>
-                            <th>Nomor</th>
-                            <th>Status Verifikasi</th>
-                            <th>Terdaftar Pada</th>
+                            <th>Supplier</th>
+                            <th>Nama Barang</th>
+                            <th>Total</th>
+                            <th>Harga Satuan</th>
+                            <th>Total Harga</th>
+                            {{-- <th>Status</th> --}}
+                            <th>Data Dibuat</th>
                             <th>Aksi</th>
                         </thead>
                         <tbody>
                             @foreach ($datas as $data)
                             <tr>
                                 <td>{{$data->id}}</td>
-                                <td>{{$data->kode_member}}</td>
-                                <td>{{$data->nama}}</td>
-                                <td>{{$data->nomor}}</td>
-                                <td>{{$data->is_verified == 1 ? 'Aktif' : 'Belum Aktif' }}</td>
+                                <td>{{$data->supplier->nama_supplier}}</td>
+                                <td>{{$data->barang}}</td>
+                                <td>{{$data->total_barang}}</td>
+                                <td>{{$data->harga_satuan }}</td>
+                                <td>{{$data->total_harga}}</td>
+                                {{-- <td>{{$data->status == 0 ? 'Produk Belum diupdate' : 'Sudah diupdate' }}</td> --}}
                                 <td>{{$data->created_at}}</td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal-show" data-id="{{$data->id}}" href="#">
-                                        Detail
-                                    </a>
+                                    <span class="btn btn-just-icon btn-sm" data-toggle="dropdown" id="dropdown"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">
+                                            more_vert
+                                        </i>
+                                    </span>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
+                                        <a href="{{route('pembelian.cetak', [$data->id])}}" class="nav-link">Cetak</a>
+
+                                        {{-- <a href="#" class="nav-link">Ubah Status</a> --}}
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    @isset($datas)
                     {{$datas->links()}}
-                    @endisset
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@include('dashboard.admin.member._modal')
-
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
-    $(function() {
-        // modal
-        $('a[data-toggle="modal"]').click(function () {
-            let id = $(this).data('id');
-
-            $('.modal-footer form').attr('action', '/admin/member/delete/' + id)
-
-            $.ajax({
-                url: '/admin/member/' + id,
-                method: 'GET',
-                dataType: 'JSON',
-                success: function (data){
-                    $('#qr_code').attr('src', data.qr_code);
-                    $('#kode_member').html(data.kode_member);
-                    $('#nama').val(data.nama);
-                    $('#nomor').val(data.nomor);
-                    $('#status').val(data.is_verified);
-                    $('#created_at').val(data.created_at);
-                    $('#updated_at').val(data.updated_at);
-                }
-            });
-
-        });
-
-        // date picker
-        $('input[name="datefilter"]').daterangepicker({
+<script>
+    // date picker
+    $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
             locale: {
                 cancelLabel: 'Clear'
@@ -132,6 +121,5 @@
                 myForm.submit();
             }, 10);
         });
-    });
 </script>
 @endsection

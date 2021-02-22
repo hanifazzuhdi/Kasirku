@@ -1,4 +1,4 @@
-@extends('layouts.master', ['title' => 'Daftar Produk | tokoku.com'])
+@extends('layouts.master', ['title' => 'Staff - Daftar Produk | ' . config('app.name') . '.com'])
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -11,14 +11,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-warning">
-                        <h4 class="card-title font-weight-bold ">Daftar Produk Tokoku</h4>
-                        <p class="card-category"> Hingga {{date('d, F Y')}} </p>
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title font-weight-bold font-weight-bold">Daftar Produk</h4>
+                        <p class="card-category"> Hingga {{date('d, F Y H:i')}} WIB</p>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div class="mb-3 d-flex justify-content-between">
-                                <form class="navbar-form w-19 ml-2 mt-1" action="{{route('admin.produk.cari')}}"
+                                <form class="navbar-form w-19 ml-2 mt-1" action="{{route('staf.produk.cari')}}"
                                     method="POST">
                                     <div class="input-group no-border">
                                         <input class="form-control" type="text" name="search" id="search"
@@ -51,7 +51,7 @@
                             </div>
 
                             <table class="table" id="dataTables">
-                                <thead class=" text-warning">
+                                <thead class=" text-info">
                                     <th>UID</th>
                                     <th>Nama Produk</th>
                                     <th>Kategori</th>
