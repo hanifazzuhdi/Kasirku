@@ -14,7 +14,7 @@
                 <small> {{$pengeluaran->updated_at}} </small>
             </div>
         </div>
-        <h6 class="mb-1"> Pengeluaran : IDR. {{$pengeluaran->jumlah}}</h6>
+        <h6 class="mb-1"> Pengeluaran : Rp. {{ number_format ($pengeluaran->jumlah, '0', ',', '.')}}</h6>
     </div>
     @endforeach
     <div class="card-footer d-flex justify-content-end mr-4">

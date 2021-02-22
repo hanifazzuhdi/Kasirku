@@ -29,6 +29,10 @@ class ProdukController extends Controller
         $barang['kategori_id'] = $barang->kategori->nama_kategori;
         $barang['merek_id'] = $barang->merek->nama_merek;
 
+        $barang['harga_beli'] = 'Rp. ' . number_format($barang->harga_beli, '0', ',', '.');
+        $barang['harga_jual'] = 'Rp. ' . number_format($barang->harga_jual, '0', ',', '.');
+        $barang['diskon'] = number_format($barang->diskon, '0', ',', '.');
+
         $data = json_encode($barang);
 
         return $data;

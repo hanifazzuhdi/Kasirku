@@ -14,7 +14,7 @@
                 <small> {{$pembelian->updated_at}} </small>
             </div>
         </div>
-        <h6 class="mb-1"> Pengeluaran : IDR. {{$pembelian->jumlah}}</h6>
+        <h6 class="mb-1"> Pengeluaran : Rp. {{ number_format($pembelian->jumlah,'0',',','.')}}</h6>
     </div>
     @endforeach
     <div class="card-footer d-flex justify-content-end mr-4">

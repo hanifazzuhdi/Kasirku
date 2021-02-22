@@ -71,7 +71,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, [
-            'supplier_id' => 'required',
+            'supplier' => 'required',
             'barang' => 'required',
             'total_barang' => 'required',
             'harga_satuan' => 'required',
@@ -82,7 +82,7 @@ class StaffController extends Controller
         DB::beginTransaction();
         Pembelian::create($data);
 
-        $supp = Supplier::find(request('supplier_id'));
+        $supp = Supplier::find(request('supplier'));
         $supp->update([
             'jml_order' => $supp->jml_order + 1
         ]);

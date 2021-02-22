@@ -15,7 +15,7 @@
             <div class="row mt-4">
                 <div class="col-md-6">
                     <label class="text-dark mb-3">Supplier : </label>
-                    <select required class="form-control" name="supplier_id" id="selectSupp">
+                    <select required class="form-control" name="supplier" id="selectSupp">
                         @foreach ($datas as $data)
                         <option value="{{$data->id}}"> {{$data->nama_supplier}} </option>
                         @endforeach
