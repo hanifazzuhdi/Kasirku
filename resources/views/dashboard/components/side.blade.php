@@ -17,12 +17,12 @@
             @include('dashboard.components._side-staf')
             @endif
 
-            <li class="nav-item active-pro ">
+            {{-- <li class="nav-item active-pro ">
                 <a class="nav-link" href="{{asset('backend/examples/upgrade.html')}}">
-                    <p>SELAMAT SIANG</p>
-                    <p> {{ Str::upper( Auth::user()->nama ) }} !</p>
-                </a>
-            </li>
+            <p>SELAMAT SIANG</p>
+            <p> {{ Str::upper( Auth::user()->nama ) }} !</p>
+            </a>
+            </li> --}}
         </ul>
     </div>
 

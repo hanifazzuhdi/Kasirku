@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\LoginKaryawan;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class LoginController extends Controller
 {
@@ -38,6 +40,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // Login
     protected function sendLoginResponse($request)
     {
         $request->session()->regenerate();
@@ -47,6 +50,7 @@ class LoginController extends Controller
         if (auth()->user()->role_id == 1) {
             return redirect()->route('home');
         } else {
+            event(new LoginKaryawan($request->email, 'Web', 'Login'));
             return redirect()->route('staf');
         }
     }

@@ -40,11 +40,11 @@
                 </tr>
                 <tr>
                     <td>Harga Satuan</td>
-                    <td class="pl-3"> : &nbsp; Rp. {{$pembelian->harga_satuan}}</td>
+                    <td class="pl-3"> : &nbsp; Rp. {{number_format($pembelian->harga_satuan, '0', ',', '.')}}</td>
                 </tr>
                 <tr>
                     <td>Total Harga</td>
-                    <td class="pl-3"> : &nbsp; Rp. {{$pembelian->total_harga}}</td>
+                    <td class="pl-3"> : &nbsp; Rp. {{number_format($pembelian->total_harga, '0', ',', '.')}}</td>
                 </tr>
             </table>
         </div>

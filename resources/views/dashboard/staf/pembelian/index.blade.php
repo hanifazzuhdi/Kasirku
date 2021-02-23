@@ -1,9 +1,5 @@
 @extends('layouts.master', ['title' => 'Staff - Data Pembelian | ' . config('app.name') . '.com'])
 
-@section('css')
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endsection
-
 @section('content')
 
 <div class="row">

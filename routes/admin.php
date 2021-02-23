@@ -9,7 +9,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Laporan
-Route::get('/laporan', 'LaporanController@index')->name('admin.laporan');
+Route::prefix('laporan')->group(function () {
+    // Stok
+
+    // Pembelian
+    Route::get('/laporan-pembelian', 'LaporanController@pembelian')->name('admin.laporan.pembelian');
+    Route::get('laporan-pembelian/cetak', 'LaporanController@cetakPembelian')->name('admin.laporan.cetak');
+    Route::post('/laporan-pembelian', 'LaporanController@cari')->name('admin.pembelian.cari');
+
+    // Penjualan
+    Route::get('/laporan-penjualan', 'LaporanController@penjualan')->name('admin.laporan.penjualan');
+    Route::post('/laporan-penjualan', 'LaporanController@cariPenjualan')->name('admin.penjualan.cari');
+
+    // Laba-rugi
+});
+
 
 // Member
 Route::get('/daftar-member', 'MemberController@index')->name('admin.member');

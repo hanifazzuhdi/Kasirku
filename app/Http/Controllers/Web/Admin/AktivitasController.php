@@ -16,7 +16,7 @@ class AktivitasController extends Controller
      */
     public function index()
     {
-        $datas = Log::where('date', date('Y-m-d'))->paginate(10);
+        $datas = Log::where('date', date('Y-m-d'))->orderBy('id', 'DESC')->paginate(10);
 
         return view('dashboard.admin.aktivitas', compact('datas'));
     }
@@ -28,11 +28,10 @@ class AktivitasController extends Controller
      */
     public function cari(Request $request)
     {
-
         $tanggal = $request->datefilter;
         $tHasil = explode(' - ', $tanggal);
 
-        $datas = Log::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->paginate(10);
+        $datas = Log::whereBetween('created_at', [$tHasil[0] . ' 00:00:00', $tHasil[1] . ' 23:59:59'])->orderBy('id', 'DESC')->paginate(10);
 
         return view('dashboard.admin.aktivitas', compact('datas'));
     }

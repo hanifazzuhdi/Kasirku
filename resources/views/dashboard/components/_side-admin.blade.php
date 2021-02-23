@@ -4,11 +4,30 @@
         <p>Dashboard</p>
     </a>
 </li>
-<li class="nav-item{{request()->is('admin/laporan') ? ' active' : ''}}">
-    <a class="nav-link" href="{{route('admin.laporan')}}">
+<li class="nav-item">
+    <a class="nav-link{{explode('/',request()->path())[1] == 'laporan' ? ' collapse-pilih' : ''}}"
+        href="#laporanCollapse" data-toggle="collapse" aria-expanded="false" aria-controls="laporanCollapse">
         <i class="material-icons">library_books</i>
         <p>Laporan</p>
     </a>
+
+    <div class="collapse{{explode('/',request()->path())[1] == 'laporan' ? ' show' : ''}}" id="laporanCollapse">
+        <a class="collapse-item{{ request()->is("nasabah") ? ' active' : '' }}" href="">
+            Laporan Stok
+        </a>
+        <a class="collapse-item{{request()->is('admin/laporan/laporan-pembelian') ? ' collapse-active' : ''}}"
+            href="{{route('admin.laporan.pembelian')}}">
+            Laporan Pembelian
+        </a>
+        <a class="collapse-item{{ request()->is("admin/laporan/laporan-penjualan") ? ' collapse-active' : '' }}"
+            href="{{route('admin.laporan.penjualan')}}">
+            Laporan Penjualan
+        </a>
+        <a class="collapse-item{{ request()->is("nasabah") ? ' active' : '' }}" href="">
+            Laporan Laba Rugi
+        </a>
+    </div>
+
 </li>
 <li class="nav-item{{request()->is('admin/daftar-member') ? ' active' : ''}}">
     <a class="nav-link" href="{{route('admin.member')}}">

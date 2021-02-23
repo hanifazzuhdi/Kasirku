@@ -104,12 +104,10 @@ class StaffController extends Controller
     {
         $pembelians = Pembelian::with('supplier')->where('id', $pembelian->id)->get();
 
-        // return view('dashboard.staf.pembelian._cetak', compact('pembelians'));
-
         $pdf = App::make('dompdf.wrapper');
 
         $pdf->loadView('dashboard.staf.pembelian._cetak', compact('pembelians'));
 
-        return $pdf->download('invoice.pdf');
+        return $pdf->stream('invoice.pdf');
     }
 }
