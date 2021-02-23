@@ -2,17 +2,31 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
-use App\Exports\UsersExport;
-use App\Models\{Pembelian, Transaksi};
+use App\Models\{Keranjang, Pembelian, Transaksi};
+use App\Exports\{PembelianExport, PenjualanExport};
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
+    // Laporan Stok
+    public function stok()
+    {
+        $pembelian = Pembelian::get()->toArray();
+
+        $keranjang = Keranjang::get()->toArray();
+
+        $datas = array_merge($pembelian, $keranjang);
+
+        dd($datas);
+
+        return view('dashboard.admin.laporan.stok', compact('pembelian', 'keranjang'));
+    }
+
     // Laporan pembelian
     public function pembelian()
     {
@@ -45,7 +59,7 @@ class LaporanController extends Controller
 
     public function cetakPembelian()
     {
-        return Excel::download(new UsersExport, 'laporan-pembelian.xlsx');
+        return Excel::download(new PembelianExport, 'laporan-pembelian.xlsx');
     }
 
     // Laporan Penjualan
@@ -76,5 +90,25 @@ class LaporanController extends Controller
         }
 
         return view('dashboard.admin.laporan.penjualan', compact('datas'));
+    }
+
+    public function cetakPenjualan(Transaksi $transaksi)
+    {
+        $keranjang = Keranjang::where('transaksi_id', $transaksi->id)->get();
+
+        $penjualan = Transaksi::with('kasir')->where('id', $transaksi->id)->first();
+
+        $pdf = App::make('dompdf.wrapper');
+
+        $pdf->setPaper('A5');
+
+        $pdf->loadView('dashboard.admin.laporan._cetak-penjualan', compact('keranjang', 'penjualan'));
+
+        return $pdf->stream('Laporan-penjualan.pdf');
+    }
+
+    public function exportPenjualan()
+    {
+        return Excel::download(new PenjualanExport, 'laporan-penjualan.xlsx');
     }
 }

@@ -14,7 +14,7 @@
             </button>
         </div>
 
-        <div class="w-25">
+        <div class="w-25 selector" title="Filter Tanggal">
             <input class="form-control rounded" id="daterange"
                 style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%"
                 name="datefilter">
@@ -26,9 +26,13 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header card-header-warning">
+            <div class="card-header card-header-warning d-flex justify-content-between">
                 <h4 class="card-title font-weight-bold font-weight-bold mt-0">Laporan Transaksi Penjualan</h4>
-                <p class="card-category">Hingga {{ date('d, F Y H:i') }} WIB</p>
+
+                <a href="{{route('admin.penjualan.export')}}"
+                    class="btn btn-just-icon btn-sm text-dark mr-2 bg-light selector" title="Export to Excel">
+                    <i class="material-icons">sim_card_download</i>
+                </a>
             </div>
             <div class="card-body mt-3">
                 <div class="table-responsive">
@@ -61,7 +65,7 @@
                                         </i>
                                     </span>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
-                                        <a href="{{route('pembelian.cetak', [$data->id])}}"
+                                        <a href="{{route('admin.penjualan.cetak', [$data->id])}}"
                                             class="nav-link text-dark">Cetak</a>
                                     </div>
                                 </td>
@@ -123,6 +127,8 @@
                 myForm.submit();
             }, 10);
         });
+
+        $( ".selector" ).tooltip({ show: { effect: 'none', duration: 0 } });
 
     });
 </script>

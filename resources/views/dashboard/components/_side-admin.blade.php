@@ -12,7 +12,8 @@
     </a>
 
     <div class="collapse{{explode('/',request()->path())[1] == 'laporan' ? ' show' : ''}}" id="laporanCollapse">
-        <a class="collapse-item{{ request()->is("nasabah") ? ' active' : '' }}" href="">
+        <a class="collapse-item{{ request()->is("admin/laporan/laporan-stok") ? ' collapse-active' : '' }}"
+            href="{{route('admin.laporan.stok')}}">
             Laporan Stok
         </a>
         <a class="collapse-item{{request()->is('admin/laporan/laporan-pembelian') ? ' collapse-active' : ''}}"

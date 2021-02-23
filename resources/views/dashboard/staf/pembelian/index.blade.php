@@ -60,8 +60,8 @@
                             <tr>
                                 <td>{{$data->id}}</td>
                                 <td>{{$data->supplier->nama_supplier}}</td>
-                                <td>{{$data->barang}}</td>
-                                <td>{{$data->total_barang}}</td>
+                                <td>{{$data->nama_barang}}</td>
+                                <td>{{$data->pcs}}</td>
                                 <td>{{$data->harga_satuan }}</td>
                                 <td>{{$data->total_harga}}</td>
                                 {{-- <td>{{$data->status == 0 ? 'Produk Belum diupdate' : 'Sudah diupdate' }}</td> --}}

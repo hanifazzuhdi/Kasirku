@@ -54,8 +54,8 @@
                             <tr>
                                 <td>{{$data->id}}</td>
                                 <td>{{$data->supplier->nama_supplier}}</td>
-                                <td>{{$data->barang}}</td>
-                                <td>{{$data->total_barang}}</td>
+                                <td>{{$data->nama_barang}}</td>
+                                <td>{{$data->pcs}}</td>
                                 <td>Rp. {{ number_format($data->harga_satuan, '0', ',', '.')}}</td>
                                 <td>Rp. {{ number_format($data->total_harga, '0', ',', '.')}}</td>
                                 <td>{{$data->created_at}}</td>

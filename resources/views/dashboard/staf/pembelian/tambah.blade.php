@@ -15,7 +15,7 @@
             <div class="row mt-4">
                 <div class="col-md-6">
                     <label class="text-dark mb-3">Supplier : </label>
-                    <select required class="form-control" name="supplier" id="selectSupp">
+                    <select required class="form-control" name="supplier_id" id="selectSupp">
                         @foreach ($datas as $data)
                         <option value="{{$data->id}}"> {{$data->nama_supplier}} </option>
                         @endforeach
@@ -27,14 +27,14 @@
 
                 <div class="col-md-6">
                     <label class="text-dark">Nama Barang : </label>
-                    <input required name="barang" type="text" class="form-control">
+                    <input required name="nama_barang" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="row mt-5">
                 <div class="col-md-6">
                     <label class="text-dark">Total Barang : </label>
-                    <input required name="total_barang" type="text" class="form-control">
+                    <input required name="pcs" type="text" class="form-control">
                 </div>
 
                 <div class="col-md-6">
@@ -70,8 +70,8 @@
     $(function (){
         $('#selectSupp').select2();
 
-        $('input[name="total_barang"], input[name="harga_satuan"]').keyup(function(){
-           var total = parseInt($('input[name="total_barang"]').val()) || 0;
+        $('input[name="pcs"], input[name="harga_satuan"]').keyup(function(){
+           var total = parseInt($('input[name="pcs"]').val()) || 0;
            var satuan = parseInt($('input[name="harga_satuan"]').val()) || 0;
 
            let totalHarga = parseInt(total) * parseInt(satuan);

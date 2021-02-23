@@ -36,9 +36,9 @@ class PembelianController extends Controller
         DB::beginTransaction();
         $data = Pembelian::create([
             'supplier_id'   => $request->input('supplier'),
-            'barang'        => $request->input('barang'),
+            'nama_barang'   => $request->input('barang'),
             'harga_satuan'  => $request->input('harga_satuan'),
-            'total_barang'  => $request->input('total_barang'),
+            'pcs'  => $request->input('total_barang'),
             'total_harga'   => $request->input('harga_satuan') * $request->input('total_barang')
         ]);
 
