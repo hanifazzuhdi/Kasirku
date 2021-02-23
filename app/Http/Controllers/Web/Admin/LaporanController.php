@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
-use App\Models\{Keranjang, Pembelian, Transaksi};
+use App\Models\{Keranjang, Pembelian, Pengeluaran, Transaksi};
 use App\Exports\{PembelianExport, PenjualanExport};
 
 use Carbon\Carbon;
@@ -13,24 +13,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
-    // Laporan Stok
-    public function stok()
-    {
-        $pembelian = Pembelian::get()->toArray();
-
-        $keranjang = Keranjang::get()->toArray();
-
-        $datas = array_merge($pembelian, $keranjang);
-
-        dd($datas);
-
-        return view('dashboard.admin.laporan.stok', compact('pembelian', 'keranjang'));
-    }
-
     // Laporan pembelian
     public function pembelian()
     {
-        $datas = Pembelian::paginate(10);
+        $datas = Pembelian::orderBy('id', 'DESC')->paginate(10);
 
         return view('dashboard.admin.laporan.pembelian', compact('datas'));
     }
@@ -46,12 +32,12 @@ class LaporanController extends Controller
             $tAkhir = Carbon::create($tanggal[1]);
             $tAkhir = date_format($tAkhir, 'Y-m-d');
 
-            $datas = Pembelian::whereBetween('created_at', [$tAwal . ' 00:00:00', $tAkhir . ' 23:59:59'])->paginate(10);
+            $datas = Pembelian::whereBetween('created_at', [$tAwal . ' 00:00:00', $tAkhir . ' 23:59:59'])->orderBy('id', 'DESC')->paginate(10);
         } else {
 
             $datas = Pembelian::whereHas('supplier', function ($q) {
                 $q->where('nama_supplier', 'LIKE', '%' . request('search') . '%');
-            })->paginate(10);
+            })->orderBy('id', 'DESC')->paginate(10);
         }
 
         return view('dashboard.admin.laporan.pembelian', compact('datas'));
@@ -65,7 +51,7 @@ class LaporanController extends Controller
     // Laporan Penjualan
     public function penjualan()
     {
-        $datas = Transaksi::with('kasir')->paginate(10);
+        $datas = Transaksi::with('kasir')->orderBy('id', 'DESC')->paginate(10);
 
         return view('dashboard.admin.laporan.penjualan', compact('datas'));
     }
@@ -81,12 +67,12 @@ class LaporanController extends Controller
             $tAkhir = Carbon::create($tanggal[1]);
             $tAkhir = date_format($tAkhir, 'Y-m-d');
 
-            $datas = Transaksi::whereBetween('created_at', [$tAwal . ' 00:00:00', $tAkhir . ' 23:59:59'])->paginate(10);
+            $datas = Transaksi::whereBetween('created_at', [$tAwal . ' 00:00:00', $tAkhir . ' 23:59:59'])->orderBy('id', 'DESC')->paginate(10);
         } else {
 
             $datas = Transaksi::whereHas('kasir', function ($q) {
                 $q->where('nama', 'LIKE', '%' . request('search') . '%')->where('role_id', 3);
-            })->paginate(10);
+            })->orderBy('id', 'DESC')->paginate(10);
         }
 
         return view('dashboard.admin.laporan.penjualan', compact('datas'));
@@ -110,5 +96,34 @@ class LaporanController extends Controller
     public function exportPenjualan()
     {
         return Excel::download(new PenjualanExport, 'laporan-penjualan.xlsx');
+    }
+
+    // Laporan Laba Rugi
+    public function labaRugi()
+    {
+        $now = date('m');
+
+        /**
+         * Pendapatan
+         * 1. Penjualan
+         * 2. Pembelian
+         * 3. laba kotor
+         */
+
+        $penjualan = Transaksi::whereMonth('created_at', $now)->pluck('harga_total')->sum();
+        $pembelian = Pembelian::whereMonth('created_at', $now)->pluck('total_harga')->sum();
+
+        $labaKotor = $penjualan - $pembelian;
+
+        /**
+         * Beban Usaha
+         * 1. pengeluaran
+         */
+        $pengeluaran = Pengeluaran::whereMonth('created_at', $now)->where('jenis', 'Pengeluaran')->pluck('jumlah')->sum();
+
+        // Laba/Rugi
+        $labaRugi = $labaKotor - $pengeluaran;
+
+        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi'));
     }
 }

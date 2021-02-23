@@ -12,19 +12,16 @@
     </a>
 
     <div class="collapse{{explode('/',request()->path())[1] == 'laporan' ? ' show' : ''}}" id="laporanCollapse">
-        <a class="collapse-item{{ request()->is("admin/laporan/laporan-stok") ? ' collapse-active' : '' }}"
-            href="{{route('admin.laporan.stok')}}">
-            Laporan Stok
-        </a>
         <a class="collapse-item{{request()->is('admin/laporan/laporan-pembelian') ? ' collapse-active' : ''}}"
             href="{{route('admin.laporan.pembelian')}}">
             Laporan Pembelian
         </a>
-        <a class="collapse-item{{ request()->is("admin/laporan/laporan-penjualan") ? ' collapse-active' : '' }}"
+        <a class="collapse-item{{request()->is("admin/laporan/laporan-penjualan") ? ' collapse-active' : ''}}"
             href="{{route('admin.laporan.penjualan')}}">
             Laporan Penjualan
         </a>
-        <a class="collapse-item{{ request()->is("nasabah") ? ' active' : '' }}" href="">
+        <a class="collapse-item{{request()->is("admin/laporan/laporan-labarugi") ? ' collapse-active' : ''}}"
+            href="{{route('admin.laporan.labarugi')}}">
             Laporan Laba Rugi
         </a>
     </div>

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master', ['title' => 'Laporan Penjualan Perusahaan | ' . config('app.name') . '.com' ])
 
 @section('content')
 
@@ -65,6 +65,8 @@
                                         </i>
                                     </span>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
+                                        <a href="#" data-toggle="modal" data-target="#modalPenjualan"
+                                            class="nav-link text-dark">Detail</a>
                                         <a href="{{route('admin.penjualan.cetak', [$data->id])}}"
                                             class="nav-link text-dark">Cetak</a>
                                     </div>

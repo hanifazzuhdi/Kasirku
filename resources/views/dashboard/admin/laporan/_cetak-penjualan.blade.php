@@ -47,7 +47,7 @@
                         </small>
                         <small style="font-size: 15px">{{$item->pcs}}</small>
                         <small style="font-size: 15px"> -
-                            {{number_format($item->diskon, '0', ',', '.')}}</small>
+                            {{number_format($item->diskon, '0', ',', '.')}} (Diskon)</small>
                     </td>
                     <td>
                         <small style="font-size: 13px">{{ number_format( $item->total_harga, '0', ',', '.')}}</small>

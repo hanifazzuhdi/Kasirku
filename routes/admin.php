@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 // Laporan
 Route::prefix('laporan')->group(function () {
-    // Stok
-    Route::get('/laporan-stok', 'LaporanController@stok')->name('admin.laporan.stok');
-
     // Pembelian
     Route::get('/laporan-pembelian', 'LaporanController@pembelian')->name('admin.laporan.pembelian');
     Route::get('laporan-pembelian/cetak', 'LaporanController@cetakPembelian')->name('admin.laporan.cetak');
@@ -25,6 +22,7 @@ Route::prefix('laporan')->group(function () {
     Route::post('/laporan-penjualan', 'LaporanController@cariPenjualan')->name('admin.penjualan.cari');
 
     // Laba-rugi
+    Route::get('/laporan-labarugi', 'LaporanController@labaRugi')->name('admin.laporan.labarugi');
 });
 
 
