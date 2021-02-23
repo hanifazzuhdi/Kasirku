@@ -14,10 +14,6 @@ class Barang extends Model
         'kategori_id', 'merek_id', 'stok', 'diskon'
     ];
 
-    protected $hidden = [
-        'id'
-    ];
-
     // relation
     public function kategori()
     {
