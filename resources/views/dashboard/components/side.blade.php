@@ -3,7 +3,7 @@
     data-image="{{asset('backend/assets/img/sidebar-4.jpg')}}">
     <div class="logo">
         <a href="#" class="simple-text logo-normal">
-            KASIR
+            {{ Str::upper( config('app.name'))}}
         </a>
     </div>
 

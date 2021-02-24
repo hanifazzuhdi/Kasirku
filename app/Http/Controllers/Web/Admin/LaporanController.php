@@ -101,7 +101,7 @@ class LaporanController extends Controller
     // Laporan Laba Rugi
     public function labaRugi()
     {
-        $now = date('m');
+        $bulan = date('m');
 
         /**
          * Pendapatan
@@ -110,8 +110,8 @@ class LaporanController extends Controller
          * 3. laba kotor
          */
 
-        $penjualan = Transaksi::whereMonth('created_at', $now)->pluck('harga_total')->sum();
-        $pembelian = Pembelian::whereMonth('created_at', $now)->pluck('total_harga')->sum();
+        $penjualan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
+        $pembelian = Pembelian::whereMonth('created_at', $bulan)->pluck('total_harga')->sum();
 
         $labaKotor = $penjualan - $pembelian;
 
@@ -119,11 +119,93 @@ class LaporanController extends Controller
          * Beban Usaha
          * 1. pengeluaran
          */
-        $pengeluaran = Pengeluaran::whereMonth('created_at', $now)->where('jenis', 'Pengeluaran')->pluck('jumlah')->sum();
+        $pengeluaran = Pengeluaran::whereMonth('created_at', $bulan)->where('jenis', 'Pengeluaran')->pluck('jumlah')->sum();
 
         // Laba/Rugi
         $labaRugi = $labaKotor - $pengeluaran;
 
-        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi'));
+        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi', 'bulan'));
+    }
+
+    public function labaCari(Request $request)
+    {
+        $bulan = explode('-', $request->bulan)[1];
+
+        $penjualan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
+        $pembelian = Pembelian::whereMonth('created_at', $bulan)->pluck('total_harga')->sum();
+
+        $labaKotor = $penjualan - $pembelian;
+
+        $pengeluaran = Pengeluaran::whereMonth('created_at', $bulan)->where('jenis', 'Pengeluaran')->pluck('jumlah')->sum();
+
+        $labaRugi = $labaKotor - $pengeluaran;
+
+        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi', 'bulan'));
+    }
+
+    // Laporan Pemasukan
+    public function pemasukan()
+    {
+        $hari = date('d');
+        $bulan = date('m');
+
+        $dt = Carbon::parse('2012-' . $bulan . '-5 23:26:11.123789');
+        $bulanName = $dt->monthName;
+
+        $hari = Transaksi::whereDay('created_at', $hari)->pluck('harga_total')->sum();
+        $tBulan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
+
+        $pemasukan = Transaksi::whereMonth('created_at', $bulan)->get();
+
+        return view('dashboard.admin.laporan.pemasukan', compact('hari', 'bulan', 'tBulan', 'bulanName', 'pemasukan'));
+    }
+
+    public function cariPemasukan(Request $request)
+    {
+        $hari = date('d');
+        $bulan = explode('-', $request->bulan)[1];
+
+        $dt = Carbon::parse('2012-' . $bulan . '-5 23:26:11.123789');
+        $bulanName = $dt->monthName;
+
+        $hari = Transaksi::whereDay('created_at', $hari)->pluck('harga_total')->sum();
+        $tBulan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
+
+        $pemasukan = Transaksi::whereMonth('created_at', $bulan)->get();
+
+        return view('dashboard.admin.laporan.pemasukan', compact('hari', 'bulan', 'tBulan', 'bulanName', 'pemasukan'));
+    }
+
+    // Laporan Pengeluaran
+    public function pengeluaran()
+    {
+        $hari = date('d');
+        $bulan = date('m');
+
+        $dt = Carbon::parse('2012-' . $bulan . '-5 23:26:11.123789');
+        $bulanName = $dt->monthName;
+
+        $hari   = Pengeluaran::whereDay('created_at', $hari)->pluck('jumlah')->sum();
+        $tBulan = Pengeluaran::whereMonth('created_at', $bulan)->pluck('jumlah')->sum();
+
+        $pengeluaran = Pengeluaran::whereMonth('created_at', $bulan)->get();
+
+        return view('dashboard.admin.laporan.pengeluaran', compact('bulan', 'hari', 'tBulan', 'bulanName', 'pengeluaran'));
+    }
+
+    public function cariPengeluaran(Request $request)
+    {
+        $hari = date('d');
+        $bulan = explode('-', $request->bulan)[1];
+
+        $dt = Carbon::parse('2012-' . $bulan . '-5 23:26:11.123789');
+        $bulanName = $dt->monthName;
+
+        $hari = Transaksi::whereDay('created_at', $hari)->pluck('harga_total')->sum();
+        $tBulan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
+
+        $pengeluaran = Pengeluaran::whereMonth('created_at', $bulan)->get();
+
+        return view('dashboard.admin.laporan.pengeluaran', compact('bulan', 'hari', 'tBulan', 'bulanName', 'pengeluaran'));
     }
 }

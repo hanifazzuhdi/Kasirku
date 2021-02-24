@@ -1,11 +1,6 @@
-@extends('layouts.master', ['title' => 'Daftar Produk | tokoku.com'])
-
-@section('css')
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endsection
+@extends('layouts.master', ['title' => 'Daftar Produk | ' . config('app.name') . '.com'])
 
 @section('content')
-
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -92,12 +87,8 @@
 </div>
 
 @include('dashboard.admin.produk._modal')
-
 @endsection
 
 @section('scripts')
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 @include('dashboard.admin.produk._script')
 @endsection

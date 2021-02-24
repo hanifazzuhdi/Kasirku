@@ -1,11 +1,6 @@
-@extends('layouts.master', ['title' => 'Daftar Supplier | '])
-
-@section('css')
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endsection
+@extends('layouts.master', ['title' => 'Daftar Supplier | ' . config('app.name') .'.com'])
 
 @section('content')
-
 <div class="content">
     <div class="container-fluid">
 
@@ -52,7 +47,7 @@
                                 </div>
                             </div>
 
-                            <table class="table" id="dataTables">
+                            <table class="table text-center" id="dataTables">
                                 <thead class=" text-warning">
                                     <th>ID</th>
                                     <th>Nama</th>
@@ -82,12 +77,9 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('scripts')
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
     // date picker
     $('input[name="datefilter"]').daterangepicker({
@@ -114,5 +106,4 @@
     });
 
 </script>
-
 @endsection

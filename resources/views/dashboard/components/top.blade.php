@@ -2,9 +2,19 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
     <div class="container-fluid">
         <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Dashboard</a>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+            <a class="navbar-brand" href="/dashboard/admin">
+                @if ( explode('/', request()->path())[0] == 'dashboard' )
+                <i class="material-icons pb-1">
+                    home
+                </i>
+                Dashboard
+                @else
+                <i class="material-icons pb-1">
+                    reply_all
+                </i> Go to Dashboard
+                @endif
+            </a>
+        </div> <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>

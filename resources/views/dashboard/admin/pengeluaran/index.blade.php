@@ -1,4 +1,4 @@
-@extends('layouts.master', ['title' => 'Pengeluaran Perusahaan | tokoku.com'])
+@extends('layouts.master', ['title' => 'Pengeluaran Perusahaan | ' . config('app.name') . '.com'])
 
 @section('content')
 

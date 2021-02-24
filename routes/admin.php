@@ -23,8 +23,16 @@ Route::prefix('laporan')->group(function () {
 
     // Laba-rugi
     Route::get('/laporan-labarugi', 'LaporanController@labaRugi')->name('admin.laporan.labarugi');
-});
+    Route::post('/laporan-labarugi', 'LaporanController@labaCari')->name('admin.labarugi.cari');
 
+    // Pemasukan
+    Route::get('/laporan-pemasukan', 'LaporanController@pemasukan')->name('admin.laporan.pemasukan');
+    Route::post('/laporan-pemasukan', 'LaporanController@cariPemasukan')->name('admin.pemasukan.cari');
+
+    // Pengeluaran
+    Route::get('/laporan-pengeluaran', 'LaporanController@pengeluaran')->name('admin.laporan.pengeluaran');
+    Route::post('/laporan-pengeluaran', 'LaporanController@cariPengeluaran')->name('admin.pengeluaran.cari');
+});
 
 // Member
 Route::get('/daftar-member', 'MemberController@index')->name('admin.member');

@@ -18,6 +18,6 @@
     </div>
     @endforeach
     <div class="card-footer d-flex justify-content-end mr-4">
-        <a href="#"> See all </a>
+        <a href="{{route('admin.laporan.pengeluaran')}}"> See all </a>
     </div>
 </div>

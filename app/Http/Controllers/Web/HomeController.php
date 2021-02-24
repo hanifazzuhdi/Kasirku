@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Models\{Log, Member};
+use App\Models\{Log, Member, Pembelian, Pengeluaran, Transaksi};
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -18,8 +17,10 @@ class HomeController extends Controller
     {
         $member = Member::MemberActive()->count();
         $logs = Log::orderBy('id', 'DESC')->limit(3)->get();
+        $penjualan = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total');
+        $pengeluaran = Pengeluaran::whereMonth('created_at', date('m'))->pluck('jumlah')->sum();
 
-        return view('dashboard.admin.home.index', compact('member', 'logs'));
+        return view('dashboard.admin.home.index', compact('member', 'logs', 'penjualan', 'pengeluaran'));
     }
 
     public function staf()

@@ -1,4 +1,4 @@
-@extends('layouts.master',['title' => 'Daftar Member | tokoku.com'])
+@extends('layouts.master',['title' => 'Daftar Member | ' . config('app.name') . '.com'])
 
 @section('content')
 

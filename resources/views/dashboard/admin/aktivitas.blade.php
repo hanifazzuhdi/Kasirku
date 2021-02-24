@@ -1,16 +1,11 @@
-@extends('layouts.master')
-
-@section('css')
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endsection
+@extends('layouts.master',['title' => 'Absensi Karyawan | ' . config('app.name') .'.com'] )
 
 @section('content')
-
 <div class="col-md-12">
     <div class="card card-plain">
         <div class="card-header card-header-warning">
             <h4 class="card-title font-weight-bold mt-0"> Aktifitas Karyawan</h4>
-            <p class="card-category">Absen Hari Ini {{ date('d, F Y H:i') }} WIB</p>
+            <p class="card-category">Absen Hari Ini {{ date('d, F Y') }}</p>
         </div>
         <div class="my-2 d-flex justify-content-end">
 
@@ -59,14 +54,9 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('scripts')
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 <script>
     // date picker
      $('input[name="datefilter"]').daterangepicker({
@@ -92,5 +82,4 @@
             }, 10);
         });
 </script>
-
 @endsection
