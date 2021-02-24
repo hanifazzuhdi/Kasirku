@@ -17,7 +17,7 @@ class LogoutController extends Controller
     {
         $user = Auth::user();
 
-        JWTAuth::invalidate(JWTAuth::getToken());
+        JWTAuth::invalidate(Auth::id());
 
         event(new LoginKaryawan($user->email, 'Mobile', 'Logout'));
 

@@ -190,7 +190,7 @@ md = {
       dataDailySalesChart = {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         series: [
-          [12, 17, 7, 17, 23, 18, 38]
+          [12, 17, 7, 17, 23, 18, 308]
         ]
       };
 
@@ -309,13 +309,19 @@ md = {
 
   initDashboardPageCharts: function() {
 
-    if ($('#dailySalesChart').length != 0 || $('#completedTasksChart').length != 0 || $('#websiteViewsChart').length != 0) {
+    if ($('#dailySalesChart').length != 0 || $('#completedTasksChart').length != 0) {
       /* ----------==========     Daily Sales Chart initialization    ==========---------- */
+
+      let id = document.querySelector('#dailySalesChart');
+
+      let data = $(id).data('penghasilan');
+
+      console.log(data);
 
       dataDailySalesChart = {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         series: [
-          [12, 17, 7, 17, 23, 18, 38]
+          data
         ]
       };
 
@@ -323,28 +329,35 @@ md = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0
         }),
-        low: 0,
-        high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+
         chartPadding: {
           top: 0,
           right: 0,
           bottom: 0,
           left: 0
         },
+
+        axisY: {
+            // Lets offset the chart a bit from the labels
+            offset: 60,
+
+            labelInterpolationFnc: function(value) {
+            return value;
+            }
+        }
       }
 
       var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
 
       md.startAnimationForLineChart(dailySalesChart);
 
-
-
       /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
+
       dataCompletedTasksChart = {
-        labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'],
         series: [
-          [230, 750, 450, 300, 280, 240, 200, 190]
+          [3000000]
         ]
       };
 
@@ -352,17 +365,17 @@ md = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0
         }),
-        low: 0,
-        high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        // low: -10,
+        // high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
         chartPadding: {
           top: 0,
           right: 0,
           bottom: 0,
-          left: 0
-        }
+          left: 10
+        },
       }
 
-      var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+      var completedTasksChart = new Chartist.Bar('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
 
       // start animation for the Completed Tasks Chart - Line Chart
       md.startAnimationForLineChart(completedTasksChart);

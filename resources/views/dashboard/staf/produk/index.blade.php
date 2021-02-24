@@ -1,9 +1,5 @@
 @extends('layouts.master', ['title' => 'Staff - Daftar Produk | ' . config('app.name') . '.com'])
 
-@section('css')
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endsection
-
 @section('content')
 
 <div class="content">
@@ -73,7 +69,7 @@
                                         <td>{{$data->updated_at}}</td>
                                         <td>
                                             <a data-toggle="modal" data-target="#modal-show" data-id="{{$data->id}}"
-                                                href="#"> Detail
+                                                href="{{route('admin.produk.show', [$data->id])}}"> Detail
                                             </a>
                                         </td>
                                     </tr>
@@ -96,10 +92,6 @@
 @endsection
 
 @section('scripts')
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 <script>
     $(function () {
         // modal
@@ -151,5 +143,4 @@
         });
     });
 </script>
-
 @endsection

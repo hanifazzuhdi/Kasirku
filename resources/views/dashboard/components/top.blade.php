@@ -9,7 +9,7 @@
                 </i>
                 Dashboard
                 @else
-                <i class="material-icons pb-1">
+                <i class="material-icons pb-2">
                     reply_all
                 </i> Go to Dashboard
                 @endif

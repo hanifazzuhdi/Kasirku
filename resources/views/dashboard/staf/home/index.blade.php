@@ -1,4 +1,4 @@
-@extends('layouts.master', ['title' => 'Dashboard Staff'])
+@extends('layouts.master', ['title' => 'Dashboard Staff | ' . config('app.name') . '.com'])
 
 @section('content')
 

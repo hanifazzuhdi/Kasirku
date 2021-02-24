@@ -25,3 +25,10 @@
         <p>Daftar Produk</p>
     </a>
 </li>
+
+<li class="nav-item{{request()->is('staff/tambah-pembelian') ? ' active' : ''}}">
+    <a class="nav-link" href="{{route('staf.pembelian.create')}}">
+        <i class="material-icons">library_add</i>
+        <p>Tambah Produk</p>
+    </a>
+</li>

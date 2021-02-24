@@ -56,10 +56,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <!-- Library for adding dinamically elements -->
     <script src="{{asset('backend/assets/js/plugins/arrive.min.js')}}"></script>
-    <!-- Chartist JS -->
-    <script src="{{asset('backend/assets/js/plugins/chartist.min.js')}}"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('backend/assets/js/material-dashboard.js?v=2.1.2')}}" type="text/javascript"></script>
+
+
 
     @include('dashboard.components.script')
 
