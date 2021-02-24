@@ -21,7 +21,7 @@ class LogoutController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'Token deleted successfully'
+            'message' => 'Berhasil Logout'
         ], 200);
     }
 }
