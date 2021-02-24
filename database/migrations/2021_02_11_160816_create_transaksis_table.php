@@ -22,7 +22,6 @@ class CreateTransaksisTable extends Migration
             $table->tinyInteger('status')->default(0);
             $table->unsignedBigInteger('kasir_id');
             $table->timestamps();
-            $table->string('hari')->default(date('d'));
 
             $table->foreign('kasir_id')->references('id')->on('users');
         });

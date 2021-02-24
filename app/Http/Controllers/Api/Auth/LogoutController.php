@@ -17,11 +17,13 @@ class LogoutController extends Controller
     {
         $user = Auth::user();
 
+        JWTAuth::invalidate(Auth::id());
+
         event(new LoginKaryawan($user->email, 'Mobile', 'Logout'));
 
         return response([
             'status' => 'success',
-            'message' => 'Berhasil Logout'
+            'message' => 'Token deleted successfully'
         ], 200);
     }
 }
