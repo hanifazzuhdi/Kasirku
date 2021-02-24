@@ -61,6 +61,23 @@ class HomeController extends Controller
 
     public function staf()
     {
-        return view('dashboard.staf.home.index');
+        $waktu = date('H');
+
+        switch (true) {
+            case $waktu >= '02' and $waktu <= '10':
+                $sapa = 'Pagi';
+                break;
+            case $waktu >= '11' and $waktu <= '15':
+                $sapa = 'Siang';
+                break;
+            case $waktu >= '16' and $waktu <= '18':
+                $sapa = 'Petang';
+                break;
+            default:
+                $sapa = 'Malam';
+                break;
+        }
+
+        return view('dashboard.staf.home.index', compact('sapa'));
     }
 }
