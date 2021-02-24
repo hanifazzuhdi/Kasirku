@@ -6,6 +6,7 @@ use App\Models\{Member, Pembelian, Pengeluaran, Supplier};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PembelianResource;
 use Illuminate\Support\Facades\DB;
 
 class PembelianController extends Controller
@@ -16,11 +17,13 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        $data = Pembelian::get();
+        $data = Pembelian::with('supplier')->get();
 
         if (count($data) == null) {
             return $this->sendResponse('failed', 'data pembelian kosong', null, 404);
         }
+
+        $data = PembelianResource::collection($data);
 
         return $this->sendResponse('success', 'data berhasil dimuat', $data, 200);
     }

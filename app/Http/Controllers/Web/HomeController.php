@@ -20,6 +20,10 @@ class HomeController extends Controller
         $penjualan = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total');
         $pengeluaran = Pengeluaran::whereMonth('created_at', date('m'))->pluck('jumlah')->sum();
 
+        $now = date('d');
+
+
+
         return view('dashboard.admin.home.index', compact('member', 'logs', 'penjualan', 'pengeluaran'));
     }
 

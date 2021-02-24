@@ -57,8 +57,8 @@
             <div class="card-icon">
                 <i class="fa fa-file-invoice-dollar" aria-hidden="true"></i>
             </div>
-            <p class="card-category">Laba / Rugi</p>
-            <h3 class="card-title">{{$pengeluaran}}</h3>
+            <p class="card-category">Pengeluaran</p>
+            <h3 class="card-title">Rp.{{number_format($pengeluaran,'0', ',', '.')}}</h3>
         </div>
         <div class="card-footer">
             <div class="stats">
