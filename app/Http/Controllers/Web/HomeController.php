@@ -22,8 +22,10 @@ class HomeController extends Controller
         $penjualan = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total');
         $pengeluaran = Pengeluaran::whereMonth('created_at', date('m'))->pluck('jumlah')->sum();
 
-        $senin = Carbon::now()->startOfWeek()->format('Y-m-d H:i:s');
-        $minggu = Carbon::now()->endOfWeek()->format('Y-m-d H:i:s');
+        $senin = Carbon::now()->startOfWeek(Carbon::MONDAY);
+        $minggu = Carbon::now()->endOfWeek(Carbon::SUNDAY);
+
+        dump($senin);
 
         $penghasilan = DB::table('transaksis')
             ->select(DB::raw("SUM(harga_total) AS penghasilan"))
@@ -59,6 +61,7 @@ class HomeController extends Controller
         return view('dashboard.admin.home.index', compact('member', 'logs', 'penjualan', 'pengeluaran', 'penghasilan', 'labaRugi'));
     }
 
+    // Home Admin
     public function staf()
     {
         $waktu = date('H');

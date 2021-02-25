@@ -67,7 +67,7 @@
                                         </i>
                                     </span>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
-                                        <a href="{{route('pembelian.cetak', [$data->id])}}"
+                                        <a href="{{route('pembelian.cetak', [$data->id])}}" target="_blank"
                                             class="nav-link text-dark">Cetak</a>
                                     </div>
                                 </td>

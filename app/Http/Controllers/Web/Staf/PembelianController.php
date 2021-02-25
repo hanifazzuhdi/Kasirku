@@ -50,20 +50,6 @@ class PembelianController extends Controller
         return view('dashboard.staf.pembelian.tambah', compact('datas'));
     }
 
-    // Buat Supplier Baru
-    public function addSupplier(Request $request)
-    {
-        $data = $this->validate($request, [
-            'nama_supplier' => 'required'
-        ]);
-
-        Supplier::create($data);
-
-        Alert::toast('Supplier berhasil ditambahkan', 'success');
-
-        return back();
-    }
-
     // Buat data pembelian baru
     public function store(Request $request)
     {
@@ -102,6 +88,8 @@ class PembelianController extends Controller
         $pembelians = Pembelian::with('supplier')->where('id', $pembelian->id)->get();
 
         $pdf = App::make('dompdf.wrapper');
+
+        $pdf->setPaper('A5');
 
         $pdf->loadView('dashboard.staf.pembelian._cetak', compact('pembelians'));
 

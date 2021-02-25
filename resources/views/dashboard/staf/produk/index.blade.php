@@ -37,7 +37,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMember">
                                         <small class="text-rose ml-2">Filter Tanggal</small>
-                                        <form action="{{ route('admin.produk.cari') }}" method="post" id="target">
+                                        <form action="{{ route('staf.produk.cari') }}" method="post" id="target">
                                             <input class="dropdown-item" type="text" name="datefilter"
                                                 placeholder="Filter Tanggal ... " required autocomplete="off" />
                                             @csrf
@@ -87,7 +87,7 @@
     </div>
 </div>
 
-@include('dashboard.admin.produk._modal')
+@include('dashboard.staf.produk._modal')
 
 @endsection
 
@@ -99,8 +99,10 @@
             let id = $(this).data('id');
             console.log(id);
 
+            $('form').attr('action', '/staff/update-produk/' + id);
+
             $.ajax({
-                url: '/admin/produk/' + id,
+                url: '/staff/produk/' + id,
                 method: 'GET',
                 dataType: 'JSON',
                 success: function (data){

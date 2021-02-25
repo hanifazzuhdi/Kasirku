@@ -19,7 +19,9 @@ class LogoutController extends Controller
 
         JWTAuth::invalidate(Auth::id());
 
-        event(new LoginKaryawan($user->email, 'Mobile', 'Logout'));
+        if ($user->role_id != 1) {
+            event(new LoginKaryawan($user->email, 'Mobile', 'Logout'));
+        }
 
         return response([
             'status' => 'success',

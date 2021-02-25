@@ -28,7 +28,7 @@
             <table>
                 <tr>
                     <td>Nama Barang </td>
-                    <td class="pl-3"> : &nbsp; {{$pembelian->barang}}</td>
+                    <td class="pl-3"> : &nbsp; {{$pembelian->nama_barang}}</td>
                 </tr>
                 <tr>
                     <td>Nama Supplier</td>
@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td>Total Barang</td>
-                    <td class="pl-3"> : &nbsp; {{$pembelian->total_barang}}</td>
+                    <td class="pl-3"> : &nbsp; {{$pembelian->pcs}}</td>
                 </tr>
                 <tr>
                     <td>Harga Satuan</td>

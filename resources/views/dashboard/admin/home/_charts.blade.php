@@ -21,11 +21,11 @@
             <canvas class="ct-chart" id="bulanan"></canvas>
         </div>
         <div class="card-body">
-            <h4 class="card-title">Penghasilan Bulanan</h4>
+            <h4 class="card-title">Laba / Rugi Perusahaan </h4>
         </div>
         <div class="card-footer">
             <div class="stats">
-                <i class="material-icons">access_time</i>Hingga Bulan {{date('F')}}
+                <i class="material-icons">access_time</i>Hingga Bulan {{date('F Y')}}
             </div>
         </div>
     </div>

@@ -74,9 +74,8 @@
                                         </i>
                                     </span>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
-                                        <a href="{{route('pembelian.cetak', [$data->id])}}" class="nav-link">Cetak</a>
-
-                                        {{-- <a href="#" class="nav-link">Ubah Status</a> --}}
+                                        <a href="{{route('pembelian.cetak', [$data->id])}}" class="nav-link"
+                                            target="_blank">Cetak</a>
                                     </div>
                                 </td>
                             </tr>

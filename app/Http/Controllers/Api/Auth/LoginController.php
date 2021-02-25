@@ -41,7 +41,9 @@ class LoginController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        event(new LoginKaryawan($request->email, 'Mobile', 'Login'));
+        if ($user->role_id != 1) {
+            event(new LoginKaryawan($request->email, 'Mobile', 'Login'));
+        }
 
         return response()->json([
             'status' => 'success',
