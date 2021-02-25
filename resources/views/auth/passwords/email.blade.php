@@ -23,7 +23,7 @@
                                 class="col-md-4 col-form-label text-md-right">{{ __('Nomor Telepon : ') }}</label>
 
                             <div class="col-md-6">
-                                <input type="text" value="{{$nomor}}" readonly class="form-control">
+                                <input type="text" name="nomor" value="{{$nomor}}" readonly class="form-control">
                                 <input type="hidden" name="token" value="{{$token}}">
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                             </label>
 
                             <div class="col-md-6">
-                                <input class="form-control" type="text" name="password">
+                                <input class="form-control" type="password" name="password">
                             </div>
                         </div>
 
@@ -44,7 +44,7 @@
                             </label>
 
                             <div class="col-md-6">
-                                <input class="form-control" type="text" name="password_confirmation">
+                                <input class="form-control" type="password" name="password_confirmation">
                             </div>
                         </div>
 
