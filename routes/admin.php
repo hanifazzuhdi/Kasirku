@@ -27,10 +27,12 @@ Route::prefix('laporan')->group(function () {
 
     // Pemasukan
     Route::get('/laporan-pemasukan', 'LaporanController@pemasukan')->name('admin.laporan.pemasukan');
+    Route::get('/laporan-pemasukan/export', 'LaporanController@exportPemasukan')->name('admin.pemasukan.export');
     Route::post('/laporan-pemasukan', 'LaporanController@cariPemasukan')->name('admin.pemasukan.cari');
 
     // Pengeluaran
     Route::get('/laporan-pengeluaran', 'LaporanController@pengeluaran')->name('admin.laporan.pengeluaran');
+    Route::get('/laporan-pengeluaran/export', 'LaporanController@exportPengeluaran')->name('admin.pengeluaran.export');
     Route::post('/laporan-pengeluaran', 'LaporanController@cariPengeluaran')->name('admin.pengeluaran.cari');
 });
 

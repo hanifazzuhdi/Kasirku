@@ -14,7 +14,7 @@ class AddColumnTransaksisTable extends Migration
     public function up()
     {
         Schema::table('transaksis', function (Blueprint $table) {
-            $table->string('hari')->default(date('d'));
+            $table->string('minggu')->default(date('W'));
         });
     }
 

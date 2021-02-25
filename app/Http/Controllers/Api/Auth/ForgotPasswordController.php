@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\Member;
+
 use Illuminate\Http\Request;
 use App\Providers\MessageProvider;
 use App\Http\Controllers\Controller;

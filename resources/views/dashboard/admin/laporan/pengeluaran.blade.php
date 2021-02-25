@@ -11,7 +11,13 @@
             <input type="month" name="bulan" value="{{date('Y-' . $bulan)}}">
         </div>
 
-        <button class=" btn btn-warning btn-sm mt-0" type="submit">Filter</button>
+        <div>
+            <button class=" btn btn-warning btn-sm mt-0" type="submit">Filter</button>
+            <a href="{{route('admin.pengeluaran.export', ['bulan' => $bulan])}}"
+                class="btn btn-info btn-sm mt-0 selector" title="Export Data to Excel">
+                <i class="fas fa-file-excel"></i>
+            </a>
+        </div>
         @csrf
     </div>
     @csrf
@@ -78,7 +84,7 @@
                 <td>{{($item->created_at)}}</td>
             </tr>
             @empty
-            <div class="alert alert-warning" role="alert">
+            <div class="text-dark text-center font-weight-bold alert alert-warning" role="alert">
                 Data Belum Ada
             </div>
             @endforelse
@@ -137,7 +143,6 @@
         });
 
         $( ".selector" ).tooltip({ show: { effect: 'none', duration: 0 } });
-
     });
 </script>
 @endsection

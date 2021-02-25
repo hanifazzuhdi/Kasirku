@@ -1,13 +1,7 @@
 <?php
 
-use App\Models\Member;
-use App\Models\Payment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use Milon\Barcode\Facades\DNS1DFacade;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,50 +15,21 @@ use Milon\Barcode\Facades\DNS1DFacade;
 */
 
 Route::get('/', function () {
-    $datas = Payment::get();
-    return view('welcome', compact('datas'));
+    return view('welcome');
 });
 
 Auth::routes([
-    'register' => false
+    'register' => false,
 ]);
 
 // Route General
-Route::middleware(['auth'])->namespace('Web')->group(function () {
+Route::namespace('Web')->group(function () {
     // Admin
-    Route::get('/dashboard/admin', 'HomeController@admin')->name('home')->middleware('admin.web');
+    Route::get('/dashboard/admin', 'HomeController@admin')->name('home')->middleware('auth', 'admin.web');
     // Staf
-    Route::get('/dashboard/staff', 'HomeController@staf')->name('staf')->middleware('staf.web');
-});
+    Route::get('/dashboard/staff', 'HomeController@staf')->name('staf')->middleware('auth', 'staf.web');
 
-// route percobaan
-Route::get('/{token}/{nomor}', function ($token, $nomor) {
-    $db = DB::select("SELECT * FROM password_resets WHERE token = '$token' AND email = '$nomor'");
-
-    if (!$db) {
-        return abort('404');
-    }
-
-    return view('welcome', compact('nomor', 'token'));
-});
-
-Route::post('/lupa/password', function (Request $request) {
-
-    $request->validate([
-        'password' => 'required|confirmed'
-    ]);
-
-    $member = Member::where('nomor', $request->nomor)->first();
-
-    $status = $member->update([
-        'password' => Hash::make($request->password)
-    ]);
-
-    if ($status) {
-        DB::delete("DELETE FROM password_resets WHERE token = '$request->token' AND email = '$request->nomor'");
-
-        return response()->json(['status' => 'berhasil diubah']);
-    } else {
-        return response()->json(['status' => 'gagal ubah password']);
-    }
+    // Lupa Password Member
+    Route::get('/password/reset/{token}/{nomor}', 'LupaPassword@index');
+    Route::post('/lupa/password', 'LupaPassword@ubahPassword')->name('resetPassword');
 });

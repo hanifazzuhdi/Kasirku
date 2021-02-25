@@ -27,7 +27,7 @@
         var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["Sen", 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+            labels: ['M1', 'M2', 'M3', 'M4'],
             datasets: [{
             label: "Penghasilan",
             lineTension: 0.5,

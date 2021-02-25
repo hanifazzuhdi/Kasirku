@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
     <div class="container-fluid">
         <div class="navbar-wrapper">
-            <a class="navbar-brand" href="/dashboard/admin">
+            <a class="navbar-brand" href="{{ Auth::user()->role_id == 1 ? '/dashboard/admin' : '/dashboard/staff'}}">
                 @if ( explode('/', request()->path())[0] == 'dashboard' )
                 <i class="material-icons pb-1">
                     home
@@ -14,7 +14,8 @@
                 </i> Go to Dashboard
                 @endif
             </a>
-        </div> <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
@@ -37,8 +38,7 @@
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                        <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="nav-link" href="#">Settings</a>
                         <div class="dropdown-divider"></div>
                         <form class="d-flex justify-content-center py-2" action="{{route('logout')}}" method="post">
                             <button class="btn btn-light btn-sm" type="submit">Log out</button>

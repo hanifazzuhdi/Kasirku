@@ -106,8 +106,12 @@ Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
     Route::post('/add-keranjang', 'KeranjangController@store');
     Route::delete('/hapus/keranjang/{keranjang}', 'KeranjangController@destroy');
 
+    // bayar pakai cash
     Route::post('/add-transaksi', 'TransaksiController@store');
     Route::delete('/delete-transaksi', 'TransaksiController@destroy');
+
+    // bayar pakai saldo
+    Route::post('/transaksi-member', 'TransaksiController@bayarSaldo');
 });
 
 

@@ -38,8 +38,9 @@
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMember">
                                         <small class="text-rose ml-2">Filter Tanggal</small>
                                         <form action="{{ route('staf.produk.cari') }}" method="post" id="target">
-                                            <input class="dropdown-item" type="text" name="datefilter"
-                                                placeholder="Filter Tanggal ... " required autocomplete="off" />
+                                            <input class="dropdown-item dropdown-item-staf" type="text"
+                                                name="datefilter" placeholder="Filter Tanggal ... " required
+                                                autocomplete="off" />
                                             @csrf
                                         </form>
                                     </div>

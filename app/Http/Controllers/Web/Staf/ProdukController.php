@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Web\Staf;
 
-use App\Models\Barang;
+use App\Models\{Barang, Merek, Kategori};
 
-use App\Http\Controllers\Controller;
-use App\Models\Kategori;
-use App\Models\Merek;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Providers\UploadProvider;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProdukController extends Controller
 {
-    /**
-     *Tampilkan halaman daftar produk
-     */
+
+    // Tampilkan halaman daftar produk
     public function index()
     {
         $datas = Barang::orderBy('id', 'DESC')->paginate(10);
@@ -22,9 +22,7 @@ class ProdukController extends Controller
         return view('dashboard.staf.produk.index', compact('datas'));
     }
 
-    /**
-     * Cari berdasarkan id
-     */
+    //   Cari berdasarkan id
     public function show(Barang $barang)
     {
         $barang['kategori_id'] = $barang->kategori->nama_kategori;
@@ -35,9 +33,8 @@ class ProdukController extends Controller
         return $data;
     }
 
-    /**
-     * Cari berdasarkan pencarian.
-     */
+
+    // Cari berdasarkan pencarian.
     public function cari(Request $request)
     {
         if (!$request->input('datefilter')) {
@@ -77,5 +74,46 @@ class ProdukController extends Controller
         $mereks = Merek::get();
 
         return view('dashboard.staf.produk.tambah', compact('kategoris', 'mereks'));
+    }
+
+    // Tambah Produk
+    public function store(Request $request)
+    {
+        $this->validated($request);
+
+        // Begin transaction
+        DB::beginTransaction();
+        $data = Barang::create([
+            'uid' => "{$request->kategori_id}{$request->merek_id}-" . str_split(time(), 6)[1] . random_int(1, 9),
+            'nama_barang' => $request->input('nama_barang'),
+            'harga_beli' => $request->input('harga_beli'),
+            'harga_jual' => $request->input('harga_jual'),
+            'kategori_id' => $request->input('kategori_id'),
+            'merek_id' => $request->input('merek_id'),
+            'stok' => $request->input('stok'),
+            'diskon' => $request->input('diskon') ?? 0,
+        ]);
+        $data->update([
+            'barcode' => UploadProvider::uploadCode($data->uid, 'barang')
+        ]);
+        DB::commit();
+        // Commit transaction
+
+        Alert::success('Success', 'Data barang berhasil dibuat');
+
+        return back();
+    }
+
+    // Validasi request
+    public function validated($request)
+    {
+        return $this->validate($request, [
+            'nama_barang' => 'required',
+            'harga_beli' => 'required|numeric',
+            'harga_jual' => 'required|numeric',
+            'stok' => 'required|numeric',
+            'kategori_id' => 'required',
+            'merek_id' => 'required',
+        ]);
     }
 }

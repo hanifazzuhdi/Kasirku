@@ -4,12 +4,12 @@
             <canvas class="ct-chart" id="myAreaChart"></canvas>
         </div>
         <div class="card-body">
-            <h4 class="card-title">Penghasilan Satu Minggu</h4>
+            <h4 class="card-title">Penghasilan Bulanan</h4>
 
         </div>
         <div class="card-footer">
             <div class="stats">
-                <i class="material-icons">access_time</i> Hingga {{date('d, F Y H:i')}} WIB
+                <i class="material-icons">access_time</i> Bulan {{date('F')}}
             </div>
         </div>
     </div>

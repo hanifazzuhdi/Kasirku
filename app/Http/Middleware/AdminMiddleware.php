@@ -19,7 +19,7 @@ class AdminMiddleware
         if (Auth::user()->role_id == 1) {
             return $next($request);
         } else {
-            abort('403');
+            return redirect('/');
         }
     }
 }

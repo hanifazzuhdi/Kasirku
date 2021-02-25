@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Api\Kasir;
 
+use App\Models\{Barang, Keranjang, Transaksi};
+use Illuminate\Support\Facades\{Auth, DB};
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TransaksiResource;
-use Illuminate\Support\Facades\{Auth, DB};
-use App\Models\{Barang, Keranjang, Transaksi};
 
 class KeranjangController extends Controller
 {
-    /**
-     * Method for validation request
-     *
-     */
+    // Validasi Request
     public function validated($request)
     {
         return $this->validate($request, [
@@ -23,29 +21,28 @@ class KeranjangController extends Controller
         ]);
     }
 
-    /**
-     * Lihat keranjang saat ini
-     *
-     */
+    // Lihat data keranjang sekarang
     public function index()
     {
         $datas = Keranjang::whereHas('transaksi', function ($q) {
             $q->where('status', 0);
         })->get();
 
-        if (empty($datas)) {
+        if (count($datas) == null) {
             return $this->sendResponse('failed', 'Data keranjang masih kosong', null, 400);
         }
 
         $data = TransaksiResource::collection($datas);
 
-        return $this->sendResponse('success', 'Data berhasil dimuat', $data, 200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Keranjang berhasil dimuat',
+            'total_belanja' => $datas->sum('total_harga'),
+            'data' => $data,
+        ], 200);
     }
 
-    /**
-     * buat keranjang
-     *
-     */
+    // Buat Keranjang baru
     public function store(Request $request)
     {
         $this->validated($request);
@@ -99,10 +96,7 @@ class KeranjangController extends Controller
         return $this->sendResponse('success', 'Berhasil tambah ke keranjang', $keranjang, 200);
     }
 
-    /**
-     * Untuk hapus data 1 kolom keranjang
-     *
-     */
+    // Hapus 1 Kolom keranjang
     public function destroy(Keranjang $keranjang)
     {
         $total = $keranjang->total_harga;

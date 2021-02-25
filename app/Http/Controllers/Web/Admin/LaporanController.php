@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Models\{Keranjang, Pembelian, Pengeluaran, Transaksi};
-use App\Exports\{PembelianExport, PenjualanExport};
+use App\Exports\{PemasukanExport, PembelianExport, PengeluaranExport, PenjualanExport};
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -103,6 +103,9 @@ class LaporanController extends Controller
     {
         $bulan = date('m');
 
+        $dt = Carbon::parse('2012-' . $bulan . '-5 23:26:11.123789');
+        $bulanName = $dt->monthName;
+
         /**
          * Pendapatan
          * 1. Penjualan
@@ -124,12 +127,15 @@ class LaporanController extends Controller
         // Laba/Rugi
         $labaRugi = $labaKotor - $pengeluaran;
 
-        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi', 'bulan'));
+        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi', 'bulan', 'bulanName'));
     }
 
     public function labaCari(Request $request)
     {
         $bulan = explode('-', $request->bulan)[1];
+
+        $dt = Carbon::parse('2012-' . $bulan . '-5 23:26:11.123789');
+        $bulanName = $dt->monthName;
 
         $penjualan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
         $pembelian = Pembelian::whereMonth('created_at', $bulan)->pluck('total_harga')->sum();
@@ -140,7 +146,7 @@ class LaporanController extends Controller
 
         $labaRugi = $labaKotor - $pengeluaran;
 
-        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi', 'bulan'));
+        return view('dashboard.admin.laporan.labarugi', compact('penjualan', 'pembelian', 'labaKotor', 'pengeluaran', 'labaRugi', 'bulan', 'bulanName'));
     }
 
     // Laporan Pemasukan
@@ -176,6 +182,12 @@ class LaporanController extends Controller
         return view('dashboard.admin.laporan.pemasukan', compact('hari', 'bulan', 'tBulan', 'bulanName', 'pemasukan'));
     }
 
+    // Export to Excel
+    public function exportPemasukan(Request $request)
+    {
+        return Excel::download(new PemasukanExport($request->bulan), 'laporan-pemasukan.xlsx');
+    }
+
     // Laporan Pengeluaran
     public function pengeluaran()
     {
@@ -207,5 +219,11 @@ class LaporanController extends Controller
         $pengeluaran = Pengeluaran::whereMonth('created_at', $bulan)->get();
 
         return view('dashboard.admin.laporan.pengeluaran', compact('bulan', 'hari', 'tBulan', 'bulanName', 'pengeluaran'));
+    }
+
+    // Export to Excel
+    public function exportPengeluaran(Request $request)
+    {
+        return Excel::download(new PengeluaranExport($request->bulan), 'laporan-pengeluaran.xlsx');
     }
 }

@@ -6,6 +6,7 @@ use App\Models\{Barang, Keranjang, Member, Transaksi};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
@@ -16,59 +17,59 @@ class TransaksiController extends Controller
         ]);
     }
 
-    /**
-     * Untuk Post pesanan
-     *
-     */
+    // Jalankan Transaksi Bayar melalui cash
     public function store(Request $request)
     {
         $this->validation($request);
 
         $transaksi = Transaksi::transaksiAktif()->firstOrFail();
 
-        $this->kurangiStok($transaksi);
-
         if ($transaksi->harga_total < request('dibayar')) {
-            // update
+            // Jalankan Transaksi
+            DB::beginTransaction();
+            $this->kurangiStok($transaksi);
+
             $transaksi->update([
                 'dibayar' => request('dibayar'),
                 'kembalian' => request('dibayar') - $transaksi->harga_total,
                 'status' => 1
             ]);
+            DB::commit();
         } else if ($transaksi->harga_total > request('dibayar')) {
             return $this->sendResponse('failed', 'Uangnya Kurang', null, 400);
-        } else {
-            // update
-            $transaksi->update([
-                'dibayar' => $request->input('dibayar'),
-                'status' => 1
-            ]);
         }
-
-        // Kurangi stok barang
 
         return $this->sendResponse('success', 'Transaksi berhasil dilakukan', $transaksi, 202);
     }
 
-    /**
-     * Bayar melalui saldo member
-     *
-     */
+    // Jalankan transaksi bayar pakai saldo member
     public function bayarSaldo(Request $request)
     {
-        $member = Member::where('kode_member', $request->input('kode_member'))->first();
+        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
 
-        $member->update([
-            'saldo' => $member->saldo - $request->input('pembayaran')
-        ]);
+        $transaksi = Transaksi::transaksiAktif()->firstOrFail();
 
-        return $this->sendResponse('success', 'Pembayaran berhasil', $member->only('kode_member, nama, saldo'), 202);
+        if ($member->saldo < $transaksi->harga_total) {
+            return $this->sendResponse('failed', 'Saldo tidak cukup', null, 400);
+        } else {
+            DB::beginTransaction();
+            $this->kurangiStok($transaksi);
+
+            $transaksi->update([
+                'dibayar' => $transaksi->harga_total,
+                'status' => 1
+            ]);
+
+            $member->update([
+                'saldo' => $member->saldo - $transaksi->harga_total
+            ]);
+            DB::commit();
+        }
+
+        return $this->sendResponse('success', 'Pembayaran berhasil', $member, 202);
     }
 
-    /**
-     * Kurangi Stok barang
-     *
-     */
+    // Kurangi Stok Barang
     public function kurangiStok($transaksi)
     {
         $keranjang = Keranjang::where('transaksi_id', $transaksi->id)->get();
@@ -85,7 +86,6 @@ class TransaksiController extends Controller
 
     /**
      * Tidak jadi pesan
-     *
      */
     public function destroy()
     {

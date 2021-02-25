@@ -41,7 +41,7 @@
                 <i class="fa fa-money-bill" aria-hidden="true"></i>
             </div>
             <p class="card-category">Penjualan</p>
-            <h3 class="card-title">Rp.{{number_format($penjualan->sum(), '0', ',', '.')}}</h3>
+            <h4 class="card-title">Rp.{{number_format($penjualan->sum(), '0', ',', '.')}}</h4>
         </div>
         <div class="card-footer">
             <div class="stats">
@@ -57,12 +57,12 @@
             <div class="card-icon">
                 <i class="fa fa-file-invoice-dollar" aria-hidden="true"></i>
             </div>
-            <p class="card-category">Pengeluaran</p>
-            <h3 class="card-title">Rp.{{number_format($pengeluaran,'0', ',', '.')}}</h3>
+            <p class="card-category">Laba / Rugi</p>
+            <h4 class="card-title">Rp.{{number_format($keuntungan,'0', ',', '.')}}</h4>
         </div>
         <div class="card-footer">
             <div class="stats">
-                <i class="material-icons">receipt_long</i> Bulan Ini
+                <i class="material-icons">receipt_long</i> Bulan {{date('F')}}
             </div>
         </div>
     </div>

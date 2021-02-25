@@ -9,25 +9,42 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    @isset($nomor, $token)
+                    <form method="POST" action="{{ route('resetPassword') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Nomor Telepon : ') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input type="text" value="{{$nomor}}" readonly class="form-control">
+                                <input type="hidden" name="token" value="{{$token}}">
+                            </div>
+                        </div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
+                                {{ __('Password Baru : ') }}
+                            </label>
+
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="password">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">
+                                {{ __('Konfirmasi Password : ') }}
+                            </label>
+
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="password_confirmation">
                             </div>
                         </div>
 
@@ -39,6 +56,8 @@
                             </div>
                         </div>
                     </form>
+                    @endisset
+
                 </div>
             </div>
         </div>
