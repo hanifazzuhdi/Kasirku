@@ -35,7 +35,7 @@ class MessageProvider extends ServiceProvider
                 $nomor,
                 [
                     'messagingServiceSid' => $this->twilio_message_sid,
-                    'body' => "Ini link lupa password anda : https://project-mini.herokuapp.com/{$token}/{$nomor}"
+                    'body' => "Ini link lupa password anda : https://project-mini.herokuapp.com/password/reset/{$token}/{$nomor}"
                 ]
             );
     }

@@ -60,37 +60,52 @@ class KeranjangController extends Controller
         }
 
         // logic keranjang
-        $barang = Barang::where('uid', $request->input('uid'))->first();
+        $barang = Barang::where('uid', request('uid'))->first();
 
-        if ($barang->stok < $request->input('pcs')) {
-            return $this->sendResponse('failed', 'Stok barang nggak cukup', $barang->only('uid', 'nama_barang', 'stok'), 400);
+        // Cek Stok
+        if ($barang->stok < request('pcs')) {
+            return $this->sendResponse('failed', 'Stok Tidak Cukup', null, 400);
         }
 
-        $keranjang = Keranjang::create([
-            'uid' => $request->input('uid'),
-            'nama_barang' => $barang->nama_barang,
-            'harga' => $barang->harga_jual,
-            'pcs' => $request->input('pcs'),
-            'total_harga' => $barang->harga_jual * $request->input('pcs'),
-            'transaksi_id' => $transaksi->id
-        ]);
+        $cekKeranjang = Keranjang::where('uid', $barang->uid)->first();
 
-        // jika dia member
-        if ($request->input('kode_member')) {
-            $keranjang->update([
-                'diskon' => $barang->diskon * $request->input('pcs'),
-                'total_harga' => $keranjang->total_harga - ($barang->diskon * request('pcs'))
-            ]);
+        if ($cekKeranjang) {
+            $cekKeranjang->pcs = $cekKeranjang->pcs + request('pcs');
+            $cekKeranjang->total_harga = $barang->harga_jual * $cekKeranjang->pcs;
+            $cekKeranjang->save();
 
-            $transaksi->update([
-                'kode_member' => $request->input('kode_member')
+            // Cek Stok
+            if ($cekKeranjang->pcs > $barang->stok) {
+                return $this->sendResponse('failed', 'Stok Tidak Cukup', null, 400);
+            }
+        } else {
+            $keranjang = Keranjang::create([
+                'uid' => request('uid'),
+                'nama_barang' => $barang->nama_barang,
+                'harga' => $barang->harga_jual,
+                'pcs' => request('pcs'),
+                'total_harga' => $barang->harga_jual * request('pcs'),
+                'transaksi_id' => $transaksi->id
             ]);
         }
 
         // update total harga transaksi
         $transaksi->update([
-            'harga_total' => $transaksi->harga_total += $keranjang->total_harga,
+            'harga_total' => Keranjang::where('transaksi_id', $transaksi->id)->sum('total_harga')
         ]);
+
+        // jika dia member
+        if (request('kode_member')) {
+            $keranjang->update([
+                'diskon' => $barang->diskon * request('pcs'),
+                'total_harga' => $keranjang->total_harga - ($barang->diskon * request('pcs'))
+            ]);
+
+            $transaksi->update([
+                'kode_member' => request('kode_member')
+            ]);
+        }
+
         DB::commit();
 
         return $this->sendResponse('success', 'Berhasil tambah ke keranjang', $keranjang, 200);

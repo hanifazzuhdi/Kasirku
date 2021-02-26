@@ -51,7 +51,12 @@ class LoginController extends Controller
             return redirect()->route('home');
         } else {
             event(new LoginKaryawan($request->email, 'Web', 'Login'));
-            return redirect()->route('staf');
+
+            if (auth()->user()->role_id == 2) {
+                return redirect()->route('staf');
+            } else {
+                return redirect()->route('kasir');
+            }
         }
     }
 }

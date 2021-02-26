@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Barang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,13 +24,17 @@ Auth::routes([
 ]);
 
 // Route General
-Route::namespace('Web')->group(function () {
+Route::namespace('Web')->middleware('auth')->group(function () {
     // Admin
     Route::get('/dashboard/admin', 'HomeController@admin')->name('home')->middleware('auth', 'admin.web');
     // Staf
     Route::get('/dashboard/staff', 'HomeController@staf')->name('staf')->middleware('auth', 'staf.web');
 
-    // Lupa Password Member
-    Route::get('/password/reset/{token}/{nomor}', 'LupaPassword@index');
-    Route::post('/lupa/password', 'LupaPassword@ubahPassword')->name('resetPassword');
+    // Kasir
+    Route::get('/kasir', 'HomeController@kasir')->name('kasir');
+    Route::post('/tambah/keranjang', 'HomeController@keranjang');
 });
+
+// Lupa Password Member
+Route::get('/password/reset/{token}/{nomor}', 'Web/LupaPassword@index');
+Route::post('/lupa/password', 'Web/LupaPassword@ubahPassword')->name('resetPassword');
