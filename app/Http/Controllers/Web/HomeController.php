@@ -129,25 +129,35 @@ class HomeController extends Controller
             ]);
         }
 
+        // jika dia member
+        if (request('kode_member')) {
+
+            $transaksi->update([
+                'kode_member' => request('kode_member')
+            ]);
+
+            $this->member($transaksi, $barang);
+        }
+
         // update total harga transaksi
         $transaksi->update([
             'harga_total' => Keranjang::where('transaksi_id', $transaksi->id)->sum('total_harga')
         ]);
 
-        // jika dia member
-        if (request('kode_member')) {
-            $keranjang->update([
-                'diskon' => $barang->diskon * request('pcs'),
-                'total_harga' => $keranjang->total_harga - ($barang->diskon * request('pcs'))
-            ]);
-
-            $transaksi->update([
-                'kode_member' => request('kode_member')
-            ]);
-        }
-
         DB::commit();
 
         return Keranjang::where('transaksi_id', $transaksi->id)->get();
+    }
+
+    // Jika dia member
+    public function member($transaksi, $barang)
+    {
+        // code
+        $keranjang = Keranjang::where('transaksi_id', $transaksi->id)->where('uid', $barang->uid)->first();
+
+        $keranjang->update([
+            'diskon' => $barang->diskon * $keranjang->pcs,
+            'total_harga' => $keranjang->harga * $keranjang->pcs - ($barang->diskon * $keranjang->pcs)
+        ]);
     }
 }

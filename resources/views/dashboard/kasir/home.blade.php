@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container py-4 px-5 mt-3 border bg-white rounded">
+<div class="container py-4 px-5 my-4 border bg-white rounded">
 
     <h3 class="mb-4">Transaksi Penjualan</h3>
 
@@ -14,12 +14,12 @@
         @include('dashboard.kasir._tengah')
     </div>
 
-    <div class="mt-4">
+    <div class="row mt-4">
         @include('dashboard.kasir._bawah')
     </div>
 
 </div>
 
-{{-- @include('dashboard.kasir._modal') --}}
+@include('dashboard.kasir._modal')
 
 @endsection

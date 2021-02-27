@@ -9,7 +9,5 @@
         <th>Sub Harga</th>
         <th>Aksi</th>
     </thead>
-    <tbody id="bodyTable">
-
-    </tbody>
+    <tbody id="bodyTable"></tbody>
 </table>

@@ -56,6 +56,6 @@
 </div>
 
 {{-- Tagihan --}}
-<div class="col-4 p-5 border shadow">
-    <h3 class="text-center pt-3"> Tagihan : <span class="total"> Rp. 10.000 </span> </h3>
+<div class="col-4 p-5 border shadow bg-danger bg-gradien text-white">
+    <h3 class="text-center pt-3"> Tagihan : <span class="tagihan"> 0 </span> </h3>
 </div>
