@@ -67,15 +67,15 @@ class KeranjangController extends Controller
             return $this->sendResponse('failed', 'Stok Tidak Cukup', null, 400);
         }
 
-        $cekKeranjang = Keranjang::where('uid', $barang->uid)->first();
+        $keranjang = Keranjang::where('uid', $barang->uid)->first();
 
-        if ($cekKeranjang) {
-            $cekKeranjang->pcs = $cekKeranjang->pcs + request('pcs');
-            $cekKeranjang->total_harga = $barang->harga_jual * $cekKeranjang->pcs;
-            $cekKeranjang->save();
+        if ($keranjang) {
+            $keranjang->pcs = $keranjang->pcs + request('pcs');
+            $keranjang->total_harga = $barang->harga_jual * $keranjang->pcs;
+            $keranjang->save();
 
             // Cek Stok
-            if ($cekKeranjang->pcs > $barang->stok) {
+            if ($keranjang->pcs > $barang->stok) {
                 return $this->sendResponse('failed', 'Stok Tidak Cukup', null, 400);
             }
         } else {
@@ -103,7 +103,6 @@ class KeranjangController extends Controller
         $transaksi->update([
             'harga_total' => Keranjang::where('transaksi_id', $transaksi->id)->sum('total_harga')
         ]);
-
 
         DB::commit();
 

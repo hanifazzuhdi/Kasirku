@@ -38,8 +38,9 @@
 
 <div class="col-4 ms-5 d-flex align-items-center">
     <div class="btn-group-vertical">
-        <button class="btn btn-outline-primary py-3">Proses Transaksi</button>
-        <button class="btn btn-outline-info py-3">Bayar Dengan Saldo (Member)</button>
-        <button class="btn btn-outline-danger py-3">Cancel</button>
+        <button class="btn btn-outline-primary py-3" id="transaksi" data-url="{{route('bayar.cash')}}">Proses
+            Transaksi</button>
+        <button class="btn btn-outline-info py-3" id="member">Bayar Dengan Saldo (Member)</button>
+        <button class="btn btn-outline-danger py-3" id="cancel">Cancel</button>
     </div>
 </div>

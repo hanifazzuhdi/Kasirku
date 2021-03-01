@@ -27,10 +27,10 @@
         // Kembalian
         $('.bayar').keyup(function () {
             let total = $('.bayar').val();
-            console.log(total);
+            // console.log(total);
 
             let tagihan = $('.tagihanHidden').val();
-            console.log(tagihan);
+            // console.log(tagihan);
 
             $('.kembalian').val( 'Rp. ' + new Intl.NumberFormat('id-ID').format(total - tagihan));
         });
@@ -138,5 +138,40 @@
             return false
 
         });
+
+        // Submit Transaksi
+        $('#transaksi').click(function (){
+
+            let dibayar =  $('.bayar').val();
+            let total = $('.tagihanHidden').val();
+
+            if (dibayar < total){
+                alert ('Uangnya Kurang !');
+                return false;
+            }
+
+            $.ajax({
+                url: $(this).data('url'),
+                method: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    dibayar: dibayar
+                },
+                statusCode : {
+                    404: function (){
+                        alert('Masukkan uang yang dibayar terlebih dahulu');
+                    },
+                    202: function (data){
+                        console.log(data);
+                        alert ('Pembayaran Diterima');
+                    }
+                },
+                // success: function (){
+                //     alert('success');
+                // }
+            })
+
+        });
+
     })
 </script>

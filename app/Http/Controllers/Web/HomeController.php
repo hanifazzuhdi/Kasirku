@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Models\{Barang, Keranjang, Log, Member, Pembelian, Pengeluaran, Transaksi};
+use App\Models\{Barang, Log, Member, Pembelian, Pengeluaran, Transaksi};
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -83,81 +82,5 @@ class HomeController extends Controller
         $produks = Barang::get();
 
         return view('dashboard.kasir.home', compact('produks'));
-    }
-
-    public function keranjang()
-    {
-        DB::beginTransaction();
-        // logic transaksi
-        $cek_transaksi = Transaksi::transaksiAktif()->first();
-
-        if (empty($cek_transaksi)) {
-            $transaksi = Transaksi::create([
-                'kasir_id' => Auth::id(),
-            ]);
-        } else {
-            $transaksi = Transaksi::transaksiAktif()->first();
-        }
-
-        // logic keranjang
-        $barang = Barang::where('uid', request('uid'))->first();
-
-        // Cek Stok
-        if ($barang->stok < request('pcs')) {
-            return false;
-        }
-
-        $cekKeranjang = Keranjang::where('uid', $barang->uid)->first();
-
-        if ($cekKeranjang) {
-            $cekKeranjang->pcs = $cekKeranjang->pcs + request('pcs');
-            $cekKeranjang->total_harga = $barang->harga_jual * $cekKeranjang->pcs;
-            $cekKeranjang->save();
-
-            // Cek Stok
-            if ($cekKeranjang->pcs > $barang->stok) {
-                return false;
-            }
-        } else {
-            $keranjang = Keranjang::create([
-                'uid' => request('uid'),
-                'nama_barang' => $barang->nama_barang,
-                'harga' => $barang->harga_jual,
-                'pcs' => request('pcs'),
-                'total_harga' => $barang->harga_jual * request('pcs'),
-                'transaksi_id' => $transaksi->id
-            ]);
-        }
-
-        // jika dia member
-        if (request('kode_member')) {
-
-            $transaksi->update([
-                'kode_member' => request('kode_member')
-            ]);
-
-            $this->member($transaksi, $barang);
-        }
-
-        // update total harga transaksi
-        $transaksi->update([
-            'harga_total' => Keranjang::where('transaksi_id', $transaksi->id)->sum('total_harga')
-        ]);
-
-        DB::commit();
-
-        return Keranjang::where('transaksi_id', $transaksi->id)->get();
-    }
-
-    // Jika dia member
-    public function member($transaksi, $barang)
-    {
-        // code
-        $keranjang = Keranjang::where('transaksi_id', $transaksi->id)->where('uid', $barang->uid)->first();
-
-        $keranjang->update([
-            'diskon' => $barang->diskon * $keranjang->pcs,
-            'total_harga' => $keranjang->harga * $keranjang->pcs - ($barang->diskon * $keranjang->pcs)
-        ]);
     }
 }

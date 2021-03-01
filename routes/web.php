@@ -32,7 +32,8 @@ Route::namespace('Web')->middleware('auth')->group(function () {
 
     // Kasir
     Route::get('/kasir', 'HomeController@kasir')->name('kasir');
-    Route::post('/tambah/keranjang', 'HomeController@keranjang');
+    Route::post('/tambah/keranjang', 'Kasir\KasirController@keranjang');
+    Route::post('/bayar', 'Kasir\KasirController@bayar')->name('bayar.cash');
 });
 
 // Lupa Password Member
