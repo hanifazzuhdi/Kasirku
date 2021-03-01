@@ -108,4 +108,19 @@ class KasirController extends Controller
 
         return $this->sendResponse('success', 'Transaksi berhasil dilakukan', $transaksi, 202);
     }
+
+    // Kurangi Stok Barang
+    public function kurangiStok($transaksi)
+    {
+        $keranjang = Keranjang::where('transaksi_id', $transaksi->id)->get();
+
+        for ($i = 0; $i < count($keranjang); $i++) {
+            # code...
+            $barang = Barang::where('uid', $keranjang[$i]->uid)->first();
+
+            $barang->update([
+                'stok' => $barang->stok - $keranjang[$i]->pcs
+            ]);
+        }
+    }
 }

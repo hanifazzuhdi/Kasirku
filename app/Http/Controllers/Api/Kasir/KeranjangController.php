@@ -67,7 +67,11 @@ class KeranjangController extends Controller
             return $this->sendResponse('failed', 'Stok Tidak Cukup', null, 400);
         }
 
-        $keranjang = Keranjang::where('uid', $barang->uid)->first();
+        $keranjang = Keranjang::whereHas('transaksi', function ($q) {
+            $q->where('status', 0);
+        })->where('uid', $barang->uid)->first();
+
+        // dump($keranjang);
 
         if ($keranjang) {
             $keranjang->pcs = $keranjang->pcs + request('pcs');

@@ -142,8 +142,8 @@
         // Submit Transaksi
         $('#transaksi').click(function (){
 
-            let dibayar =  $('.bayar').val();
-            let total = $('.tagihanHidden').val();
+            let dibayar = parseInt($('.bayar').val());
+            let total = parseInt($('.tagihanHidden').val());
 
             if (dibayar < total){
                 alert ('Uangnya Kurang !');
