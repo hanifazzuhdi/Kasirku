@@ -1,6 +1,5 @@
 <table class="table table-striped table-bordered text-center">
     <thead>
-        <th>#</th>
         <th>UID</th>
         <th>Nama Barang</th>
         <th>Pcs</th>

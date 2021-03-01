@@ -14,7 +14,7 @@
         @include('dashboard.kasir._tengah')
     </div>
 
-    <div class="row mt-4">
+    <div class="row mt-4 justify-content-between">
         @include('dashboard.kasir._bawah')
     </div>
 

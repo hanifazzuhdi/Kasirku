@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Kasir;
 
-use App\Models\{Barang, Keranjang, Transaksi};
+use App\Models\{Barang, Keranjang, Member, Transaksi};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -34,7 +34,9 @@ class KasirController extends Controller
             return false;
         }
 
-        $cekKeranjang = Keranjang::where('uid', $barang->uid)->first();
+        $cekKeranjang = Keranjang::whereHas('transaksi', function ($q) {
+            $q->where('status', 0);
+        })->where('uid', $barang->uid)->first();
 
         if ($cekKeranjang) {
             $cekKeranjang->pcs = $cekKeranjang->pcs + request('pcs');
@@ -109,6 +111,33 @@ class KasirController extends Controller
         return $this->sendResponse('success', 'Transaksi berhasil dilakukan', $transaksi, 202);
     }
 
+    // Jalankan transaksi bayar pakai saldo member
+    public function bayarMember(Request $request)
+    {
+        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+
+        $transaksi = Transaksi::transaksiAktif()->firstOrFail();
+
+        if ($member->saldo < $transaksi->harga_total) {
+            return $this->sendResponse('failed', 'Saldo tidak cukup', null, 400);
+        } else {
+            DB::beginTransaction();
+            $this->kurangiStok($transaksi);
+
+            $transaksi->update([
+                'dibayar' => $transaksi->harga_total,
+                'status' => 1
+            ]);
+
+            $member->update([
+                'saldo' => $member->saldo - $transaksi->harga_total
+            ]);
+            DB::commit();
+        }
+
+        return $this->sendResponse('success', 'Pembayaran berhasil', $member, 202);
+    }
+
     // Kurangi Stok Barang
     public function kurangiStok($transaksi)
     {
@@ -122,5 +151,30 @@ class KasirController extends Controller
                 'stok' => $barang->stok - $keranjang[$i]->pcs
             ]);
         }
+    }
+
+    // Hapus 1 Kolom keranjang
+    public function hapusKeranjang(Keranjang $keranjang)
+    {
+        $total = $keranjang->total_harga;
+
+        $keranjang->delete();
+
+        // kurangi total harga
+        $transaksi = Transaksi::transaksiAktif()->first();
+
+        $transaksi->update([
+            'harga_total' => $transaksi->harga_total - $total
+        ]);
+
+        return back();
+    }
+
+    // Tidak jadi pesan
+    public function destroy()
+    {
+        Transaksi::transaksiAktif()->where('kasir_id', Auth::id())->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Transaksi berhasil digagalkan'], 202);
     }
 }

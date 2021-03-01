@@ -31,9 +31,15 @@ Route::namespace('Web')->middleware('auth')->group(function () {
     Route::get('/dashboard/staff', 'HomeController@staf')->name('staf')->middleware('auth', 'staf.web');
 
     // Kasir
+    // keranjang
     Route::get('/kasir', 'HomeController@kasir')->name('kasir');
     Route::post('/tambah/keranjang', 'Kasir\KasirController@keranjang');
+    Route::get('/hapus/keranjang/{keranjang}', 'Kasir\KasirController@hapusKeranjang');
+
+    // transaksi
     Route::post('/bayar', 'Kasir\KasirController@bayar')->name('bayar.cash');
+    Route::post('/bayar/member', 'Kasir\KasirController@bayarMember')->name('bayar.saldo');
+    Route::post('/transaksi/cancel', 'Kasir\KasirController@destroy')->name('transaksi.cancel');
 });
 
 // Lupa Password Member

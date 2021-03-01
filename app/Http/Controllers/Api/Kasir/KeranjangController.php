@@ -71,8 +71,6 @@ class KeranjangController extends Controller
             $q->where('status', 0);
         })->where('uid', $barang->uid)->first();
 
-        // dump($keranjang);
-
         if ($keranjang) {
             $keranjang->pcs = $keranjang->pcs + request('pcs');
             $keranjang->total_harga = $barang->harga_jual * $keranjang->pcs;

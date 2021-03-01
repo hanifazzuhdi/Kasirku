@@ -37,7 +37,7 @@
 
         // Ajax Keranjang
         $('.tambah').click(function (){
-            let member = $('#member').val();
+            let member = $('#kode_member').val();
             let uid    = $('select[name="uid"]').val();
             let pcs    = $('input[name="pcs"]').val();
 
@@ -70,14 +70,13 @@
                     function tableTemplate(datas) {
                         return `
                             <tr>
-                                <td>${datas.id}</td>
                                 <td>${datas.uid}</td>
                                 <td>${datas.nama_barang}</td>
                                 <td>${datas.pcs}</td>
                                 <td>${datas.harga}</td>
                                 <td>${datas.diskon}</td>
                                 <td>${datas.total_harga}</td>
-                                <td> <a href="/hapus/keranjang/${datas.id}" class="material-icons">
+                                <td> <a href='/hapus/keranjang/${datas.id}' class="material-icons keranjang">
                                         delete
                                      </a>
                                 </td>
@@ -139,13 +138,13 @@
 
         });
 
-        // Submit Transaksi
+        // Submit Transaksi Cash
         $('#transaksi').click(function (){
 
             let dibayar = parseInt($('.bayar').val());
-            let total = parseInt($('.tagihanHidden').val());
 
-            if (dibayar < total){
+            let total = parseInt($('.tagihanHidden').val());
+            if (isNaN(dibayar) || dibayar < total){
                 alert ('Uangnya Kurang !');
                 return false;
             }
@@ -159,19 +158,65 @@
                 },
                 statusCode : {
                     404: function (){
-                        alert('Masukkan uang yang dibayar terlebih dahulu');
+                        alert('Data Transaksi tidak ada');
                     },
                     202: function (data){
                         console.log(data);
-                        alert ('Pembayaran Diterima');
+                        alert (data.message);
+                        location.reload();
                     }
                 },
-                // success: function (){
-                //     alert('success');
-                // }
             })
 
         });
+
+        // Bayar Melalui Saldo
+        $('#member').click(function (){
+
+            let kode_member = $('#kode_member').val();
+
+            if (kode_member == ''){
+                alert('Kode Member Kosong');
+                return false
+            }
+
+            $.ajax({
+                url: $(this).data('url'),
+                method: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    kode_member: kode_member
+                },
+                statusCode: {
+                    404: function (){
+                        alert('Data tidak ditemukan');
+                    },
+                    400: function (){
+                        alert('Saldo Member Kurang');
+                    },
+                    202: function (data){
+                        alert(data.message + '. Saldo member dikurangi');
+                        location.reload();
+                    }
+                },
+            });
+
+        });
+
+        // Cancel Transaksi
+        $('#cancel').click(function (){
+            $.ajax({
+                url: $(this).data('url'),
+                method: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (data){
+                    alert(data.message);
+                    location.reload();
+                }
+            });
+        })
 
     })
 </script>

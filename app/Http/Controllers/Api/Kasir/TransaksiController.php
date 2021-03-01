@@ -84,9 +84,7 @@ class TransaksiController extends Controller
         }
     }
 
-    /**
-     * Tidak jadi pesan
-     */
+    // Tidak jadi pesan
     public function destroy()
     {
         Transaksi::transaksiAktif()->delete();
