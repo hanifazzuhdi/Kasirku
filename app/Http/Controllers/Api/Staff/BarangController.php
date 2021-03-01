@@ -47,7 +47,7 @@ class BarangController extends Controller
         // Begin transaction
         DB::beginTransaction();
         $data = Barang::create([
-            'uid' => "{$request->kategori_id}{$request->merek_id}-" . str_split(time(), 6)[1] . random_int(1, 9),
+            'uid' => "{$request->kategori_id}{$request->merek_id}" . str_split(time(), 6)[1] . random_int(1, 9),
             'nama_barang' => $request->input('nama_barang'),
             'harga_beli' => $request->input('harga_beli'),
             'harga_jual' => $request->input('harga_jual'),
