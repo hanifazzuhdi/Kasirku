@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Kasir\KasirController;
 use App\Models\Barang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,15 +32,27 @@ Route::namespace('Web')->middleware('auth')->group(function () {
     Route::get('/dashboard/staff', 'HomeController@staf')->name('staf')->middleware('auth', 'staf.web');
 
     // Kasir
-    // keranjang
     Route::get('/kasir', 'HomeController@kasir')->name('kasir');
-    Route::post('/tambah/keranjang', 'Kasir\KasirController@keranjang');
-    Route::get('/hapus/keranjang/{keranjang}', 'Kasir\KasirController@hapusKeranjang');
+});
+
+// Route Kasir
+Route::namespace('Web\Kasir')->middleware('auth')->group(function () {
+    // Keranjang
+    Route::get('/hapus/keranjang/{keranjang}', 'KasirController@hapusKeranjang');
+    Route::get('/transaksi-belumselesai', 'KasirController@belumSelesai');
+    Route::post('/tambah/keranjang', 'KasirController@keranjang');
 
     // transaksi
-    Route::post('/bayar', 'Kasir\KasirController@bayar')->name('bayar.cash');
-    Route::post('/bayar/member', 'Kasir\KasirController@bayarMember')->name('bayar.saldo');
-    Route::post('/transaksi/cancel', 'Kasir\KasirController@destroy')->name('transaksi.cancel');
+    Route::post('/bayar', 'KasirController@bayar')->name('bayar.cash');
+    Route::post('/bayar/member', 'KasirController@bayarMember')->name('bayar.saldo');
+    Route::post('/transaksi/cancel', 'KasirController@destroy')->name('transaksi.cancel');
+
+    // Topup saldo
+    Route::post('/cari-member', 'KasirController@cari');
+    Route::post('/isi-saldo', 'KasirController@isiSaldo');
+
+    // Cetak
+    Route::post('/cetak-penjualan', 'KasirController@cetak');
 });
 
 // Lupa Password Member

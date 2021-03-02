@@ -57,7 +57,8 @@ class TransaksiController extends Controller
 
             $transaksi->update([
                 'dibayar' => $transaksi->harga_total,
-                'status' => 1
+                'status' => 1,
+                'type' => 'Saldo'
             ]);
 
             $member->update([

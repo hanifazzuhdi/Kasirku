@@ -16,37 +16,59 @@
 <body>
 
     <div class="container">
-        <div class="border-bottom p-3">
-            <h2 class="text-center pb-3"> Kasir Mart </h2>
-            <table class="m-auto">
+        <div class="p-3" style="border-style: none none dashed none">
+            <h4 class="text-center pb-3" style="border-style: none none double none"> Kasir Mart </h4>
+            <table>
                 <tr>
-                    <td class="mr-3">
-                        <small class="d-block" style="font-size: 13px">ID Pembelian : {{$penjualan->id}}</small>
-                        <small style="font-size: 13px"> Tgl : {{$penjualan->created_at}} </small>
+                    <td>
+                        <small>No Order </small>
                     </td>
                     <td>
-                        <small class="d-block" style="font-size: 13px"> Kasir : {{$penjualan->kasir->nama}}</small>
-                        <small style="font-size: 13px"> Kode Member : {{$penjualan->kode_member}}</small>
+                        <small> : {{$penjualan->id}} </small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <small>Kasir </small>
+                    </td>
+                    <td>
+                        <small> : {{$penjualan->kasir->nama}} </small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <small>Tanggal </small>
+                    </td>
+                    <td>
+                        <small> : {{$penjualan->created_at}} </small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <small>Pembayaran </small>
+                    </td>
+                    <td>
+                        <small> : {{$penjualan->type}} </small>
                     </td>
                 </tr>
             </table>
         </div>
 
-        <div class="border-bottom mt-3 pb-3">
-            <table class="container ">
+        <div class="mt-3 pb-3">
+            <table class="container">
                 @foreach ($keranjang as $item)
                 <tr>
                     <td>
-                        <small style="font-size: 15px">{{$loop->iteration}}.</small>
-                        <small style="font-size: 15px">{{$item->nama_barang}}</small>
+                        <small>{{$loop->iteration}}.</small>
+                        <small>{{$item->nama_barang}}</small>
                     </td>
                 </tr>
                 <tr>
                     <td class="ml-3">
-                        <small style="font-size: 15px">{{number_format($item->harga, '0', ',', '.')}} X
+                        <small>{{number_format($item->harga, '0', ',', '.')}} X
                         </small>
-                        <small style="font-size: 15px">{{$item->pcs}}</small>
-                        <small style="font-size: 15px"> -
+                        <small>{{$item->pcs}}</small>
+                        <small> -
                             {{number_format($item->diskon, '0', ',', '.')}} (Diskon)</small>
                     </td>
                     <td>
@@ -57,15 +79,45 @@
             </table>
         </div>
 
-        <div class="text-right pr-4 mt-3">
-            <small class="d-block mb-1" style="font-size: 15px"> Total :
-                {{number_format($penjualan->harga_total, '0', ',', '.')}} </small>
-            <small class="d-block mb-1" style="font-size: 15px"> Bayar :
-                {{number_format($penjualan->bayar, '0', ',', '.')}}
-            </small>
-            <small class="d-block mb-1" style="font-size: 15px"> Kembalian :
-                {{number_format($penjualan->kembalian, '0', ',', '.')}} </small>
+        <div class="pl-4 mt-2 py-3" style="border-style: double none double none">
+            <table>
+                <tr>
+                    <td>
+                        <small> Total </small>
+                    </td>
+                    <td>
+                        <small> : {{number_format($penjualan->harga_total, '0', ',', '.')}}</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <small> Diskon </small>
+                    </td>
+                    <td>
+                        <small> : {{number_format($penjualan->diskon, '0', ',', '.')}}</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <small> Bayar </small>
+                    </td>
+                    <td>
+                        <small> : {{number_format($penjualan->dibayar, '0', ',', '.')}}</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <small> Kembalian </small>
+                    </td>
+                    <td>
+                        <small> : {{number_format($penjualan->kembalian, '0', ',', '.')}}</small>
+                    </td>
+                </tr>
+            </table>
         </div>
+
+        <h5 class="text-center pt-3">Terimakasih Atas Kunjungan Anda</h5>
+        <p class="text-center">Barang yang sudah dibeli tidak dapat ditukar kembali</p>
 
     </div>
 

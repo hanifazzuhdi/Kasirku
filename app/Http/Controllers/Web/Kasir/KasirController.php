@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Web\Kasir;
 
-use App\Models\{Barang, Keranjang, Member, Transaksi};
+use App\Models\{Barang, Keranjang, Member, Payment, Transaksi};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\{Auth, DB};
-
+use Illuminate\Support\Facades\{App, Auth, DB};
 
 class KasirController extends Controller
 {
@@ -126,7 +125,8 @@ class KasirController extends Controller
 
             $transaksi->update([
                 'dibayar' => $transaksi->harga_total,
-                'status' => 1
+                'status' => 1,
+                'type' => 'Saldo'
             ]);
 
             $member->update([
@@ -176,5 +176,72 @@ class KasirController extends Controller
         Transaksi::transaksiAktif()->where('kasir_id', Auth::id())->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Transaksi berhasil digagalkan'], 202);
+    }
+
+    // cari member
+    public function cari(Request $request)
+    {
+        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+
+        return $this->sendResponse('success', 'Member berhasil di muat', $member, 200);
+    }
+
+    // Topup saldo
+    public function isiSaldo(Request $request)
+    {
+        $this->validate($request, [
+            'kode_member' => 'required',
+            'nominal' => 'required'
+        ]);
+
+        DB::beginTransaction();
+        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+
+        $member->update([
+            'saldo' => $member->saldo + $request->input('nominal')
+        ]);
+
+        Payment::create([
+            'order_id' => 'KASIR-' . date('dmyHis') . '-' . $member->id,
+            'jumlah' => $request->input('nominal'),
+            'kode_member' => $request->input('kode_member'),
+            'nama_member' => $member->nama,
+            'nomor_member' => $member->nomor,
+            'bank' => 'Kasir',
+            'status' => 1
+        ]);
+        DB::commit();
+
+        return $this->sendResponse('success', 'Transaksi berhasil, saldo ditambahkan', $request->input('nominal'), 200);
+    }
+
+    // transaksi belum selesai
+    public function belumSelesai()
+    {
+        $keranjang =  Keranjang::whereHas('transaksi', function ($q) {
+            $q->where('status', 0)->where('kasir_id', Auth::id());
+        })->get();
+
+        if (count($keranjang) == null) {
+            return $this->sendResponse('success', 'Data Keranjang Kosong', null, 404);
+        }
+
+        return $keranjang;
+    }
+
+    // Cetak Struk
+    public function cetak()
+    {
+        $penjualan = Transaksi::where('status', 1)->where('kasir_id', Auth::id())->orderBy('id', 'DESC')->first();
+
+        $keranjang = Keranjang::where('transaksi_id', $penjualan->id)->get();
+
+        $pdf = App::make('dompdf.wrapper');
+
+        $pdf->setPaper('A5');
+
+        $pdf->loadView('dashboard.admin.laporan._cetak-penjualan', compact('keranjang', 'penjualan'));
+
+        return $pdf->stream('struk-penjualan.pdf');
     }
 }

@@ -28,18 +28,23 @@
     <!-- Navbar -->
     <nav class="navbar navbar-light border-bottom shadow-sm">
 
-        <div class="container-fluid d-flex justify-content-between p-1 mx-5">
+        <div class="container-fluid d-flex justify-content-between px-3 py-1 mx-5">
             <a class="navbar-brand" href="#">
                 {{config('app.name')}}
             </a>
 
-            <a href="">Logout</a>
+            <div id="clock" class="clock">loading ...</div>
+
+            <form class="d-flex justify-content-center" action="{{route('logout')}}" method="post">
+                <button class="btn btn-light btn-sm" type="submit">Log out</button>
+                @csrf
+            </form>
+
         </div>
     </nav>
 
     {{-- Body --}}
     @yield('content')
-
 
     {{-- Scripts --}}
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
@@ -50,7 +55,9 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous">
     </script>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     @include('dashboard.kasir._scripts')
 
