@@ -17,8 +17,15 @@
     <div class="row mb-3">
         <label for="member" class="col-sm-2 col-form-label col-form-label-sm">Member</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control form-control-sm" id="kode_member"
-                placeholder="Masukkan Kode Member (Opsional)">
+
+            <select required id="kode_member" class="form-control" placeholder="Masukkan Kode Member (Opsional)"
+                aria-describedby=" basic-addon1">
+                <option></option>
+                @foreach ($members as $item)
+                <option value="{{$item->kode_member}}">{{$item->kode_member}}</option>
+                @endforeach
+            </select>
+
         </div>
     </div>
 </div>

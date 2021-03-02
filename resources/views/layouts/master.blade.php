@@ -59,8 +59,6 @@
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('backend/assets/js/material-dashboard.js?v=2.1.2')}}" type="text/javascript"></script>
 
-
-
     @include('dashboard.components.script')
 
     @yield('scripts')

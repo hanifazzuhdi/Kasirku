@@ -13,7 +13,6 @@ class Controller extends BaseController
 
     /**
      * Method for send response api
-     *
      */
 
     public function sendResponse($status, $message, $data, $http)
@@ -27,7 +26,6 @@ class Controller extends BaseController
 
     /**
      * Method for format phone number
-     *
      */
     public function formatNumber($request)
     {
@@ -47,5 +45,30 @@ class Controller extends BaseController
         }
 
         return $nomor;
+    }
+
+    /**
+     * Tentukan Waktu
+     */
+    public function sapa()
+    {
+        $waktu = date('H');
+
+        switch (true) {
+            case $waktu >= '02' and $waktu <= '10':
+                $sapa = 'Pagi';
+                break;
+            case $waktu >= '11' and $waktu <= '15':
+                $sapa = 'Siang';
+                break;
+            case $waktu >= '16' and $waktu <= '18':
+                $sapa = 'Petang';
+                break;
+            default:
+                $sapa = 'Malam';
+                break;
+        }
+
+        return $sapa;
     }
 }

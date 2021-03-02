@@ -56,6 +56,12 @@
             theme: "bootstrap"
         });
 
+        $('select#kode_member').select2({
+            placeholder: "Masukkan Kode Member (Opsional)",
+            allowClear: true,
+            theme: "bootstrap"
+        });
+
         // Kembalian
         $('.bayar').keyup(function () {
             let total = $('.bayar').val();
@@ -327,10 +333,6 @@
                 },
                 success: function (data){
                     toast('success', 'Topup Saldo Berhasil');
-
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1500);
                 }
             });
         });

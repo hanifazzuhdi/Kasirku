@@ -56,22 +56,7 @@ class HomeController extends Controller
     // Home Admin
     public function staf()
     {
-        $waktu = date('H');
-
-        switch (true) {
-            case $waktu >= '02' and $waktu <= '10':
-                $sapa = 'Pagi';
-                break;
-            case $waktu >= '11' and $waktu <= '15':
-                $sapa = 'Siang';
-                break;
-            case $waktu >= '16' and $waktu <= '18':
-                $sapa = 'Petang';
-                break;
-            default:
-                $sapa = 'Malam';
-                break;
-        }
+        $sapa = $this->sapa();
 
         return view('dashboard.staf.home.index', compact('sapa'));
     }
@@ -79,8 +64,11 @@ class HomeController extends Controller
     // Home Kasir
     public function kasir()
     {
-        $produks = Barang::get();
+        $sapa = $this->sapa();
 
-        return view('dashboard.kasir.home', compact('produks'));
+        $produks = Barang::get();
+        $members = Member::get();
+
+        return view('dashboard.kasir.home', compact('produks', 'members', 'sapa'));
     }
 }
