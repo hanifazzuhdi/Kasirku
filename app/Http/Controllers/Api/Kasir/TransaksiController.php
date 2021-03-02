@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\Kasir;
 use App\Models\{Barang, Keranjang, Member, Transaksi};
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
+use function PHPSTORM_META\map;
 
 class TransaksiController extends Controller
 {
@@ -39,7 +41,21 @@ class TransaksiController extends Controller
             return $this->sendResponse('failed', 'Uangnya Kurang', null, 400);
         }
 
-        return $this->sendResponse('success', 'Transaksi berhasil dilakukan', $transaksi, 202);
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Transaksi berhasil dilakukan',
+            'data'    => [
+                'id' => $transaksi->id,
+                'harga_total' => $transaksi->harga_total,
+                'dibayar' => $transaksi->dibayar,
+                'kembalian' => $transaksi->kembalian,
+                'kode_member' => $transaksi->kode_member,
+                'status' => $transaksi->status,
+                'kasir' => $transaksi->kasir->nama,
+                'type' => $transaksi->type,
+                'created_at' => $transaksi->created_at
+            ]
+        ], 200);
     }
 
     // Jalankan transaksi bayar pakai saldo member
@@ -58,7 +74,8 @@ class TransaksiController extends Controller
             $transaksi->update([
                 'dibayar' => $transaksi->harga_total,
                 'status' => 1,
-                'type' => 'Saldo'
+                'type' => 'Saldo',
+                'kode_member' => request('kode_member')
             ]);
 
             $member->update([
@@ -67,7 +84,21 @@ class TransaksiController extends Controller
             DB::commit();
         }
 
-        return $this->sendResponse('success', 'Pembayaran berhasil', $member, 202);
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Transaksi berhasil dilakukan',
+            'data'    => [
+                'id' => $transaksi->id,
+                'harga_total' => $transaksi->harga_total,
+                'dibayar' => $transaksi->dibayar,
+                'kembalian' => $transaksi->kembalian,
+                'kode_member' => $transaksi->kode_member,
+                'status' => $transaksi->status,
+                'kasir' => $transaksi->kasir->nama,
+                'type' => $transaksi->type,
+                'created_at' => $transaksi->created_at
+            ]
+        ], 200);
     }
 
     // Kurangi Stok Barang

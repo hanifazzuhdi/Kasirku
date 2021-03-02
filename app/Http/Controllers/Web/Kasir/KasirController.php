@@ -126,7 +126,8 @@ class KasirController extends Controller
             $transaksi->update([
                 'dibayar' => $transaksi->harga_total,
                 'status' => 1,
-                'type' => 'Saldo'
+                'type' => 'Saldo',
+                'kode_member' => request('kode_member')
             ]);
 
             $member->update([

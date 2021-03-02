@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\{Auth, DB};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TransaksiResource;
+use App\Http\Resources\KeranjangResource;
 
 class KeranjangController extends Controller
 {
@@ -32,7 +32,7 @@ class KeranjangController extends Controller
             return $this->sendResponse('failed', 'Data keranjang masih kosong', null, 400);
         }
 
-        $data = TransaksiResource::collection($datas);
+        $data = KeranjangResource::collection($datas);
 
         return response()->json([
             'status' => 'success',
