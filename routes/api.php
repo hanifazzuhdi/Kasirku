@@ -44,6 +44,12 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
     Route::post('/add-pengeluaran', 'PengeluaranController@store');
 
     // Pemasukan
+    Route::get('/laporan-pemasukan', 'PemasukanController@index');
+    Route::post('/laporan-pemasukan', 'PemasukanController@show');
+
+    // Ansensi Karyawan
+    Route::get('/absen-harian', 'AbsenController@harian');
+    Route::post('/absen-bulanan', 'AbsenController@bulanan');
 });
 
 

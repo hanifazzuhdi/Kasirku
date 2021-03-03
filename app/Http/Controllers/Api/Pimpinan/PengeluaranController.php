@@ -36,8 +36,12 @@ class PengeluaranController extends Controller
     /**
      * Laporan Pengeluaran berdasarkan bulan
      */
-    public function show()
+    public function show(Request $request)
     {
+        $this->validate($request, [
+            'bulan' => 'required'
+        ]);
+
         //  pengeluaran hari ini
         $hari   = Pengeluaran::whereDay('created_at', date('d'))->pluck('jumlah')->sum();
 

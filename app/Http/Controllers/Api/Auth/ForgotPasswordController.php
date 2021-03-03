@@ -7,7 +7,6 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Providers\MessageProvider;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
 
 class ForgotPasswordController extends Controller
 {
@@ -29,15 +28,6 @@ class ForgotPasswordController extends Controller
 
         $pesan = new MessageProvider();
         $pesan->sendMessage($nomor);
-
-        // $res = Http::get('https://websms.co.id/api/smsgateway', [
-        //     'token' => 'cfb5b569ba4dd350fd94d800e479810d',
-        //     'to' => '085883241556',
-        //     'msg' => urlencode('Link Lupa Password Anda : https://project-mini.herokuapp.com/AcZ8uzpHLRXmbxAH46usgvJMURZBLv/+628999981907')
-        // ]);
-
-        // return response($res);
-
 
         return response([
             'status'  => 'success',
