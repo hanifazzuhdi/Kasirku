@@ -38,7 +38,7 @@
 
             <div class="card-body mt-3">
                 <div class="table-responsive">
-                    <table class="table" id="dataTables">
+                    <table class="table text-center" id="dataTables">
                         <thead class="text-dark">
                             <th>ID</th>
                             <th>Supplier</th>
@@ -47,7 +47,6 @@
                             <th>Harga Satuan</th>
                             <th>Total Harga</th>
                             <th>Data Dibuat</th>
-                            <th>Aksi</th>
                         </thead>
                         <tbody>
                             @foreach ($datas as $data)
@@ -59,18 +58,6 @@
                                 <td>Rp. {{ number_format($data->harga_satuan, '0', ',', '.')}}</td>
                                 <td>Rp. {{ number_format($data->total_harga, '0', ',', '.')}}</td>
                                 <td>{{$data->created_at}}</td>
-                                <td>
-                                    <span class="btn btn-just-icon btn-sm" data-toggle="dropdown" id="dropdown"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">
-                                            more_vert
-                                        </i>
-                                    </span>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
-                                        <a href="{{route('pembelian.cetak', [$data->id])}}" target="_blank"
-                                            class="nav-link text-dark">Cetak</a>
-                                    </div>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>

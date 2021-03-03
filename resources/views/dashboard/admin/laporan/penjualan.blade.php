@@ -36,7 +36,7 @@
             </div>
             <div class="card-body mt-3">
                 <div class="table-responsive">
-                    <table class="table" id="dataTables">
+                    <table class="table text-center" id="dataTables">
                         <thead class="text-dark">
                             <th>ID</th>
                             <th>Harga Total</th>
@@ -45,7 +45,6 @@
                             <th>Kode Member</th>
                             <th>Kasir</th>
                             <th>Tgl Transaksi</th>
-                            <th>Aksi</th>
                         </thead>
                         <tbody>
                             @foreach ($datas as $data)
@@ -57,18 +56,6 @@
                                 <td> {{$data->kode_member}} </td>
                                 <td> {{$data->kasir->nama}} </td>
                                 <td> {{$data->created_at}} </td>
-                                <td>
-                                    <span class="btn btn-just-icon btn-sm" data-toggle="dropdown" id="dropdown"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">
-                                            more_vert
-                                        </i>
-                                    </span>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
-                                        <a href="{{route('admin.penjualan.cetak', [$data->id])}}"
-                                            class="nav-link text-dark">Cetak</a>
-                                    </div>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>

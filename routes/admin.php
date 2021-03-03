@@ -18,7 +18,6 @@ Route::prefix('laporan')->group(function () {
     // Penjualan
     Route::get('/laporan-penjualan', 'LaporanController@penjualan')->name('admin.laporan.penjualan');
     Route::get('/laporan-penjualan/export', 'LaporanController@exportPenjualan')->name('admin.penjualan.export');
-    Route::get('/laporan-penjualan/{transaksi}', 'LaporanController@cetakPenjualan')->name('admin.penjualan.cetak');
     Route::post('/laporan-penjualan', 'LaporanController@cariPenjualan')->name('admin.penjualan.cari');
 
     // Laba-rugi

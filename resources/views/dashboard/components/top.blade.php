@@ -24,24 +24,27 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="#" class="nav-link" id="besar">
-                        <i class="fa fa-expand" aria-hidden="true"></i>
-                    </a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">person</i>
-                        <p class="d-lg-none d-md-block">
-                            Account
-                        </p>
+                        <img class="bg-light rounded-circle p-1" src="{{Auth::user()->avatar}}" width="35px"
+                            alt="Avatar">
+                        <span class="pt-3"> {{Auth::user()->nama}} </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+                        @if (Auth::user()->role_id == 1)
                         <a class="nav-link" href="#">Settings</a>
+                        @endif
                         <div class="dropdown-divider"></div>
                         <form class="d-flex justify-content-center py-2" action="{{route('logout')}}" method="post">
+                            @if (Auth::user()->role_id != 1)
+                            <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
+                                data-target="#modelId">
+                                Akhiri Sesi
+                            </button>
+                            @else
                             <button class="btn btn-light btn-sm" type="submit">Log out</button>
+                            @endif
                             @csrf
                         </form>
                     </div>
@@ -51,3 +54,5 @@
     </div>
 </nav>
 <!-- End Navbar -->
+
+@include('dashboard.components._logout')

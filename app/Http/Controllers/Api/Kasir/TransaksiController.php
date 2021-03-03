@@ -7,8 +7,7 @@ use App\Models\{Barang, Keranjang, Member, Transaksi};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
-use function PHPSTORM_META\map;
+use App\Http\Resources\KeranjangResource;
 
 class TransaksiController extends Controller
 {
@@ -26,6 +25,8 @@ class TransaksiController extends Controller
 
         $transaksi = Transaksi::transaksiAktif()->firstOrFail();
 
+        $keranjang = KeranjangResource::collection(Keranjang::where('transaksi_id', $transaksi->id)->get());
+
         if ($transaksi->harga_total < request('dibayar')) {
             // Jalankan Transaksi
             DB::beginTransaction();
@@ -41,21 +42,7 @@ class TransaksiController extends Controller
             return $this->sendResponse('failed', 'Uangnya Kurang', null, 400);
         }
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Transaksi berhasil dilakukan',
-            'data'    => [
-                'id' => $transaksi->id,
-                'harga_total' => $transaksi->harga_total,
-                'dibayar' => $transaksi->dibayar,
-                'kembalian' => $transaksi->kembalian,
-                'kode_member' => $transaksi->kode_member,
-                'status' => $transaksi->status,
-                'kasir' => $transaksi->kasir->nama,
-                'type' => $transaksi->type,
-                'created_at' => $transaksi->created_at
-            ]
-        ], 200);
+        return $this->transaksiResponse($transaksi, $keranjang);
     }
 
     // Jalankan transaksi bayar pakai saldo member
@@ -64,6 +51,8 @@ class TransaksiController extends Controller
         $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
 
         $transaksi = Transaksi::transaksiAktif()->firstOrFail();
+
+        $keranjang = KeranjangResource::collection(Keranjang::where('transaksi_id', $transaksi->id)->get());
 
         if ($member->saldo < $transaksi->harga_total) {
             return $this->sendResponse('failed', 'Saldo tidak cukup', null, 400);
@@ -84,21 +73,7 @@ class TransaksiController extends Controller
             DB::commit();
         }
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Transaksi berhasil dilakukan',
-            'data'    => [
-                'id' => $transaksi->id,
-                'harga_total' => $transaksi->harga_total,
-                'dibayar' => $transaksi->dibayar,
-                'kembalian' => $transaksi->kembalian,
-                'kode_member' => $transaksi->kode_member,
-                'status' => $transaksi->status,
-                'kasir' => $transaksi->kasir->nama,
-                'type' => $transaksi->type,
-                'created_at' => $transaksi->created_at
-            ]
-        ], 200);
+        return $this->transaksiResponse($transaksi, $keranjang);
     }
 
     // Kurangi Stok Barang

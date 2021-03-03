@@ -3,7 +3,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <h4> SELAMAT {{Str::upper($sapa)}} {{Str::upper(Auth::user()->nama)}}, SEMANGAT BEKERJA ! </h4>
+                <h4> Selamat {{$sapa}} {{Auth::user()->nama}}</h4>
+                <h4>SEMANGAT BEKERJA ! </h4>
             </div>
             <div class="modal-footer">
                 <button onclick="openFullscreen()" type="button" data-bs-dismiss="modal"

@@ -71,4 +71,25 @@ class Controller extends BaseController
 
         return $sapa;
     }
+
+    // transaksi response
+    public function transaksiResponse($transaksi, $keranjang)
+    {
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Transaksi berhasil dilakukan',
+            'data'    => [
+                'id' => $transaksi->id,
+                'harga_total' => $transaksi->harga_total,
+                'dibayar' => $transaksi->dibayar,
+                'kembalian' => $transaksi->kembalian,
+                'kode_member' => $transaksi->kode_member,
+                'status' => $transaksi->status,
+                'kasir' => $transaksi->kasir->nama,
+                'type' => $transaksi->type,
+                'created_at' => $transaksi->created_at
+            ],
+            'keranjang' => $keranjang
+        ], 200);
+    }
 }

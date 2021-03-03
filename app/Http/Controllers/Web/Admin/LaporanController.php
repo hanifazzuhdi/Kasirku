@@ -78,21 +78,6 @@ class LaporanController extends Controller
         return view('dashboard.admin.laporan.penjualan', compact('datas'));
     }
 
-    public function cetakPenjualan(Transaksi $transaksi)
-    {
-        $keranjang = Keranjang::where('transaksi_id', $transaksi->id)->get();
-
-        $penjualan = Transaksi::with('kasir')->where('id', $transaksi->id)->first();
-
-        $pdf = App::make('dompdf.wrapper');
-
-        $pdf->setPaper('A5');
-
-        $pdf->loadView('dashboard.admin.laporan._cetak-penjualan', compact('keranjang', 'penjualan'));
-
-        return $pdf->stream('Laporan-penjualan.pdf');
-    }
-
     public function exportPenjualan()
     {
         return Excel::download(new PenjualanExport, 'laporan-penjualan.xlsx');
