@@ -56,5 +56,5 @@ Route::namespace('Web\Kasir')->middleware('auth')->group(function () {
 });
 
 // Lupa Password Member
-Route::get('/password/reset/{token}/{nomor}', 'Web/LupaPassword@index');
-Route::post('/lupa/password', 'Web/LupaPassword@ubahPassword')->name('resetPassword');
+Route::get('/password/reset/{token}/{nomor}', 'Web\LupaPassword@index');
+Route::post('/lupa/password', 'Web\LupaPassword@ubahPassword')->name('resetPassword');
