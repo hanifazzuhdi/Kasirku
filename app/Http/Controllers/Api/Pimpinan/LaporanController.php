@@ -3,18 +3,14 @@
 namespace App\Http\Controllers\Api\Pimpinan;
 
 use App\Models\{Barang, Pembelian, Transaksi};
+use App\Http\Resources\{LaporanKasir, PembelianResource, StokResource};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\LaporanKasir;
-use App\Http\Resources\StokResource;
 
 class LaporanController extends Controller
 {
-    /**
-     * Laporan Stok
-     *
-     */
+    // Laporan Stok
     public function stok()
     {
         $datas = StokResource::collection(Barang::get());
@@ -22,10 +18,7 @@ class LaporanController extends Controller
         return $this->sendResponse('success', 'data berhasil dimuat', $datas, 200);
     }
 
-    /**
-     * Laporan semua permbelian
-     *
-     */
+    // Laporan Semua Pembelian
     public function allPembelian()
     {
         $data = Pembelian::get();
@@ -33,6 +26,8 @@ class LaporanController extends Controller
         if (count($data)  == null) {
             return $this->sendResponse('failed', 'Data Pembelian Kosong', null, 404);
         }
+
+        $data = PembelianResource::collection($data);
 
         return $this->sendResponse('success', 'Data berhasil ditampilakan', $data, 200);
     }
@@ -51,6 +46,8 @@ class LaporanController extends Controller
         if (count($data)  == null) {
             return $this->sendResponse('failed', 'Data Pembelian Kosong', null, 404);
         }
+
+        $data = PembelianResource::collection($data);
 
         return $this->sendResponse('success', 'Data berhasil ditampilakan', $data, 200);
     }

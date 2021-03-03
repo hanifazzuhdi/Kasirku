@@ -198,8 +198,8 @@ class LaporanController extends Controller
         $dt = Carbon::parse('2012-' . $bulan . '-5 23:26:11.123789');
         $bulanName = $dt->monthName;
 
-        $hari = Transaksi::whereDay('created_at', $hari)->pluck('harga_total')->sum();
-        $tBulan = Transaksi::whereMonth('created_at', $bulan)->pluck('harga_total')->sum();
+        $hari = Pengeluaran::whereDay('created_at', $hari)->pluck('jumlah')->sum();
+        $tBulan = Pengeluaran::whereMonth('created_at', $bulan)->pluck('jumlah')->sum();
 
         $pengeluaran = Pengeluaran::whereMonth('created_at', $bulan)->get();
 

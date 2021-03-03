@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api\Pimpinan;
 
-use App\Models\{Pengeluaran};
-
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Transaksi;
+use Illuminate\Http\Request;
 
-
-class PengeluaranController extends Controller
+class PemasukanController extends Controller
 {
     /**
      * lihat data pengeluaran bulan ini
@@ -16,13 +14,13 @@ class PengeluaranController extends Controller
     public function index()
     {
         //  pengeluaran hari ini
-        $hari   = Pengeluaran::whereDay('created_at', date('d'))->pluck('jumlah')->sum();
+        $hari   = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total')->sum();
 
         //  pengeluaran bulan ini
-        $bulan   = Pengeluaran::whereMonth('created_at', date('m'))->pluck('jumlah')->sum();
+        $bulan   = Transaksi::whereMonth('created_at', date('m'))->pluck('harga_total')->sum();
 
         //  data pengeluaran bulan ini
-        $pengeluaran = Pengeluaran::whereMonth('created_at', date('m'))->get();
+        $pengeluaran = Transaksi::whereMonth('created_at', date('m'))->get();
 
         return response()->json([
             'status'            => 'success',
@@ -39,13 +37,13 @@ class PengeluaranController extends Controller
     public function show()
     {
         //  pengeluaran hari ini
-        $hari   = Pengeluaran::whereDay('created_at', date('d'))->pluck('jumlah')->sum();
+        $hari   = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total')->sum();
 
         //  pengeluaran bulan ini
-        $bulan   = Pengeluaran::whereMonth('created_at', request('bulan'))->pluck('jumlah')->sum();
+        $bulan   = Transaksi::whereMonth('created_at', request('bulan'))->pluck('harga_total')->sum();
 
         //  data pengeluaran bulan ini
-        $pengeluaran = Pengeluaran::whereMonth('created_at', request('bulan'))->get();
+        $pengeluaran = Transaksi::whereMonth('created_at', request('bulan'))->get();
 
         return response()->json([
             'status'            => 'success',
@@ -54,20 +52,5 @@ class PengeluaranController extends Controller
             'pengeluaran_bulan' => $bulan,
             'data'              => $pengeluaran
         ]);
-    }
-
-    /**
-     * Tambah data pengeluaran
-     */
-    public function store(Request $request)
-    {
-        $data = $this->validate($request, [
-            'nama_pengeluaran' => 'required',
-            'jumlah' => 'required'
-        ]);
-
-        $data = Pengeluaran::create($data);
-
-        return $this->sendResponse('success', 'Data Pengeluaran berhasil ditambahkan', $data, 201);
     }
 }

@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Events\LoginKaryawan;
 use App\User;
+use App\Models\Member;
+use App\Events\LoginKaryawan;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
-use App\Models\Member;
-use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends Controller
 {
-    /**
-     * Method Login for Staff or Kasir
-     *
-     *
-     */
+    // Login Karyawan
     public function login(Request $request)
     {
         $loginType = filter_var($request->email, FILTER_VALIDATE_EMAIL)  ? 'email' : 'nomor';
@@ -53,11 +48,7 @@ class LoginController extends Controller
         ]);
     }
 
-    /**
-     * Method login for member
-     *
-     *
-     */
+    // Login Member
     protected function memberLogin($request)
     {
         $nomor = $this->formatNumber($request);
@@ -91,11 +82,7 @@ class LoginController extends Controller
         ]);
     }
 
-    /**
-     * format number phone member, change 08 to +62
-     *
-     *
-     */
+    // Format nomor telpon
     public function formatNumber($request)
     {
         if (str_contains($request->input('email'), '+62') and str_split($request->input('email'), 3)[0] == '+62') {

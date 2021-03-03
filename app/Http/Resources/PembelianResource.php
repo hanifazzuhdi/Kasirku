@@ -23,7 +23,7 @@ class PembelianResource extends JsonResource
             'total_harga' => $this->total_harga,
             'status' => $this->status,
             'created_at' => $this->created_at,
-            'updated_ay' => $this->updated_ay,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

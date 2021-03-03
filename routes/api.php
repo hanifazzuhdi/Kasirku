@@ -21,11 +21,7 @@ Route::group(['namespace' => 'Auth'], function () {
 });
 
 
-/** Pimpinan
- *  1. Laporan
- *  2. Laporan harian - bulanan
- *
- */
+// Route Pimpinan
 Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function () {
     // stok => pilih uid barang terlebih dulu
     Route::get('/laporan-stok', "LaporanController@stok");
@@ -34,17 +30,20 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
     Route::get('/laporan-pembelian', 'LaporanController@allPembelian');
     Route::post('/laporan-pembelian', 'LaporanController@pembelian');
 
-    // Penjualan / pemasukan
+    // Penjualan
     Route::get('/laporan-penjualan', 'LaporanController@allPenjualan');
     Route::post('/laporan-penjualan', 'LaporanController@penjualan');
 
     // Laba Rugi
-    Route::post('/laporan/laba-rugi', 'LabaRugiController@show');
+    Route::get('/laporan/laba-rugi', 'LabaRugiController@show');
+    Route::post('/laporan/laba-rugi', 'LabaRugiController@cari');
 
-    // Total pengeluaran => 1. pembelian 2. pengeluaran
+    // Total pengeluaran => 2. pengeluaran
     Route::get('/laporan-pengeluaran', 'PengeluaranController@index');
     Route::post('/laporan-pengeluaran', 'PengeluaranController@show');
     Route::post('/add-pengeluaran', 'PengeluaranController@store');
+
+    // Pemasukan
 });
 
 

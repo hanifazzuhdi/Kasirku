@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Events\LoginKaryawan;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Controller;
 
 class LogoutController extends Controller
 {
-    /**
-     *  Method for destroy token
-     *
-     */
+    // Logout dan destroy token
     public function logout()
     {
         $user = Auth::user();
