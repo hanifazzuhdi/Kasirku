@@ -20,7 +20,6 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('/forgot-password', 'ForgotPasswordController@forgot');
 });
 
-
 // Route Pimpinan
 Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function () {
     // stok => pilih uid barang terlebih dulu
@@ -53,13 +52,7 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
 });
 
 
-/** Staf
- *  1. Data supplier
- *  2. Buat supplier
- *  3. Kategori
- *  4. Barang
- *  5. Pembelian / stok masuk
- */
+// Staff
 Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     // supplier
     Route::get('/supplier', 'SupplierController@index');

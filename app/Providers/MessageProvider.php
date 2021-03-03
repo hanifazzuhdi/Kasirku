@@ -4,12 +4,13 @@ namespace App\Providers;
 
 use Twilio\Rest\Client;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class MessageProvider extends ServiceProvider
 {
-    public $token, $twilio_sid, $twilio_message_sid;
+    public $token;
 
     /**
      * Construct method for assign property
@@ -17,26 +18,28 @@ class MessageProvider extends ServiceProvider
      */
     public function __construct()
     {
-        $this->token = getenv("TWILIO_AUTH_TOKEN");
-        $this->twilio_sid = getenv("TWILIO_SID");
-        $this->twilio_message_sid = getenv("TWILIO_MESSAGE_SID");
+        $this->token = 'cfb5b569ba4dd350fd94d800e479810d';
     }
 
-    public function sendMessage($nomor)
+    public function sendMessage($nomor1, $nomor)
     {
-        $token = Str::random(30);
+        $token = Str::random(5);
 
-        DB::insert("INSERT INTO password_resets VALUES ('$nomor','$token', now())");
+        DB::insert("INSERT INTO password_resets VALUES ('$nomor1','$token', now())");
 
-        $twilio = new Client($this->twilio_sid, $this->token);
+        $res = Http::withToken('5ee9a7b457c02acab98278fdd99d7f50e3aafbb8')->withHeaders([
+            'Content-Type' => ' application/json'
+        ])->post('https://api-ssl.bitly.com/v4/shorten', [
+            'long_url' => "https://project-mini.herokuapp.com/password/reset/$token/$nomor1",
+            "domain" => "bit.ly"
+        ]);
 
-        $twilio->messages
-            ->create(
-                $nomor,
-                [
-                    'messagingServiceSid' => $this->twilio_message_sid,
-                    'body' => "Ini link lupa password anda : https://project-mini.herokuapp.com/password/reset/{$token}/{$nomor}"
-                ]
-            );
+        json_encode($res, true);
+
+        Http::get('http://websms.co.id/api/smsgateway', [
+            'token' => $this->token,
+            'to' => $nomor,
+            'msg' => "Ini link lupa password anda " . $res['link']
+        ]);
     }
 }

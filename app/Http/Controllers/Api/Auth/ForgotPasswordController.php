@@ -7,6 +7,7 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Providers\MessageProvider;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class ForgotPasswordController extends Controller
 {
@@ -18,16 +19,18 @@ class ForgotPasswordController extends Controller
     {
         $this->validation($request);
 
-        $nomor = $this->formatNumber($request);
+        $nomor1 = $this->formatNumber($request);
 
-        $member = Member::where('nomor', $nomor)->first();
+        $member = Member::where('nomor', $nomor1)->first();
 
         if ($member == null) {
             return $this->sendResponse('failed', 'Nomor belum terdaftar', null, 400);
         }
 
+        $nomor = '0' . explode('+62', $nomor1)[1];
+
         $pesan = new MessageProvider();
-        $pesan->sendMessage($nomor);
+        $pesan->sendMessage($nomor1, $nomor);
 
         return response([
             'status'  => 'success',
