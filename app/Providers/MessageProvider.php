@@ -36,10 +36,12 @@ class MessageProvider extends ServiceProvider
 
         json_encode($res, true);
 
+        $url = explode('https://', $res['link'])[1];
+
         Http::get('http://websms.co.id/api/smsgateway', [
             'token' => $this->token,
             'to' => $nomor,
-            'msg' => "Ini link lupa password anda " . $res['link']
+            'msg' => "Ini link lupa password anda " . $url
         ]);
     }
 }
