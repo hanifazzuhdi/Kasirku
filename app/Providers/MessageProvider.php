@@ -41,7 +41,7 @@ class MessageProvider extends ServiceProvider
         Http::get('http://websms.co.id/api/smsgateway', [
             'token' => $this->token,
             'to' => $nomor,
-            'msg' => "Ini link lupa password anda " . $url
+            'msg' => "Ini link permintaan lupa password anda " . $url
         ]);
     }
 }
