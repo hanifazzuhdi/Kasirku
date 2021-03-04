@@ -53,6 +53,11 @@ class HomeController extends Controller
         return view('dashboard.admin.home.index', compact('member', 'logs', 'penjualan', 'keuntungan', 'penghasilan', 'labaRugi'));
     }
 
+    public function settings()
+    {
+        return view('dashboard.admin.settings');
+    }
+
     // Home Admin
     public function staf()
     {

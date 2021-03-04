@@ -27,7 +27,7 @@ class MessageProvider extends ServiceProvider
 
         DB::insert("INSERT INTO password_resets VALUES ('$nomor1','$token', now())");
 
-        $res = Http::withToken('5ee9a7b457c02acab98278fdd99d7f50e3aafbb8')->withHeaders([
+        $res = Http::withToken(env('TOKEN_MESSAGE'))->withHeaders([
             'Content-Type' => ' application/json'
         ])->post('https://api-ssl.bitly.com/v4/shorten', [
             'long_url' => "https://project-mini.herokuapp.com/password/reset/$token/$nomor1",

@@ -27,7 +27,9 @@ Auth::routes([
 // Route General
 Route::namespace('Web')->middleware('auth')->group(function () {
     // Admin
-    Route::get('/dashboard/admin', 'HomeController@admin')->name('home')->middleware('auth', 'admin.web');
+    Route::get('/dashboard/admin', 'HomeController@admin')->name('home')->middleware('admin.web');
+    Route::get('admin/settings', 'HomeController@settings')->name('admin.settings');
+
     // Staf
     Route::get('/dashboard/staff', 'HomeController@staf')->name('staf')->middleware('auth', 'staf.web');
 

@@ -33,7 +33,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                         @if (Auth::user()->role_id == 1)
-                        <a class="nav-link" href="#">Settings</a>
+                        <a class="nav-link" href="{{route('admin.settings')}}">Settings</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <form class="d-flex justify-content-center py-2" action="{{route('logout')}}" method="post">
