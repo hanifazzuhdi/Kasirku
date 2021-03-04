@@ -40,14 +40,14 @@
             return Toast;
         }
 
-        // moment js waktu
-        function update() {
-            let locallocale = moment();
-            locallocale.locale('id');
+        // js waktu
+        var renderTime = function () {
+            var time = new Date();
+            clock.textContent = time.toLocaleString('id-ID', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}) + ' WIB';
+        };
+        renderTime();
 
-            $('#clock').html(locallocale.format('DD MMMM Y, H:mm:ss') + ' WIB');
-        }
-        setInterval(update, 1000);
+        setInterval(renderTime, 1000);
 
         // select 2
         $('select[name="uid"]').select2({

@@ -27,14 +27,15 @@
 <script>
     $(document).ready(function(){
 
-        // moment js waktu
-        function update() {
-            let locallocale = moment();
-            locallocale.locale('id');
 
-            $('#clock').html(locallocale.format('DD MMMM Y, H:mm:ss') + ' WIB');
-        }
-        setInterval(update, 1000);
+        // js waktu
+        var renderTime = function () {
+            var time = new Date();
+            clock.textContent = time.toLocaleString('id-ID', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}) + ' WIB';
+        };
+        renderTime();
+
+        setInterval(renderTime, 1000);
 
         $("#calendar").simpleCalendar({
             months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],

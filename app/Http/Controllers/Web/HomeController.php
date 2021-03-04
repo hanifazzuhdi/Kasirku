@@ -6,6 +6,7 @@ use App\Models\{Barang, Log, Member, Pembelian, Pengeluaran, Transaksi};
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,6 @@ class HomeController extends Controller
         $member = Member::MemberActive()->count();
         $logs = Log::orderBy('id', 'DESC')->limit(3)->get();
         $penjualan = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total');
-        // $pengeluaran = Pengeluaran::whereMonth('created_at', date('m'))->pluck('jumlah')->sum();
 
         $penghasilan = DB::table('transaksis')
             ->select(DB::raw("SUM(harga_total) AS penghasilan"))
@@ -31,7 +31,7 @@ class HomeController extends Controller
             if ($i >= date('m')) {
                 break;
             }
-            # code...
+
             $penjualann = Transaksi::whereMonth('created_at', $bulan[$i])->pluck('harga_total')->sum();
             $pembelian = Pembelian::whereMonth('created_at', $bulan[$i])->pluck('total_harga')->sum();
 

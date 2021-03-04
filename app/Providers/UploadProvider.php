@@ -13,15 +13,19 @@ class UploadProvider extends ServiceProvider
 {
     public static function upload(Request $request)
     {
-        $response = cloudinary()->upload($request->file('avatar')->getRealPath(), [
-            'transformation' => [
-                'quality' => 'auto',
-                'fetch_format' => 'auto'
-            ],
-            'crop' => 'limit'
-        ])->getSecurePath();
+        $image = base64_encode(file_get_contents($request->file('avatar')));
 
-        return $response;
+        $client = new GuzzleHttpClient();
+        $response = $client->request('POST', 'https://api.imgbb.com/1/upload', [
+            'form_params' => [
+                'key' => 'f98a15c0e84720165f5cd99516022338',
+                'image' => $image,
+                'name' => $request
+            ]
+        ]);
+        $res = json_decode($response->getBody()->getContents(), true);
+
+        return $res['data']['url'];
     }
 
     public static function uploadCode($request, $type)
@@ -30,22 +34,18 @@ class UploadProvider extends ServiceProvider
             $image = DNS2DFacade::getBarcodePNG($request, 'QRCODE');
         } else {
             $image = DNS1DFacade::getBarcodePNG($request, 'C39', 1, 34, array(1, 1, 1), true);
-
-            $client = new GuzzleHttpClient();
-            $response = $client->request('POST', 'https://api.imgbb.com/1/upload', [
-                'form_params' => [
-                    'key' => 'f98a15c0e84720165f5cd99516022338',
-                    'image' => $image,
-                    'name' => $request
-                ]
-            ]);
-            $res = json_decode($response->getBody()->getContents(), true);
-
-            return $res['data']['url'];
         }
 
-        $response = cloudinary()->upload("data:image/png;base64,$image")->getSecurePath();
+        $client = new GuzzleHttpClient();
+        $response = $client->request('POST', 'https://api.imgbb.com/1/upload', [
+            'form_params' => [
+                'key' => 'f98a15c0e84720165f5cd99516022338',
+                'image' => $image,
+                'name' => $request
+            ]
+        ]);
+        $res = json_decode($response->getBody()->getContents(), true);
 
-        return $response;
+        return $res['data']['url'];
     }
 }

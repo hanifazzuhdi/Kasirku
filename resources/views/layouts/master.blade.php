@@ -18,8 +18,8 @@
     <link rel="icon" type="image/png" href="{{asset('backend/assets/img/favicon.png')}}">
 
     <!-- CSS Files -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="{{asset('backend/assets/css/material-dashboard.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     @yield('css')
 </head>
@@ -44,6 +44,7 @@
         @include('sweetalert::alert')
 
     </div>
+
     <!--   Core JS Files   -->
     <script src="{{asset('backend/assets/js/core/jquery.min.js')}}"></script>
     <script src="{{asset('backend/assets/js/core/popper.min.js')}}"></script>
