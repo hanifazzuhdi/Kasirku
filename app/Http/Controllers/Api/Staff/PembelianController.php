@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Api\Staff;
 
-use App\Models\{Member, Pembelian, Pengeluaran, Supplier};
+use App\Models\{Pembelian, Pengeluaran, Supplier};
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PembelianResource;
-use Illuminate\Support\Facades\DB;
 
 class PembelianController extends Controller
 {
     /**
      * Get all data pembelian
-     *
      */
     public function index()
     {
@@ -30,7 +29,6 @@ class PembelianController extends Controller
 
     /**
      * function for store data pembelian
-     *
      */
     public function store(Request $request)
     {
@@ -38,11 +36,11 @@ class PembelianController extends Controller
 
         DB::beginTransaction();
         $data = Pembelian::create([
-            'supplier_id'   => $request->input('supplier'),
-            'nama_barang'   => $request->input('barang'),
-            'harga_satuan'  => $request->input('harga_satuan'),
-            'pcs'  => $request->input('total_barang'),
-            'total_harga'   => $request->input('harga_satuan') * $request->input('total_barang')
+            'supplier_id'   => $request->supplier,
+            'nama_barang'   => $request->barang,
+            'harga_satuan'  => $request->harga_satuan,
+            'pcs'           => $request->total_barang,
+            'total_harga'   => $request->harga_satuan * $request->total_barang
         ]);
 
         $supp = Supplier::find(request('supplier'));
@@ -52,7 +50,7 @@ class PembelianController extends Controller
 
         Pengeluaran::create([
             'nama_pengeluaran' => "Pembelian Barang $request->barang",
-            'jumlah' => $request->input('harga_satuan') * $request->input('total_barang'),
+            'jumlah' => $request->harga_satuan * $request->total_barang,
             'jenis' => 'Pembelian'
         ]);
         DB::commit();
@@ -62,9 +60,7 @@ class PembelianController extends Controller
 
     /**
      * Method for update status pembelian
-     *
      */
-
     public function updateStatus($id)
     {
         $pembelian = Pembelian::find($id);
@@ -78,7 +74,6 @@ class PembelianController extends Controller
 
     /**
      * validate all request
-     *
      */
     public function validated($request)
     {

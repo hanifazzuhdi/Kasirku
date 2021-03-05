@@ -34,7 +34,6 @@ class LaporanController extends Controller
 
     /**
      * Laporan Pembelian berdasarkan antara tanggal
-     *
      */
     public function pembelian(Request $request)
     {
@@ -54,7 +53,6 @@ class LaporanController extends Controller
 
     /**
      * Laporan Penjualan
-     *
      */
     public function allPenjualan()
     {
@@ -71,9 +69,7 @@ class LaporanController extends Controller
 
     /**
      *  Laporan penjualan berdasarkan tanggal
-     *
      */
-
     public function penjualan(Request $request)
     {
         $tanggalAwal = $request->input('tAwal');

@@ -48,7 +48,7 @@ class TransaksiController extends Controller
     // Jalankan transaksi bayar pakai saldo member
     public function bayarSaldo(Request $request)
     {
-        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+        $member = Member::where('kode_member', $request->kode_member)->firstOrFail();
 
         $transaksi = Transaksi::transaksiAktif()->firstOrFail();
 

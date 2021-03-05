@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Member;
 
-use App\Models\{Bank, Member, Payment};
+use App\Models\{Member, Payment};
 use Illuminate\Support\Facades\{DB, Http};
 
 use Illuminate\Support\Str;
@@ -16,10 +16,7 @@ class SaldoController extends Controller
         return $this->middleware('jwt.auth')->except('webhooks');
     }
 
-    /**
-     * Method get saldo
-     *
-     */
+    // Lihat Saldo
     public function index()
     {
         $data = Member::where('id', auth('member')->id())->first();
@@ -27,10 +24,7 @@ class SaldoController extends Controller
         return $this->sendResponse('success', 'Saldo berhasil dimuat', $data->saldo, 200);
     }
 
-    /**
-     * Method get transaksi
-     *
-     */
+    // Lihat data transaksi
     public function transaksi()
     {
         $data = Payment::where('kode_member', auth('member')->user()->kode_member)->orderBy('id', 'DESC')->get();
@@ -38,10 +32,7 @@ class SaldoController extends Controller
         return $this->sendResponse('success', 'Riwayat transaksi berhasil dimuat', $data, 200);
     }
 
-    /**
-     *  Isi saldo via kasir
-     *
-     */
+    // Isi saldo melalui kasir
     public function isiSaldo(Request $request)
     {
         $this->validate($request, [
@@ -50,33 +41,30 @@ class SaldoController extends Controller
         ]);
 
         DB::beginTransaction();
-        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+        $member = Member::where('kode_member', $request->kode_member)->firstOrFail();
 
         $member->update([
-            'saldo' => $member->saldo + $request->input('jumlah')
+            'saldo' => $member->saldo + $request->jumlah
         ]);
 
         Payment::create([
-            'order_id' => 'KASIR-' . date('dmyHis') . '-' . $member->id,
-            'jumlah' => $request->input('jumlah'),
-            'kode_member' => $request->input('kode_member'),
-            'nama_member' => $member->nama,
+            'order_id'     => 'KASIR-' . date('dmyHis') . '-' . $member->id,
+            'jumlah'       => $request->jumlah,
+            'kode_member'  => $request->kode_member,
+            'nama_member'  => $member->nama,
             'nomor_member' => $member->nomor,
-            'bank' => 'Kasir',
-            'status' => 1
+            'bank'         => 'Kasir',
+            'status'       => 1
         ]);
         DB::commit();
 
-        return $this->sendResponse('success', 'Transaksi berhasil, saldo ditambahkan', $request->input('jumlah'), 200);
+        return $this->sendResponse('success', 'Transaksi berhasil, saldo ditambahkan', $request->jumlah, 200);
     }
 
-    /**
-     * Method for add saldo via payments
-     *
-     */
+    // Isi saldo dengan topup
     public function store(Request $request)
     {
-        $order_id = Str::upper($request->input('bank')) . "-" . date('dmyHis') . '-' . auth('member')->id();
+        $order_id = Str::upper($request->bank) . "-" . date('dmyHis') . '-' . auth('member')->id();
 
         DB::beginTransaction();
         $res = Http::withBasicAuth(env('SERVER_KEY_MIDTRANS'), '')
@@ -104,16 +92,20 @@ class SaldoController extends Controller
             ]);
 
         Payment::create([
-            'order_id' => $order_id,
-            'jumlah' => $request->input('jumlah'),
-            "kode_member" => auth('member')->user()->kode_member,
-            "nama_member" => auth('member')->user()->nama,
+            'order_id'     => $order_id,
+            'jumlah'       => $request->jumlah,
+            "kode_member"  => auth('member')->user()->kode_member,
+            "nama_member"  => auth('member')->user()->nama,
             "nomor_member" => auth('member')->user()->nomor,
-            'bank' => $request->input('bank')
+            'bank'         => $request->bank
         ]);
         DB::commit();
 
         $data = $res->json();
+
+        if ($data['status_code'] == '500') {
+            return $this->sendResponse('failed', 'Fitur sedang dalam perbaikan', null, 500);
+        }
 
         return response()->json([
             'status' => 'success',
@@ -129,10 +121,7 @@ class SaldoController extends Controller
         ]);
     }
 
-    /**
-     *  Webhooks for midtrans transaction
-     *
-     */
+    // Webhook Transaksi
     public function webhooks(Request $request)
     {
         $notification_body = json_decode($request->getContent(), true);

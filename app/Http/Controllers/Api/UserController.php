@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use Illuminate\Support\Facades\{Auth, DB};
+
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Providers\UploadProvider;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    /** Method for show user login
-     *
-     *
-     */
+    // Melihat data user yang login
     public function show()
     {
         $data = User::find(Auth::id());
@@ -22,10 +19,7 @@ class UserController extends Controller
         return $this->sendResponse('success', 'Data berhasil dimuat', $data, 200);
     }
 
-    /**
-     * Method for update profile user
-     *
-     */
+    //  Update profile user
     public function update(Request $request)
     {
         $user = User::find(Auth::id());
@@ -40,9 +34,9 @@ class UserController extends Controller
             }
 
             $user->update([
-                'nama' => $request->input('nama') ?? $user->nama,
-                'umur' => $request->input('umur') ?? $user->umur,
-                'alamat' => $request->input('alamat') ?? $user->alamat,
+                'nama'   => $request->nama ?? $user->nama,
+                'umur'   => $request->umur ?? $user->umur,
+                'alamat' => $request->alamat ?? $user->alamat,
                 'avatar' => $avatar ?? $user->avatar,
             ]);
         });

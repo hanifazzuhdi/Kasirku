@@ -111,6 +111,7 @@ class KeranjangController extends Controller
         return $this->sendResponse('success', 'Berhasil tambah ke keranjang', $keranjang, 200);
     }
 
+    // Jika dia member
     public function member($transaksi, $barang)
     {
         // code

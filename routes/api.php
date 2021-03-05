@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 // Route auth
 Route::group(['namespace' => 'Auth'], function () {
     // login semua role
@@ -51,7 +50,6 @@ Route::group(['namespace' => 'Pimpinan', 'middleware' => 'jwt.auth'], function (
     Route::post('/absen-bulanan', 'AbsenController@bulanan');
 });
 
-
 // Staff
 Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     // supplier
@@ -80,11 +78,7 @@ Route::group(['namespace' => 'Staff', 'middleware' => 'jwt.auth'], function () {
     Route::post('/update-pembelian/{id}', 'PembelianController@updateStatus');
 });
 
-
-/** Kasir
- *  1. Transaksi/Penjualan
- *  2. isi saldo member
- */
+// Kasir
 Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
     // penjualan
     Route::get('/keranjang', 'KeranjangController@index');
@@ -99,21 +93,13 @@ Route::group(['namespace' => 'Kasir', 'middleware' => 'jwt.auth'], function () {
     Route::post('/transaksi-member', 'TransaksiController@bayarSaldo');
 });
 
-
-/** Staf + Kasir
- *
- */
+// Staff + Kasir
 Route::group(['middleware' => ['jwt.auth']], function () {
-    // Karyawan
     Route::get('/profile', 'UserController@show');
     Route::post('/update-profile', 'UserController@update');
 });
 
-
-/** Member
- *  1. Member
- *  2. Saldo
- */
+// Member
 Route::group(['namespace' => 'Member'], function () {
     // Member
     Route::get('/get-member', 'MemberController@index');

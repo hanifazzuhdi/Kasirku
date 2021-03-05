@@ -12,9 +12,7 @@ class MerekController extends Controller
 {
     /**
      * Method melihat semua data merek
-     *
      */
-
     public function index()
     {
         $datas = MerekResource::collection(Merek::get());
@@ -24,7 +22,6 @@ class MerekController extends Controller
 
     /**
      * Method untuk menambah data merek
-     *
      */
     public function store(Request $request)
     {

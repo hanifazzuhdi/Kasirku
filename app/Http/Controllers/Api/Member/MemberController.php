@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api\Member;
 
-use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
 {
+    // Jwt Auth
     public function __construct()
     {
         return $this->middleware('jwt.auth');
@@ -32,14 +33,14 @@ class MemberController extends Controller
 
         $user = Member::find(auth('member')->id());
 
-        if (Hash::check($request->input('password_lama'), $user->password)) {
+        if (Hash::check($request->password_lama, $user->password)) {
 
-            if ($request->input('password_baru') == $request->input('password_lama')) {
+            if ($request->password_baru == $request->password_lama) {
                 return $this->sendResponse('failed', 'Password tidak boleh sama dengan sebelumnya', null, 404);
             }
 
             $user->update([
-                'password' => Hash::make($request->input('password_baru'))
+                'password' => Hash::make($request->password_baru)
             ]);
 
             return $this->sendResponse('success', 'Password berhasil diubah', $user, 200);

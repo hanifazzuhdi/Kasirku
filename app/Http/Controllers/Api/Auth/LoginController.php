@@ -85,10 +85,10 @@ class LoginController extends Controller
     // Format nomor telpon
     public function formatNumber($request)
     {
-        if (str_contains($request->input('email'), '+62') and str_split($request->input('email'), 3)[0] == '+62') {
-            $nomor = $request->input('email');
+        if (str_contains($request->email, '+62') and str_split($request->email, 3)[0] == '+62') {
+            $nomor = $request->email;
         } else {
-            $nomor = str_split($request->input('email'), 2);
+            $nomor = str_split($request->email, 2);
 
             if ($nomor[0] === '08') {
 

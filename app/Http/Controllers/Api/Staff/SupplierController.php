@@ -9,13 +9,11 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
+    /**
+     * Method for get all data supplier
+     */
     public function index()
     {
-        /**
-         * Method for get all data supplier
-         *
-         */
-
         $data = SupplierResource::collection(Supplier::get());
 
         if (count($data) == null) {

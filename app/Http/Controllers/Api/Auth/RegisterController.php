@@ -15,7 +15,6 @@ class RegisterController extends Controller
 
     /**
      * Construc method for assign property
-     *
      */
     public function __construct()
     {
@@ -26,7 +25,6 @@ class RegisterController extends Controller
 
     /**
      * Function for registration
-     *
      */
     public function register(Request $request)
     {
@@ -42,12 +40,12 @@ class RegisterController extends Controller
 
         DB::transaction(function () use ($request, $nomor) {
 
-            $kode_member = '000' . substr($request->input('nomor'), 2);
+            $kode_member = '000' . substr($request->nomor, 2);
 
             $user = Member::create([
                 'nomor' => $nomor,
-                'nama' => $request->input('nama'),
-                'password' => Hash::make($request->input('password')),
+                'nama' => $request->nama,
+                'password' => Hash::make($request->password),
                 'kode_member' => $kode_member,
                 'qr_code' => UploadProvider::uploadCode($kode_member, 'register'),
                 'role_id' => 4
@@ -70,7 +68,6 @@ class RegisterController extends Controller
 
     /**
      * Validation Request
-     *
      */
     public function validation($request)
     {

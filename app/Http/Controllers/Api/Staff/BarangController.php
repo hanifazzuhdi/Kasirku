@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\DB;
 use App\Providers\UploadProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarangResource;
-use Milon\Barcode\Facades\DNS1DFacade;
 
 class BarangController extends Controller
 {
     /**
      * Method for get data all products
-     *
      */
     public function index()
     {
@@ -25,7 +23,6 @@ class BarangController extends Controller
 
     /**
      * Method show barang per uid
-     *
      */
     public function show($uid)
     {
@@ -38,7 +35,6 @@ class BarangController extends Controller
 
     /**
      * Method for store data products
-     *
      */
     public function store(Request $request)
     {
@@ -48,13 +44,13 @@ class BarangController extends Controller
         DB::beginTransaction();
         $data = Barang::create([
             'uid' => "{$request->kategori_id}{$request->merek_id}" . str_split(time(), 6)[1] . random_int(1, 9),
-            'nama_barang' => $request->input('nama_barang'),
-            'harga_beli' => $request->input('harga_beli'),
-            'harga_jual' => $request->input('harga_jual'),
-            'kategori_id' => $request->input('kategori_id'),
-            'merek_id' => $request->input('merek_id'),
-            'stok' => $request->input('stok'),
-            'diskon' => $request->input('diskon') ?? 0,
+            'nama_barang' => $request->nama_barang,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'kategori_id' => $request->kategori_id,
+            'merek_id' => $request->merek_id,
+            'stok' => $request->stok,
+            'diskon' => $request->diskon ?? 0,
         ]);
         $data->update([
             'barcode' => UploadProvider::uploadCode($data->uid, 'barang')
@@ -71,16 +67,15 @@ class BarangController extends Controller
 
     /**
      * Api Update barang
-     *
      */
     public function update(Barang $barang, Request $request)
     {
         $barang->update([
-            'nama_barang' => $request->input('nama_barang') ?? $barang->nama_barang,
-            'harga_beli' => $request->input('harga_beli') ?? $barang->harga_beli,
-            'harga_jual' => $request->input('harga_jual') ?? $barang->harga_jual,
-            'stok' => $request->input('stok') ?? $barang->stok,
-            'diskon' => $request->input('diskon') ?? $barang->diskon,
+            'nama_barang' => $request->inama_barang ?? $barang->nama_barang,
+            'harga_beli'  => $request->harga_beli ?? $barang->harga_beli,
+            'harga_jual'  => $request->harga_jual ?? $barang->harga_jual,
+            'stok'        => $request->stok ?? $barang->stok,
+            'diskon'      => $request->diskon ?? $barang->diskon,
         ]);
 
         return $this->sendResponse('success', 'Data barang berhasil diupdate', $barang, 202);
@@ -88,7 +83,6 @@ class BarangController extends Controller
 
     /**
      * Api Hapus barang
-     *
      */
     public function delete(Barang $barang)
     {
@@ -99,7 +93,6 @@ class BarangController extends Controller
 
     /**
      * Method for validate request
-     *
      */
     public function validated($request)
     {

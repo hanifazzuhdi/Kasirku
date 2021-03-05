@@ -12,7 +12,6 @@ class KategoriController extends Controller
 {
     /**
      * Method for get all data kategori
-     *
      */
     public function index()
     {
@@ -23,7 +22,6 @@ class KategoriController extends Controller
 
     /**
      * Method for add new kategori
-     *
      */
     public function store(Request $request)
     {
@@ -38,7 +36,6 @@ class KategoriController extends Controller
 
     /**
      * Delete Kategori
-     *
      */
     public function delete($id)
     {
