@@ -103,8 +103,8 @@ class SaldoController extends Controller
 
         $data = $res->json();
 
-        if ($data['status_code'] == '500') {
-            return $this->sendResponse('failed', 'Fitur sedang dalam perbaikan', null, 500);
+        if ($data['status_code'] == '500' or  app('Illuminate\Http\Response')->status() == '503') {
+            return $this->sendResponse('failed', 'Fitur sedang dalam perbaikan', null, 400);
         }
 
         return response()->json([
