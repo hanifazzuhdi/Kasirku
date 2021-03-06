@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Barang;
-use App\Providers\UploadProvider;
+use App\Services\UploadServices;
 use Illuminate\Database\Seeder;
 use Milon\Barcode\Facades\DNS1DFacade;
 

@@ -5,15 +5,13 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Models\Member;
 
 use Illuminate\Http\Request;
-use App\Providers\MessageProvider;
+use App\Services\MessageServices;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
 
 class ForgotPasswordController extends Controller
 {
     /**
      * lupa password
-     *
      */
     public function forgot(Request $request)
     {
@@ -29,7 +27,7 @@ class ForgotPasswordController extends Controller
 
         $nomor = '0' . explode('+62', $nomor1)[1];
 
-        $pesan = new MessageProvider();
+        $pesan = new MessageServices();
         $pesan->sendMessage($nomor1, $nomor);
 
         return response([
@@ -41,7 +39,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * validasi request
-     *
      */
     public function validation($request)
     {

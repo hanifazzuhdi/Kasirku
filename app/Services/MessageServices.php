@@ -1,23 +1,20 @@
 <?php
 
-namespace App\Providers;
+namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\{DB, Http};
+use Illuminate\Support\{ServiceProvider, Str};
 
-class MessageProvider extends ServiceProvider
+class MessageServices extends ServiceProvider
 {
     public $token;
 
     /**
      * Construct method for assign property
-     *
      */
     public function __construct()
     {
-        $this->token = 'cfb5b569ba4dd350fd94d800e479810d';
+        $this->token = env('TOKEN_MESSAGE');
     }
 
     public function sendMessage($nomor1, $nomor)
@@ -26,16 +23,17 @@ class MessageProvider extends ServiceProvider
 
         DB::insert("INSERT INTO password_resets VALUES ('$nomor1','$token', now())");
 
-        $res = Http::withToken(env('TOKEN_MESSAGE'))->withHeaders([
+        // Buat short link
+        $req = Http::withToken(env('TOKEN_BITLY'))->withHeaders([
             'Content-Type' => ' application/json'
         ])->post('https://api-ssl.bitly.com/v4/shorten', [
-            'long_url' => "https://project-mini.herokuapp.com/password/reset/$token/$nomor1",
+            'long_url' => "https://project-mini.herokuapp.com/password/reqet/$token/$nomor1",
             "domain" => "bit.ly"
         ]);
 
-        json_encode($res, true);
+        json_encode($req, true);
 
-        $url = explode('https://', $res['link'])[1];
+        $url = explode('https://', $req['link'])[1];
 
         Http::get('http://websms.co.id/api/smsgateway', [
             'token' => $this->token,

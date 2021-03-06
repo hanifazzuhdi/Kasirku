@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Staff;
 use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Providers\UploadProvider;
+use App\Services\UploadServices;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BarangResource;
 
@@ -53,7 +53,7 @@ class BarangController extends Controller
             'diskon' => $request->diskon ?? 0,
         ]);
         $data->update([
-            'barcode' => UploadProvider::uploadCode($data->uid, 'barang')
+            'barcode' => UploadServices::uploadCode($data->uid, 'barang')
         ]);
         DB::commit();
         // Commit transaction

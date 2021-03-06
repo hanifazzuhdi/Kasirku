@@ -6,7 +6,7 @@ use App\Models\{Barang, Merek, Kategori};
 
 
 use Illuminate\Http\Request;
-use App\Providers\UploadProvider;
+use App\Services\UploadServices;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\Controller;
@@ -94,7 +94,7 @@ class ProdukController extends Controller
             'diskon'      => $request->diskon ?? 0,
         ]);
         $data->update([
-            'barcode' => UploadProvider::uploadCode($data->uid, 'barang')
+            'barcode' => UploadServices::uploadCode($data->uid, 'barang')
         ]);
         DB::commit();
         // Commit transaction

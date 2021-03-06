@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Providers;
+namespace App\Services;
 
 use Illuminate\Http\Request;
 
+use Milon\Barcode\Facades\{DNS1DFacade, DNS2DFacade};
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Support\ServiceProvider;
-use Milon\Barcode\Facades\DNS1DFacade;
-use Milon\Barcode\Facades\DNS2DFacade;
 
-class UploadProvider extends ServiceProvider
+class UploadServices extends ServiceProvider
 {
     public static function upload(Request $request)
     {

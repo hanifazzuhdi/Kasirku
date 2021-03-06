@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Models\Member;
 use Twilio\Rest\Client;
 use Illuminate\Http\Request;
-use App\Providers\UploadProvider;
+use App\Services\UploadServices;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\{DB, Hash};
 
@@ -46,7 +46,7 @@ class RegisterController extends Controller
                 'nama' => $request->nama,
                 'password' => Hash::make($request->password),
                 'kode_member' => explode('+', $nomor)[1],
-                'qr_code' => UploadProvider::uploadCode(explode('+', $nomor)[1], 'register'),
+                'qr_code' => UploadServices::uploadCode(explode('+', $nomor)[1], 'register'),
                 'role_id' => 4
             ]);
 

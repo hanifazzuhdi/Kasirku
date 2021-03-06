@@ -6,6 +6,7 @@ use App\Models\{Pembelian, Pengeluaran, Transaksi};
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class LabaRugiController extends Controller
 {
@@ -50,6 +51,9 @@ class LabaRugiController extends Controller
 
         $pengeluaran = Pengeluaran::whereMonth('created_at', $data['bulan'])->where('jenis', 'Pengeluaran')->pluck('jumlah')->sum();
 
+        $dt = Carbon::parse('2012-' . date(request('bulan')) . '-5 23:26:11.123789');
+        $bulanName = $dt->monthName;
+
         // Laba/Rugi
         $labaRugi = $labaKotor - $pengeluaran;
 
@@ -61,7 +65,8 @@ class LabaRugiController extends Controller
                 'pembelian_produk' => $pembelian,
                 'laba_kotor' => $labaKotor,
                 'pengeluaran' => $pengeluaran,
-                'laba_rugi' => $labaRugi
+                'laba_rugi' => $labaRugi,
+                'bulan'     => $bulanName
             ],
         ]);
     }

@@ -6,7 +6,7 @@ use App\User;
 use Illuminate\Support\Facades\{Auth, DB};
 
 use Illuminate\Http\Request;
-use App\Providers\UploadProvider;
+use App\Services\UploadServices;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -30,7 +30,7 @@ class UserController extends Controller
 
         DB::transaction(function () use ($user, $request) {
             if ($request->file('avatar')) {
-                $avatar = UploadProvider::upload($request);
+                $avatar = UploadServices::upload($request);
             }
 
             $user->update([
