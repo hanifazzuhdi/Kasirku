@@ -15,6 +15,8 @@ class HomeController extends Controller
     {
         $member = Member::MemberActive()->count();
         $logs = Log::orderBy('id', 'DESC')->limit(3)->get();
+
+
         $penjualan = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total');
 
         $penghasilan = DB::table('transaksis')

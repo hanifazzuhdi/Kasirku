@@ -22,7 +22,7 @@ class LaporanController extends Controller
 
     public function cari(Request $request)
     {
-        if ($request->input('search') == null) {
+        if ($request->search == null) {
             $tanggal = explode(' - ', request('datefilter'));
 
             $tAwal = Carbon::create($tanggal[0]);
@@ -57,7 +57,7 @@ class LaporanController extends Controller
 
     public function cariPenjualan(Request $request)
     {
-        if ($request->input('search') == null) {
+        if ($request->search == null) {
             $tanggal = explode(' - ', request('datefilter'));
 
             $tAwal = Carbon::create($tanggal[0]);

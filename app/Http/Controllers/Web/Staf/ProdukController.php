@@ -6,10 +6,10 @@ use App\Models\{Barang, Merek, Kategori};
 
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Providers\UploadProvider;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Controllers\Controller;
 
 class ProdukController extends Controller
 {
@@ -37,7 +37,7 @@ class ProdukController extends Controller
     // Cari berdasarkan pencarian.
     public function cari(Request $request)
     {
-        if (!$request->input('datefilter')) {
+        if (!$request->datefilter) {
             $datas = Barang::where('uid', 'LIKE', "%$request->search%")->paginate(10);
         } else {
             $tanggal = $request->datefilter;
@@ -84,14 +84,14 @@ class ProdukController extends Controller
         // Begin transaction
         DB::beginTransaction();
         $data = Barang::create([
-            'uid' => "{$request->kategori_id}{$request->merek_id}" . str_split(time(), 6)[1] . random_int(1, 9),
-            'nama_barang' => $request->input('nama_barang'),
-            'harga_beli' => $request->input('harga_beli'),
-            'harga_jual' => $request->input('harga_jual'),
-            'kategori_id' => $request->input('kategori_id'),
-            'merek_id' => $request->input('merek_id'),
-            'stok' => $request->input('stok'),
-            'diskon' => $request->input('diskon') ?? 0,
+            'uid'         => "{$request->kategori_id}{$request->merek_id}" . str_split(time(), 6)[1] . random_int(1, 9),
+            'nama_barang' => $request->nama_barang,
+            'harga_beli'  => $request->harga_beli,
+            'harga_jual'  => $request->harga_jual,
+            'kategori_id' => $request->kategori_id,
+            'merek_id'    => $request->merek_id,
+            'stok'        => $request->stok,
+            'diskon'      => $request->diskon ?? 0,
         ]);
         $data->update([
             'barcode' => UploadProvider::uploadCode($data->uid, 'barang')

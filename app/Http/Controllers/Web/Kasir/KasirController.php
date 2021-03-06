@@ -113,7 +113,7 @@ class KasirController extends Controller
     // Jalankan transaksi bayar pakai saldo member
     public function bayarMember(Request $request)
     {
-        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+        $member = Member::where('kode_member', $request->kode_member)->firstOrFail();
 
         $transaksi = Transaksi::transaksiAktif()->firstOrFail();
 
@@ -182,7 +182,7 @@ class KasirController extends Controller
     // cari member
     public function cari(Request $request)
     {
-        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+        $member = Member::where('kode_member', $request->kode_member)->firstOrFail();
 
         return $this->sendResponse('success', 'Member berhasil di muat', $member, 200);
     }
@@ -196,24 +196,24 @@ class KasirController extends Controller
         ]);
 
         DB::beginTransaction();
-        $member = Member::where('kode_member', $request->input('kode_member'))->firstOrFail();
+        $member = Member::where('kode_member', $request->kode_member)->firstOrFail();
 
         $member->update([
-            'saldo' => $member->saldo + $request->input('nominal')
+            'saldo' => $member->saldo + $request->nominal
         ]);
 
         Payment::create([
-            'order_id' => 'KASIR-' . date('dmyHis') . '-' . $member->id,
-            'jumlah' => $request->input('nominal'),
-            'kode_member' => $request->input('kode_member'),
-            'nama_member' => $member->nama,
+            'order_id'     => 'KASIR-' . date('dmyHis') . '-' . $member->id,
+            'jumlah'       => $request->nominal,
+            'kode_member'  => $request->kode_member,
+            'nama_member'  => $member->nama,
             'nomor_member' => $member->nomor,
-            'bank' => 'Kasir',
-            'status' => 1
+            'bank'         => 'Kasir',
+            'status'       => 1
         ]);
         DB::commit();
 
-        return $this->sendResponse('success', 'Transaksi berhasil, saldo ditambahkan', $request->input('nominal'), 200);
+        return $this->sendResponse('success', 'Transaksi berhasil, saldo ditambahkan', $request->nominal, 200);
     }
 
     // transaksi belum selesai

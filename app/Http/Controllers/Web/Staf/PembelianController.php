@@ -28,7 +28,7 @@ class PembelianController extends Controller
      */
     public function cari(Request $request)
     {
-        if (!$request->input('datefilter')) {
+        if (!$request->datefilter) {
             $datas = Pembelian::whereHas('supplier', function ($q) use ($request) {
                 $q->where('nama_supplier', 'LIKE', '%' . $request->search . '%');
             })->paginate(10);
@@ -71,8 +71,8 @@ class PembelianController extends Controller
         ]);
 
         Pengeluaran::create([
-            'nama_pengeluaran' => "Pembelian Barang " . $request->input('nama_barang'),
-            'jumlah' => $request->input('harga_satuan') * $request->input('pcs'),
+            'nama_pengeluaran' => "Pembelian Barang " . $request->nama_barang,
+            'jumlah' => $request->harga_satuan * $request->pcs,
             'jenis' => 'Pembelian'
         ]);
         DB::commit();

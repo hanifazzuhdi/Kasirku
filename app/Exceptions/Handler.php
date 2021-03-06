@@ -2,9 +2,10 @@
 
 namespace App\Exceptions;
 
+use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
-use Throwable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -52,12 +53,12 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof ThrottleRequestsException) {
-
-            return response()->json(abort(429, 'Upaya Hari Ini Sudah Habis'));
+            return response()->json(['error' => 'Upaya Hari Ini Sudah Habis']);
+        } else if ($exception instanceof ModelNotFoundException) {
+            return response()->json(['error' => "Data di " . $exception->getModel() .  " tidak ditemukan"], 404);
         } else {
             return parent::render($request, $exception);
         }
-
         return parent::render($request, $exception);
     }
 }

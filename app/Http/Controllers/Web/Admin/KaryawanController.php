@@ -71,7 +71,7 @@ class KaryawanController extends Controller
      */
     public function cari(Request $request)
     {
-        if (!$request->input('datefilter')) {
+        if (!$request->datefilter) {
             $searchType = filter_var(request('search'), FILTER_VALIDATE_INT) ? 'id' : 'email';
             $datas = User::where($searchType, 'LIKE', "%$request->search%")->where('id', '!=', 1)->paginate(10);
         } else {

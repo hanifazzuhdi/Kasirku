@@ -67,6 +67,35 @@ class SaldoController extends Controller
         $order_id = Str::upper($request->bank) . "-" . date('dmyHis') . '-' . auth('member')->id();
 
         DB::beginTransaction();
+        $data = $this->proses($request, $order_id);
+
+        Payment::create([
+            'order_id'     => $order_id,
+            'jumlah'       => $request->jumlah,
+            "kode_member"  => auth('member')->user()->kode_member,
+            "nama_member"  => auth('member')->user()->nama,
+            "nomor_member" => auth('member')->user()->nomor,
+            'bank'         => $request->bank
+        ]);
+        DB::commit();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Transaksi berhasil dilakukan',
+            'data'  => [
+                'order_id' => $data['order_id'],
+                'transaction_status' => $data['transaction_status'],
+                'jumlah' => $data['gross_amount'],
+                'bank' => Str::upper($data['va_numbers'][0]['bank']),
+                'va_numbers' => $data['va_numbers'][0]['va_number'],
+                'transaction_date' => $data['transaction_time']
+            ]
+        ]);
+    }
+
+    // Proses transaksi
+    public function proses($request, $order_id)
+    {
         $res = Http::withBasicAuth(env('SERVER_KEY_MIDTRANS'), '')
             ->withHeaders([
                 'Accept' => 'application/json',
@@ -91,34 +120,13 @@ class SaldoController extends Controller
                 ]
             ]);
 
-        Payment::create([
-            'order_id'     => $order_id,
-            'jumlah'       => $request->jumlah,
-            "kode_member"  => auth('member')->user()->kode_member,
-            "nama_member"  => auth('member')->user()->nama,
-            "nomor_member" => auth('member')->user()->nomor,
-            'bank'         => $request->bank
-        ]);
-        DB::commit();
-
         $data = $res->json();
 
-        if ($data['status_code'] == '500' or  app('Illuminate\Http\Response')->status() == '503') {
+        if ($data['status_code'] == '500') {
             return $this->sendResponse('failed', 'Fitur sedang dalam perbaikan', null, 400);
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Transaksi berhasil dilakukan',
-            'data'  => [
-                'order_id' => $data['order_id'],
-                'transaction_status' => $data['transaction_status'],
-                'jumlah' => $data['gross_amount'],
-                'bank' => Str::upper($data['va_numbers'][0]['bank']),
-                'va_numbers' => $data['va_numbers'][0]['va_number'],
-                'transaction_date' => $data['transaction_time']
-            ]
-        ]);
+        return $data;
     }
 
     // Webhook Transaksi

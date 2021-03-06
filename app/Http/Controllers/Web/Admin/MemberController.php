@@ -29,7 +29,7 @@ class MemberController extends Controller
      */
     public function cari(Request $request)
     {
-        if (!$request->input('datefilter')) {
+        if (!$request->datefilter) {
             $datas = Member::where('kode_member', 'LIKE', "%$request->search%")->paginate(10);
         } else {
             $tanggal = $request->datefilter;

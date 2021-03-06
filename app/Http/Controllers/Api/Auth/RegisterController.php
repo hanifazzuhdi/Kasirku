@@ -39,15 +39,14 @@ class RegisterController extends Controller
         }
 
         DB::transaction(function () use ($request, $nomor) {
-
-            $kode_member = '000' . substr($request->nomor, 2);
+            // $kode_member = '000' . substr($request->nomor, 2);
 
             $user = Member::create([
                 'nomor' => $nomor,
                 'nama' => $request->nama,
                 'password' => Hash::make($request->password),
-                'kode_member' => $kode_member,
-                'qr_code' => UploadProvider::uploadCode($kode_member, 'register'),
+                'kode_member' => explode('+', $nomor)[1],
+                'qr_code' => UploadProvider::uploadCode(explode('+', $nomor)[1], 'register'),
                 'role_id' => 4
             ]);
 

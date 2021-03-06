@@ -114,3 +114,10 @@ Route::group(['namespace' => 'Member'], function () {
     Route::post('/payments', 'SaldoController@store');
     Route::post('/notif/payments', 'SaldoController@webhooks');
 });
+
+// Route fallback
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact ' . config('app.name') . '.com'
+    ], 404);
+});

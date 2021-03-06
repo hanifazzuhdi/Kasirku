@@ -26,7 +26,7 @@ class BarangController extends Controller
      */
     public function show($uid)
     {
-        $barang = Barang::where('uid', $uid)->get();
+        $barang = Barang::where('uid', $uid)->firstOrFail();
 
         $data = BarangResource::collection($barang);
 

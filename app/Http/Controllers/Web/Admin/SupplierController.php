@@ -28,7 +28,7 @@ class SupplierController extends Controller
      */
     public function cari(Request $request)
     {
-        if (!$request->input('datefilter')) {
+        if (!$request->datefilter) {
             $datas = Supplier::where('nama_supplier', 'LIKE', "%$request->search%")->paginate(10);
         } else {
             $tanggal = $request->datefilter;
