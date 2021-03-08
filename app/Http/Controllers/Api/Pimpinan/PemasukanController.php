@@ -46,7 +46,7 @@ class PemasukanController extends Controller
         $bulan   = Transaksi::whereMonth('created_at', request('bulan'))->pluck('harga_total')->sum();
 
         //  data pemasukan bulan ini
-        $pemasukan = Transaksi::whereMonth('created_at', request('bulan'))->get();
+        $pemasukan = Transaksi::select('harga_total', 'created_at')->whereMonth('created_at', request('bulan'))->get();
 
         return response()->json([
             'status'            => 'success',
