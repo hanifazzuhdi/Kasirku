@@ -6,7 +6,6 @@ use App\Models\{Barang, Log, Member, Pembelian, Pengeluaran, Transaksi};
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {

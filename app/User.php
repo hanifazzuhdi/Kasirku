@@ -29,7 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'remember_token',
         'role_id',
         'is_verified',
-        'updated_at', 'created_at', 'email_verified_at'
+        'updated_at', 'created_at', 'email_verified_at', 'tanggal_lahir'
     ];
 
     /**

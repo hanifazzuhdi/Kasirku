@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
@@ -12,7 +13,6 @@ class KaryawanController extends Controller
 {
     /**
      * Lihat semua karyawan
-     *
      */
     public function index()
     {
@@ -42,7 +42,6 @@ class KaryawanController extends Controller
 
     /**
      * Tambah karyawan
-     *
      */
     public function store(Request $request)
     {
@@ -50,12 +49,15 @@ class KaryawanController extends Controller
             'nama' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'umur' => 'required',
+            'tanggal_lahir' => 'required',
             'alamat' => 'required',
             'role_id' => 'required',
         ]);
 
+        $umur = Carbon::createFromDate($data['tangal_lahir'])->age;
+
         $data['password'] = Hash::make(request('password'));
+        $data['umur'] = $umur;
 
         User::create($data);
 

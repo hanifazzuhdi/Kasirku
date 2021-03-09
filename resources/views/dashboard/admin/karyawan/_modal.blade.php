@@ -108,23 +108,26 @@
                                             <input name="email" class="form-control" type="text">
                                         </div>
                                         <div class="col-md-4">
-                                            <label> Alamat : </label>
-                                            <br>
-                                            <input name="alamat" class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-5">
-                                        <div class="col-md-4">
-                                            <label> Umur : </label>
-                                            <br>
-                                            <input name="umur" class="form-control" type="text">
-                                        </div>
-                                        <div class="col-md-4">
                                             <label> Password : </label>
                                             <br>
                                             <input name="password" class="form-control" type="password">
                                         </div>
-                                        <div class="col-md-4">
+                                    </div>
+                                    <div class="row mt-5 justify-content-center">
+                                        <div class="">
+                                            <label> Alamat : </label>
+                                            <br>
+                                            <textarea class="form-control" cols="92" rows="3" name="alamat"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-md-6">
+                                            <label> Tanggal Lahir : </label>
+                                            <br>
+                                            <input name="tanggal_lahir" class="form-control" type="date">
+                                        </div>
+
+                                        <div class="col-md-6">
                                             <label> Jabatan : </label>
                                             <br>
                                             <select name="role_id" class="custom-select">

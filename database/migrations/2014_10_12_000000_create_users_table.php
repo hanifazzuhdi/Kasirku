@@ -17,10 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable()->default(now());
             $table->string('is_verified')->default('1');
             $table->string('password');
             $table->integer('umur')->nullable();
+            $table->date('tanggal_lahir')->nullable();
             $table->string('alamat')->nullable();
             $table->string('avatar')->nullable()->default('https://i.ibb.co/Smw9VXW/Pngtree-users-vector-3725294.png');
             $table->unsignedBigInteger('role_id')->nullable();

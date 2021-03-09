@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Events\LoginKaryawan;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 
@@ -46,6 +47,17 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
+
+        // Update Umur
+        $user = User::where('tanggal_lahir', date('Y-m-d'))->whereDay('updated_at', '!=', date('d'))->get();
+        if ($user != null) {
+
+            foreach ($user as $key => $value) {
+                $value->update([
+                    'umur' => $value->umur + 1
+                ]);
+            }
+        }
 
         if (auth()->user()->role_id == 1) {
             return redirect()->route('home');
