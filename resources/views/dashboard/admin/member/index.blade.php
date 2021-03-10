@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-warning">
-                <h4 class="card-title font-weight-bold ">Daftar Member Tokoku</h4>
+                <h4 class="card-title font-weight-bold ">Daftar Member</h4>
                 <p class="card-category"> Hingga {{date('d, F Y')}} </p>
             </div>
             <div class="card-body">

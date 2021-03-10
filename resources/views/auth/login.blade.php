@@ -67,7 +67,7 @@
                     </form>
                 </div>
             </div>
+            <small>* Staff || Kasir - Hubungi Administrator jika anda lupa password.</small>
         </div>
     </div>
-</div>
-@endsection
+</div> @endsection

@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header card-header-warning d-flex justify-content-between">
                 <div>
-                    <h4 class="card-title font-weight-bold ">Daftar Karyawan Tokoku</h4>
+                    <h4 class="card-title font-weight-bold ">Daftar Karyawan</h4>
                     <p class="card-category"> Hingga {{date('d, F Y H:i')}} WIB </p>
                 </div>
 
