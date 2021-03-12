@@ -27,7 +27,7 @@ class MessageServices extends ServiceProvider
         $req = Http::withToken(env('TOKEN_BITLY'))->withHeaders([
             'Content-Type' => ' application/json'
         ])->post('https://api-ssl.bitly.com/v4/shorten', [
-            'long_url' => "https://project-mini.herokuapp.com/password/reqet/$token/$nomor1",
+            'long_url' => "https://project-mini.herokuapp.com/password/reset/$token/$nomor1",
             "domain" => "bit.ly"
         ]);
 
