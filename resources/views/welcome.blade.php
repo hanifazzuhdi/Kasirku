@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Kasirku</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
@@ -97,7 +97,7 @@
 
         <div class="content">
             <div class="title m-b-md">
-                Project Mini<a class="d" href="{{route('login')}}"> 3</a>
+                Kasir <a class="d" href="{{route('login')}}">Ku</a>
             </div>
 
             <div class="links">
