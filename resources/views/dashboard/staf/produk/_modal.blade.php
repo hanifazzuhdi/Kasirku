@@ -21,7 +21,7 @@
                                         <div class="col-md-6">
                                             <label for=""><span class="text-danger"> * </span> Nama Produk : </label>
                                             <br>
-                                            <input name="nama_produk" id="nama" class="form-control" type="text"
+                                            <input name="nama_barang" id="nama" class="form-control" type="text"
                                                 value="">
                                         </div>
                                         <div class="col-md-6">
@@ -71,6 +71,15 @@
                 <button type="button" class="btn btn-black" data-dismiss="modal">Close</button>
                 <button onclick="return confirm('Yakin Update Produk ?')" type="submit"
                     class="btn btn-warning">Update</button>
+                </form>
+
+                {{-- delete --}}
+                <form class="delete pt-3" action="" method="POST">
+                    <button class="btn btn-danger btn-just-icon" onclick="return confirm('Yakin Hapus Produk ?')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    @csrf
+                    @method('delete')
                 </form>
             </div>
 

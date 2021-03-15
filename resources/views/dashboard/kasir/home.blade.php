@@ -20,6 +20,6 @@
 
 </div>
 
-{{-- @include('dashboard.kasir._modal') --}}
+@include('dashboard.kasir._modal')
 
 @endsection

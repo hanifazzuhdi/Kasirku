@@ -101,6 +101,7 @@
             console.log(id);
 
             $('form').attr('action', '/staff/update-produk/' + id);
+            $('form.delete').attr('action', '/staff/delete-produk/' + id);
 
             $.ajax({
                 url: '/staff/produk/' + id,

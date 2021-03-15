@@ -9,7 +9,7 @@
         </div>
         <div class="card-footer">
             <div class="stats">
-                <i class="material-icons">access_time</i> Bulan {{date('F')}}
+                <i class="material-icons">access_time</i> Hingga Bulan {{date('F Y')}}
             </div>
         </div>
     </div>

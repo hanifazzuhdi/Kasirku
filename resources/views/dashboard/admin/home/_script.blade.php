@@ -27,21 +27,21 @@
         var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['M1', 'M2', 'M3', 'M4'],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
             datasets: [{
-            label: "Penghasilan",
-            lineTension: 0.5,
-            backgroundColor: "rgba(78, 115, 223, 0.05)",
-            borderColor: "rgba(78, 115, 223, 1)",
-            pointRadius: 3,
-            pointBackgroundColor: "rgba(78, 115, 223, 1)",
-            pointBorderColor: "rgba(78, 115, 223, 1)",
-            pointHoverRadius: 3,
-            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-            pointHitRadius: 10,
-            pointBorderWidth: 2,
-            data: {!! json_encode($penghasilan) !!},
+                label: "Penghasilan",
+                lineTension: 0.5,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: {!! json_encode($penghasilan) !!},
             }],
         },
         options: {
@@ -105,7 +105,7 @@
             callbacks: {
                 label: function(tooltipItem, chart) {
                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                return datasetLabel + ': Rp.' + number_format(tooltipItem.yLabel);
+                return datasetLabel + ': Rp ' + number_format(tooltipItem.yLabel);
                 }
             }
             }
@@ -120,19 +120,19 @@
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
             datasets: [{
-            label: "Earnings",
-            lineTension: 0.5,
-            backgroundColor: "rgba(78, 115, 223, 0.05)",
-            borderColor: "black",
-            pointRadius: 3,
-            pointBackgroundColor: "black",
-            pointBorderColor: "rgba(78, 115, 223, 1)",
-            pointHoverRadius: 3,
-            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-            pointHitRadius: 10,
-            pointBorderWidth: 2,
-            data: {!! json_encode($labaRugi) !!},
+                label: "Penghasilan",
+                lineTension: 0.5,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "black",
+                pointRadius: 3,
+                pointBackgroundColor: "black",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: {!! json_encode($labaRugi) !!},
             }],
         },
         options: {
@@ -196,7 +196,7 @@
             callbacks: {
                 label: function(tooltipItem, chart) {
                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                return datasetLabel + ': Rp.' + number_format(tooltipItem.yLabel);
+                return datasetLabel + ': Rp ' + number_format(tooltipItem.yLabel);
                 }
             }
             }

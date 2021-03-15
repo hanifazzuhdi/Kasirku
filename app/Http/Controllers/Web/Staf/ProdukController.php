@@ -53,7 +53,7 @@ class ProdukController extends Controller
     public function update(Barang $barang, Request $request)
     {
         $data = $this->validate($request, [
-            'nama_produk' => 'required',
+            'nama_barang' => 'required',
             'stok' => 'required|numeric',
             'harga_beli' => 'required|numeric',
             'harga_jual' => 'required|numeric',
@@ -100,6 +100,15 @@ class ProdukController extends Controller
         // Commit transaction
 
         Alert::success('Success', 'Data barang berhasil dibuat');
+
+        return back();
+    }
+
+    public function destroy(Barang $barang)
+    {
+        $barang->delete();
+
+        Alert::success('Success', 'Data barang berhasil dihapus');
 
         return back();
     }

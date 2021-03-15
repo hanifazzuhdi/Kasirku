@@ -70,7 +70,7 @@
             let tagihan = $('.tagihanHidden').val();
             // console.log(tagihan);
 
-            $('.kembalian').val('Rp. ' + new Intl.NumberFormat('id-ID').format(total - tagihan));
+            $('.kembalian').val('Rp ' + new Intl.NumberFormat('id-ID').format(total - tagihan));
         });
 
         // Ajax Keranjang
@@ -133,13 +133,13 @@
                     let total = [];
                     data.forEach((v, k) => total.push(v.harga * v.pcs) );
 
-                    $('.total').val( 'Rp. ' + total.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n) ));
+                    $('.total').val( 'Rp ' + total.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n) ));
 
                     // Diskon
                     let diskon = [];
                     data.forEach((v, k) => diskon.push(v.diskon));
 
-                    $('.diskon').val( 'Rp. ' + diskon.reduce((t,n) => new Intl.NumberFormat('id-ID').format(t + n) ));
+                    $('.diskon').val( 'Rp ' + diskon.reduce((t,n) => new Intl.NumberFormat('id-ID').format(t + n) ));
 
                     // tagihan
                     var tagihan = [];
@@ -147,8 +147,8 @@
 
                     console.log(tagihan);
 
-                    $('.tagihan').html('Rp. ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
-                    $('.tagihan').val( 'Rp. ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
+                    $('.tagihan').html('Rp ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
+                    $('.tagihan').val( 'Rp ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
 
                     $('.tagihanHidden').val( tagihan.reduce((t, n) => t + n));
 
@@ -189,6 +189,8 @@
                 return false;
             }
 
+            console.log($(this).data('url'));
+
             $.ajax({
                 url: $(this).data('url'),
                 method: 'POST',
@@ -202,8 +204,8 @@
                     },
                     202: function (data){
                         Swal.fire({
-                            title: 'Transaksi Sukses',
-                            text: "Saldo member berhasil dikurangi",
+                            title: 'Sukses',
+                            text: "Transaksi berhasil dilakukan",
                             icon: 'success',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -212,6 +214,10 @@
                             }).then((result) => {
                             if (result.isConfirmed) {
                                 $('.invisible form').submit();
+                            } else {
+                                setTimeout(function () {
+                                    location.reload()
+                                }, 200);
                             }
                         })
                     }
@@ -256,6 +262,10 @@
                             }).then((result) => {
                             if (result.isConfirmed) {
                                 $('.invisible form').submit();
+                            }else {
+                                setTimeout(function () {
+                                    location.reload()
+                                }, 200);
                             }
                         })
                     }
@@ -277,7 +287,7 @@
 
                     setTimeout(function () {
                         location.reload()
-                    }, 1500);
+                    }, 1000);
                 }
             });
         })
@@ -382,20 +392,20 @@
                     let total = [];
                     data.forEach((v, k) => total.push(v.harga * v.pcs) );
 
-                    $('.total').val( 'Rp. ' + total.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n) ));
+                    $('.total').val( 'Rp ' + total.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n) ));
 
                     // Diskon
                     let diskon = [];
                     data.forEach((v, k) => diskon.push(v.diskon));
 
-                    $('.diskon').val( 'Rp. ' + diskon.reduce((t,n) => new Intl.NumberFormat('id-ID').format(t + n) ));
+                    $('.diskon').val( 'Rp ' + diskon.reduce((t,n) => new Intl.NumberFormat('id-ID').format(t + n) ));
 
                     // tagihan
                     var tagihan = [];
                     data.forEach((v, k) => tagihan.push(v.total_harga));
 
-                    $('.tagihan').html('Rp. ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
-                    $('.tagihan').val( 'Rp. ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
+                    $('.tagihan').html('Rp ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
+                    $('.tagihan').val( 'Rp ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
                     $('.tagihanHidden').val( tagihan.reduce((t, n) => t + n));
 
                     return false;

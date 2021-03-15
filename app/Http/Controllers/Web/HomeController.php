@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\{Barang, Log, Member, Pembelian, Pengeluaran, Transaksi};
-
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
-    // Home Admin
     public function admin()
     {
         $member = Member::MemberActive()->count();
@@ -18,14 +14,10 @@ class HomeController extends Controller
 
         $penjualan = Transaksi::whereDay('created_at', date('d'))->pluck('harga_total');
 
-        $penghasilan = DB::table('transaksis')
-            ->select(DB::raw("SUM(harga_total) AS penghasilan"))
-            ->whereMonth('created_at', date('m'))
-            ->groupBy('minggu')
-            ->pluck('penghasilan');
-
         $bulan = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+
         $labaRugi = [];
+        $penghasilan = [];
 
         for ($i = 0; $i < 12; $i++) {
 
@@ -35,6 +27,8 @@ class HomeController extends Controller
 
             $penjualann = Transaksi::whereMonth('created_at', $bulan[$i])->pluck('harga_total')->sum();
             $pembelian = Pembelian::whereMonth('created_at', $bulan[$i])->pluck('total_harga')->sum();
+
+            $penghasilan[] = $penjualann;
 
             $labaKotor = $penjualann - $pembelian;
 
@@ -51,7 +45,7 @@ class HomeController extends Controller
             $keuntungan = $labaKotor - $pengeluaran;
         }
 
-        return view('dashboard.admin.home.index', compact('member', 'logs', 'penjualan', 'keuntungan', 'penghasilan', 'labaRugi'));
+        return view('dashboard.admin.home.index', compact('member', 'logs', 'penjualan', 'keuntungan', 'penghasilan', 'labaRugi', 'penghasilan'));
     }
 
     public function settings()
@@ -59,7 +53,6 @@ class HomeController extends Controller
         return view('dashboard.admin.settings');
     }
 
-    // Home Admin
     public function staf()
     {
         $sapa = $this->sapa();
@@ -67,7 +60,6 @@ class HomeController extends Controller
         return view('dashboard.staf.home.index', compact('sapa'));
     }
 
-    // Home Kasir
     public function kasir()
     {
         $sapa = $this->sapa();

@@ -29,3 +29,5 @@ Route::get('/tambah-produk', 'ProdukController@create')->name('staf.produk.creat
 Route::post('/tambah-produk', 'ProdukController@store')->name('staf.produk.store');
 Route::post('/daftar-produk', 'ProdukController@cari')->name('staf.produk.cari');
 Route::post('/update-produk/{barang}', 'ProdukController@update')->name('staf.produk.update');
+
+Route::delete('/delete-produk/{barang}', 'ProdukController@destroy');
