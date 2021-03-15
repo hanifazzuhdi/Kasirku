@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -70,5 +72,27 @@ class LoginController extends Controller
                 return redirect()->route('kasir');
             }
         }
+    }
+
+    // Logout
+    public function logout(Request $request)
+    {
+        if (Auth::user()->role_id != 1) {
+            event(new LoginKaryawan(Auth::user()->email, 'Web', 'Logout'));
+        }
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/');
     }
 }

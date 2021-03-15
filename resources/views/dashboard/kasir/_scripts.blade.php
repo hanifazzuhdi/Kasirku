@@ -70,7 +70,7 @@
             let tagihan = $('.tagihanHidden').val();
             // console.log(tagihan);
 
-            $('.kembalian').val( 'Rp. ' + new Intl.NumberFormat('id-ID').format(total - tagihan));
+            $('.kembalian').val('Rp. ' + new Intl.NumberFormat('id-ID').format(total - tagihan));
         });
 
         // Ajax Keranjang
@@ -145,8 +145,11 @@
                     var tagihan = [];
                     data.forEach((v, k) => tagihan.push(v.total_harga));
 
+                    console.log(tagihan);
+
                     $('.tagihan').html('Rp. ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
                     $('.tagihan').val( 'Rp. ' + tagihan.reduce((t, n) => new Intl.NumberFormat('id-ID').format(t + n)));
+
                     $('.tagihanHidden').val( tagihan.reduce((t, n) => t + n));
 
                 },
