@@ -48,17 +48,17 @@ class UserSeeder extends Seeder
             'is_verified'       => '1'
         ]);
 
-        // Member::create([
-        //     'nomor'             => '+628999981907',
-        //     'kode_member'       => '000999981907',
-        //     'nama'              => 'Usman Among Us',
-        //     'password'          => Hash::make('password'),
-        //     'saldo'             => 100000,
-        //     'role_id'           => 4,
-        //     'is_verified'       => '1',
-        //     'qr_code'           => 'https://res.cloudinary.com/hanif-it/image/upload/v1613363169/x0auxiva7lluxhmpudem.png',
-        //     'created_at'        => now()
-        // ]);
+        Member::create([
+            'nomor'             => '+628999981907',
+            'kode_member'       => '000999981907',
+            'nama'              => 'Usman Among Us',
+            'password'          => Hash::make('password'),
+            'saldo'             => 100000,
+            'role_id'           => 4,
+            'is_verified'       => '1',
+            'qr_code'           => 'https://res.cloudinary.com/hanif-it/image/upload/v1613363169/x0auxiva7lluxhmpudem.png',
+            'created_at'        => now()
+        ]);
 
         // Member::create([
         //     'nomor'             => '+6285210593721',

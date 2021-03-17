@@ -54,7 +54,7 @@ class KaryawanController extends Controller
             'role_id' => 'required',
         ]);
 
-        $umur = Carbon::createFromDate($data['tangal_lahir'])->age;
+        $umur = Carbon::createFromDate($data['tanggal_lahir'])->age;
 
         $data['password'] = Hash::make(request('password'));
         $data['umur'] = $umur;
